@@ -769,9 +769,9 @@
                     // Clear props on animated children (exclude flowchart elements)
                     const outChildren = outgoing.querySelectorAll('*:not(.react-flow *):not(#flowchart-root *):not([class*="react-flow"])');
                     outChildren.forEach(child => {
-                        window.gsap.set(child, { clearProps: 'all' });
+                        window.gsap.set(child, { clearProps: 'x,y,opacity,scale,rotation,rotateX,rotateY,clipPath,transform,willChange' });
                     });
-                    window.gsap.set(outgoing, { clearProps: 'all' });
+                    window.gsap.set(outgoing, { clearProps: 'x,y,opacity,scale,rotation,rotateX,rotateY,clipPath,transform,willChange,visibility' });
                     
                     // Cleanup SplitText
                     const outTitle = outgoing.querySelector('.slide-title, h1, h2');
