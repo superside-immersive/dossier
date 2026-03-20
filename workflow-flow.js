@@ -342,15 +342,13 @@
             root.style.background = 'transparent';
             ReactDOM.render(h(WorkflowApp), root);
 
-            // Run the filter intro only the first time the workflow slide becomes active
+            // Run the filter intro every time the workflow slide becomes active
             var slide = document.getElementById('slide-workflow');
             if (slide) {
                 var wasActive = false;
-                var hasPlayedIntro = false;
                 new MutationObserver(function () {
                     var isActive = slide.classList.contains('active');
-                    if (isActive && !wasActive && !hasPlayedIntro && _playIntroSequence) {
-                        hasPlayedIntro = true;
+                    if (isActive && !wasActive && _playIntroSequence) {
                         _playIntroSequence();
                     }
                     if (!isActive && wasActive && _cancelIntroSequence) {
