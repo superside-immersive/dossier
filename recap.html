@@ -245,6 +245,43 @@ body {
     justify-content: center !important;
     padding: 50px 80px !important;
 }
+#slide-ai .ai-slide-badge {
+    position: absolute !important;
+    top: 22px !important;
+    right: 28px !important;
+    z-index: 2 !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    padding: 6px 10px !important;
+    border-radius: 999px !important;
+    background: rgba(247,249,242,0.92) !important;
+    border: 1px solid rgba(184,224,90,0.38) !important;
+    box-shadow: 0 8px 22px rgba(26,46,40,0.04) !important;
+    color: #3a4a42 !important;
+    font-size: 10px !important;
+    font-weight: 700 !important;
+    letter-spacing: 0.08em !important;
+    text-transform: uppercase !important;
+    line-height: 1 !important;
+    white-space: nowrap !important;
+    pointer-events: none !important;
+    animation: aiBadgePulse 3.6s ease-in-out infinite !important;
+}
+#slide-ai .ai-slide-badge i {
+    color: #2a7a4f !important;
+}
+
+@keyframes aiBadgePulse {
+    0%, 100% {
+        background: rgba(247,249,242,0.92);
+        border-color: rgba(26,46,40,0.1);
+    }
+    50% {
+        background: rgba(216,255,133,0.55);
+        border-color: rgba(184,224,90,0.55);
+    }
+}
 #slide-ai .slide-title {
     font-size: 38px !important;
     margin-bottom: 8px !important;
@@ -289,6 +326,30 @@ body {
     color: #4a5a52 !important;
     line-height: 1.5 !important;
     margin: 0 !important;
+}
+#slide-ai .ai-slide-cta {
+    margin-top: 10px !important;
+    align-self: flex-start !important;
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 6px !important;
+    padding: 0 !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    color: #2a7a4f !important;
+    border: none !important;
+    box-shadow: none !important;
+    font-size: 12px !important;
+    font-weight: 700 !important;
+    line-height: 1.2 !important;
+    text-decoration: none !important;
+    transition: color 0.2s ease, transform 0.2s ease !important;
+}
+#slide-ai .ai-slide-cta:hover {
+    background: transparent !important;
+    color: var(--color-text-dark) !important;
+    transform: translateY(-1px) !important;
+    text-decoration: underline !important;
 }
 
 /* ── WORKFLOW SLIDE ── */
@@ -471,6 +532,8 @@ body.grid-view .tile .icon         { font-size: 14px; margin-bottom: 4px; }
 body.grid-view .tile h3            { font-size: 8px; }
 body.grid-view .tile p             { font-size: 7px; }
 body.grid-view .tiled-content      { gap: 8px; margin-top: 8px; }
+body.grid-view #slide-ai .ai-slide-badge { top: 10px !important; right: 10px !important; font-size: 6px !important; padding: 3px 6px !important; gap: 3px !important; }
+body.grid-view #slide-ai .ai-slide-cta   { font-size: 7px !important; padding: 0 !important; gap: 3px !important; }
 body.grid-view .budget-badge       { font-size: 7px; padding: 2px 6px; }
 body.grid-view .stat-hero          { font-size: 32px; }
 body.grid-view .pipeline-row       { font-size: 7px; padding: 4px 0; }
@@ -942,7 +1005,8 @@ ul li::before {
 }
 
 .team-name {
-    display: flex;
+    display: grid;
+    grid-template-columns: auto 1fr auto;
     align-items: center;
     gap: 16px;
     padding: 16px 0;
@@ -950,6 +1014,7 @@ ul li::before {
     font-size: 18px;
     color: var(--color-white);
     font-weight: 400;
+    line-height: 1.2;
 }
 
 .team-name:last-child { border-bottom: none; }
@@ -963,11 +1028,14 @@ ul li::before {
 }
 
 .team-name .role {
-    font-size: 13px;
+    font-size: 12px;
     color: var(--color-text-muted);
     margin-left: auto;
     font-weight: 400;
     letter-spacing: 0.05em;
+    white-space: nowrap;
+    text-align: right;
+    flex-shrink: 0;
 }
 
 .team-name.team-name--you .dot {
@@ -1496,6 +1564,7 @@ body.grid-view .urgency-grid    { gap: 6px; margin-top: 8px; }
          SLIDE 5 — AI-POWERED WORKFLOWS
          ═══════════════════════════════════════════ -->
     <div class="slide-container slide--light" id="slide-ai">
+        <div class="ai-slide-badge"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i><span>This deck was built with AI</span></div>
         <h2 class="slide-title">AI-Powered Workflows</h2>
         <p>Every project runs on a fully AI-enabled pipeline — from first concept to client delivery. Speed and quality aren't a tradeoff anymore.</p>
         <div class="tiled-content">
@@ -1516,6 +1585,7 @@ body.grid-view .urgency-grid    { gap: 6px; margin-top: 8px; }
                 <div class="icon"><i class="fa fa-chart-bar"></i></div>
                 <h3>Data Viz &amp; Insights</h3>
                 <p>Raw event data into interactive visualizations — live dashboards, AR overlays, and more.</p>
+                <a class="ai-slide-cta" href="https://superside-immersive.github.io/supersidersglobally/" target="_blank" rel="noopener noreferrer">View example ↗</a>
             </div>
             <div class="tile tile-media">
                 <video class="hover-vid" src="mcpfigma.mp4" muted loop playsinline preload="metadata"></video>
@@ -1921,6 +1991,7 @@ body.grid-view .urgency-grid    { gap: 6px; margin-top: 8px; }
         document.querySelectorAll('.tile-media').forEach(function(tile) {
             tile.style.cursor = 'pointer';
             tile.addEventListener('click', function(e) {
+                if (e.target.closest('a, button')) return;
                 var vid = tile.querySelector('.hover-vid');
                 var img = tile.querySelector('.hover-img');
                 if (vid) {
