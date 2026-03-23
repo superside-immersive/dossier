@@ -1636,6 +1636,26 @@
                 });
             }
 
+            /* Lock aspect-ratio containers to explicit pixels (html2canvas ignores aspect-ratio) */
+            function lockAspectRatioBoxes(root) {
+                root.querySelectorAll('*').forEach(el => {
+                    const cs = window.getComputedStyle(el);
+                    if (cs.aspectRatio && cs.aspectRatio !== 'auto') {
+                        const rect = el.getBoundingClientRect();
+                        el.dataset.pdfAr = cs.aspectRatio;
+                        el.dataset.pdfArW = rect.width + 'px';
+                        el.dataset.pdfArH = rect.height + 'px';
+                    }
+                });
+            }
+            function unlockAspectRatioBoxes(root) {
+                root.querySelectorAll('[data-pdf-ar]').forEach(el => {
+                    delete el.dataset.pdfAr;
+                    delete el.dataset.pdfArW;
+                    delete el.dataset.pdfArH;
+                });
+            }
+
             for (let i = 0; i < totalSlides; i++) {
                 if (indicator) indicator.innerText = `Exportando ${i + 1} / ${totalSlides}…`;
 
@@ -1656,6 +1676,7 @@
 
                 /* Lock image dimensions at current rendered size */
                 lockImageSizes(slides[i]);
+                lockAspectRatioBoxes(slides[i]);
 
                 /* Replace videos with frame snapshots */
                 const videos = slides[i].querySelectorAll('video');
@@ -1733,6 +1754,13 @@
                             img.style.maxWidth = 'none';
                             img.style.maxHeight = 'none';
                         });
+                        /* Resolve aspect-ratio containers to explicit pixel sizes */
+                        clonedDoc.querySelectorAll('[data-pdf-ar]').forEach(el => {
+                            el.style.aspectRatio = 'auto';
+                            el.style.width = el.dataset.pdfArW;
+                            el.style.height = el.dataset.pdfArH;
+                            el.style.overflow = 'hidden';
+                        });
                         /* Hide UI in clone */
                         const cb = clonedDoc.querySelector('.controls-bar');
                         const si = clonedDoc.querySelector('.slide-indicator');
@@ -1747,6 +1775,7 @@
                     if (vd.img.parentNode) vd.img.parentNode.removeChild(vd.img);
                 }
                 unlockImageSizes(slides[i]);
+                unlockAspectRatioBoxes(slides[i]);
 
                 if (i > 0) pdf.addPage([W, H], 'landscape');
                 const imgData = canvas.toDataURL('image/jpeg', 0.92);
