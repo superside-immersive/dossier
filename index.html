@@ -264,6 +264,25 @@
             text-transform: uppercase; letter-spacing: 0.03em;
         }
 
+        /* ── Caja Negra featured quote ── */
+        .caja-negra-quote {
+            margin-top: 18px;
+            padding: 14px 0 0;
+            border-top: 1px solid rgba(255,255,255,0.10);
+        }
+        .caja-negra-quote p {
+            font-family: var(--font-main);
+            font-size: clamp(1.15rem, 1.6vw, 1.45rem);
+            font-weight: 500;
+            font-style: italic;
+            letter-spacing: 0.035em;
+            line-height: 1.35;
+            color: rgba(246,247,251,0.92);
+            background: linear-gradient(90deg, rgba(255,255,255,0.06) 0%, transparent 100%);
+            padding: 10px 16px;
+            border-left: 3px solid rgba(255,255,255,0.35);
+        }
+
         /* ═══════════════════════════════════════
            KPI (flat dividers, no box)
            ═══════════════════════════════════════ */
@@ -992,6 +1011,8 @@
             .kpi-row { gap: 12px; }
             .two-column { gap: 28px; }
             .team-member p { font-size: 12px; line-height: 1.45; }
+            .caja-negra-quote { margin-top: 12px; padding-top: 10px; }
+            .caja-negra-quote p { font-size: 1rem; padding: 8px 12px; }
         }
         @media (max-height: 700px) {
             .slide-container { padding: 20px 48px 48px; }
@@ -1086,6 +1107,7 @@
 
             /* Pull quote */
             .pull-quote p { font-size: 16px; }
+            .caja-negra-quote p { font-size: 0.95rem; padding: 8px 12px; }
 
             /* Punchline */
             .ctx-punchline p { font-size: 20px; }
@@ -1231,7 +1253,9 @@
                     <p class="lead">La Caja Negra es un dispositivo escénico heredado del teatro experimental: un espacio completamente oscuro, acústicamente controlado, donde se anulan todas las distracciones del entorno para que la experiencia sensorial sea absoluta.</p>
                     <p>En DataRaíz tomamos ese concepto y lo llevamos al cruce entre tecnología y arte: el negro total se convierte en la superficie donde las visuales generativas, la iluminación inmersiva y el sonido espacializado alcanzan su máxima potencia expresiva. La tecnología deja de ser un gadget para convertirse en un organismo vivo.</p>
                     <p>La configuración elimina la jerarquía entre escenario y público — todos están adentro de la obra.</p>
-                    <p style="margin-top: 10px; font-style: italic; font-size: 17px; color: rgba(246,247,251,0.7); letter-spacing: 0.02em;">El rito escénico como inmersión total, el contraste como lenguaje.</p>
+                    <div class="caja-negra-quote">
+                        <p>El rito escénico como inmersión total, el contraste como lenguaje.</p>
+                    </div>
                 </div>
                 <div class="content-area" style="display:flex; flex-direction:column; justify-content:center;">
                     <div class="kpi-row" style="flex-direction:column; gap:24px;">
