@@ -31,6 +31,35 @@
         /* Mobile: lock to 1080px height so it matches desktop 16:9 */
         .mobile-deck, .mobile-deck body { height: 1080px !important; overflow: hidden; }
 
+        /* Mobile tap zones */
+        .mobile-tap-zone {
+            display: none;
+            position: fixed;
+            top: 0;
+            width: 25%;
+            height: 100%;
+            z-index: 15;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .mobile-tap-zone.left { left: 0; }
+        .mobile-tap-zone.right { right: 0; }
+        .mobile-deck .mobile-tap-zone { display: block; }
+        .mobile-deck .controls-bar {
+            bottom: 20px;
+            padding: 10px 14px;
+            gap: 12px;
+        }
+        .mobile-deck .control-button {
+            width: 52px;
+            height: 52px;
+            font-size: 18px;
+        }
+        .mobile-deck .slide-indicator {
+            font-size: 14px;
+            padding: 10px 16px;
+        }
+
         body {
             font-family: var(--font-main);
             background: #0a0a0a;
@@ -1696,6 +1725,9 @@
 
     <div class="sidebar-overlay" id="sidebarOverlay"></div>
     <div class="flowchart-sidebar" id="flowchartSidebar"></div>
+
+    <div class="mobile-tap-zone left" onclick="prevSlide()" aria-label="Slide anterior"></div>
+    <div class="mobile-tap-zone right" onclick="nextSlide()" aria-label="Slide siguiente"></div>
 
     <div class="slide-indicator" id="slideIndicator">1 / 14</div>
 
