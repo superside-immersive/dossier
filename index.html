@@ -1608,22 +1608,38 @@
             const slides = Array.from(document.querySelectorAll('.slide-container:not(.gsap-clone)'));
             const totalSlides = slides.length;
 
-            /* Work at 1920×1080 for crisp PDF */
             const W = 1920;
             const H = 1080;
 
             const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [W, H], compress: true });
 
-            /* Hide UI elements */
+            /* Hide UI */
             const controlsBar = document.querySelector('.controls-bar');
             const slideInd = document.querySelector('.slide-indicator');
             if (controlsBar) controlsBar.style.display = 'none';
             if (slideInd) slideInd.style.display = 'none';
 
+            /* Lock every image's rendered size BEFORE capture to prevent distortion */
+            function lockImageSizes(root) {
+                root.querySelectorAll('img').forEach(img => {
+                    const rect = img.getBoundingClientRect();
+                    img.dataset.pdfW = rect.width + 'px';
+                    img.dataset.pdfH = rect.height + 'px';
+                    img.dataset.pdfFit = window.getComputedStyle(img).objectFit;
+                });
+            }
+            function unlockImageSizes(root) {
+                root.querySelectorAll('img').forEach(img => {
+                    delete img.dataset.pdfW;
+                    delete img.dataset.pdfH;
+                    delete img.dataset.pdfFit;
+                });
+            }
+
             for (let i = 0; i < totalSlides; i++) {
                 if (indicator) indicator.innerText = `Exportando ${i + 1} / ${totalSlides}…`;
 
-                /* Make only this slide visible */
+                /* Activate only this slide */
                 slides.forEach((s, idx) => {
                     if (idx === i) {
                         s.style.opacity = '1';
@@ -1638,47 +1654,56 @@
                     }
                 });
 
-                /* Replace videos with canvas frames */
+                /* Lock image dimensions at current rendered size */
+                lockImageSizes(slides[i]);
+
+                /* Replace videos with frame snapshots */
                 const videos = slides[i].querySelectorAll('video');
                 const videoData = [];
                 for (const video of videos) {
                     try {
                         if (video.readyState < 2) {
-                            await new Promise((resolve) => {
-                                video.addEventListener('loadeddata', resolve, { once: true });
-                                setTimeout(resolve, 2000);
-                            });
+                            await new Promise(r => { video.addEventListener('loadeddata', r, { once: true }); setTimeout(r, 2000); });
                         }
+                        const vw = video.videoWidth || 640;
+                        const vh = video.videoHeight || 360;
                         const vc = document.createElement('canvas');
-                        vc.width = video.videoWidth || video.clientWidth || 400;
-                        vc.height = video.videoHeight || video.clientHeight || 300;
-                        const vCtx = vc.getContext('2d');
-                        vCtx.drawImage(video, 0, 0, vc.width, vc.height);
+                        vc.width = vw; vc.height = vh;
+                        vc.getContext('2d').drawImage(video, 0, 0, vw, vh);
 
+                        const rect = video.getBoundingClientRect();
                         const img = document.createElement('img');
                         img.src = vc.toDataURL('image/jpeg', 0.92);
-                        img.style.cssText = window.getComputedStyle(video).cssText;
-                        img.style.width = video.getBoundingClientRect().width + 'px';
-                        img.style.height = video.getBoundingClientRect().height + 'px';
-                        img.style.objectFit = window.getComputedStyle(video).objectFit || 'cover';
+                        /* Copy exact rendered box */
+                        const cs = window.getComputedStyle(video);
+                        img.style.width = rect.width + 'px';
+                        img.style.height = rect.height + 'px';
+                        img.style.objectFit = cs.objectFit || 'cover';
+                        img.style.objectPosition = cs.objectPosition || 'center';
                         img.style.display = 'block';
+                        img.style.borderRadius = cs.borderRadius;
+                        img.style.position = cs.position;
+                        if (cs.position === 'absolute' || cs.position === 'fixed') {
+                            img.style.top = cs.top; img.style.left = cs.left;
+                            img.style.right = cs.right; img.style.bottom = cs.bottom;
+                            img.style.inset = cs.inset;
+                        }
+                        img.dataset.pdfW = rect.width + 'px';
+                        img.dataset.pdfH = rect.height + 'px';
+                        img.dataset.pdfFit = cs.objectFit || 'cover';
 
                         videoData.push({ video, img, parent: video.parentNode });
                         video.parentNode.insertBefore(img, video);
                         video.style.display = 'none';
-                    } catch (e) {
-                        console.warn('Could not capture video frame:', e);
-                    }
+                    } catch (e) { console.warn('Video frame capture failed:', e); }
                 }
 
-                /* Wait for layout */
                 await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
 
-                /* Capture */
                 const canvas = await html2canvas(slides[i], {
                     width: W,
                     height: H,
-                    scale: 2,
+                    scale: 1,
                     useCORS: true,
                     allowTaint: true,
                     backgroundColor: '#0a0a0a',
@@ -1686,12 +1711,33 @@
                     windowWidth: W,
                     windowHeight: H,
                     onclone: (clonedDoc) => {
-                        const clonedSlide = clonedDoc.querySelectorAll('.slide-container')[i];
-                        if (clonedSlide) {
-                            clonedSlide.style.position = 'relative';
-                            clonedSlide.style.width = W + 'px';
-                            clonedSlide.style.height = H + 'px';
-                        }
+                        /* Fix the slide container */
+                        const allCloned = clonedDoc.querySelectorAll('.slide-container');
+                        allCloned.forEach((cs, idx) => {
+                            if (idx === i) {
+                                cs.style.position = 'relative';
+                                cs.style.width = W + 'px';
+                                cs.style.height = H + 'px';
+                                cs.style.overflow = 'hidden';
+                                cs.style.opacity = '1';
+                                cs.style.visibility = 'visible';
+                            } else {
+                                cs.style.display = 'none';
+                            }
+                        });
+                        /* Enforce locked image sizes in clone to prevent distortion */
+                        clonedDoc.querySelectorAll('img[data-pdf-w]').forEach(img => {
+                            img.style.width = img.dataset.pdfW;
+                            img.style.height = img.dataset.pdfH;
+                            img.style.objectFit = img.dataset.pdfFit || 'cover';
+                            img.style.maxWidth = 'none';
+                            img.style.maxHeight = 'none';
+                        });
+                        /* Hide UI in clone */
+                        const cb = clonedDoc.querySelector('.controls-bar');
+                        const si = clonedDoc.querySelector('.slide-indicator');
+                        if (cb) cb.style.display = 'none';
+                        if (si) si.style.display = 'none';
                     }
                 });
 
@@ -1700,15 +1746,15 @@
                     vd.video.style.display = '';
                     if (vd.img.parentNode) vd.img.parentNode.removeChild(vd.img);
                 }
+                unlockImageSizes(slides[i]);
 
-                /* Add page */
                 if (i > 0) pdf.addPage([W, H], 'landscape');
                 const imgData = canvas.toDataURL('image/jpeg', 0.92);
                 pdf.addImage(imgData, 'JPEG', 0, 0, W, H);
             }
 
-            /* Restore slide state */
-            slides.forEach((s, idx) => {
+            /* Restore */
+            slides.forEach(s => {
                 s.style.opacity = '';
                 s.style.visibility = '';
                 s.style.pointerEvents = '';
