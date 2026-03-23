@@ -997,11 +997,17 @@
             .contact-strip { flex-direction: column; gap: 16px; }
         }
         @media (max-width: 820px) {
-            .slide-container { padding: 28px 20px 118px; overflow-y: auto; }
+            body { overflow: hidden; }
+            .slide-container {
+                padding: 24px 18px 90px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
             .two-column, .program-grid, .schedule-grid,
             .tiled-content, .partnership-grid,
             .audience-grid, .team-grid, .closing-grid {
-                grid-template-columns: 1fr;
+                grid-template-columns: 1fr !important;
+                gap: 16px !important;
             }
             .tiled-content .tile {
                 border-left: none;
@@ -1014,9 +1020,78 @@
                 padding: 16px 0;
             }
             .title-layout h1, .section-title-layout h2, .stat-hero {
-                font-size: clamp(2.8rem, 12vw, 4.4rem);
+                font-size: clamp(2rem, 10vw, 3.2rem);
             }
-            .controls-bar { bottom: 10px; }
+            h2.slide-title { font-size: clamp(1.4rem, 6vw, 2rem); }
+            .lead, .section-copy { font-size: 15px; }
+            p, li { font-size: 14px; }
+            .controls-bar { bottom: 8px; }
+            .slide-indicator { top: 12px; right: 12px; font-size: 10px; padding: 6px 10px; }
+
+            /* Cover */
+            .cover-text-panel { padding: 20px; }
+            .cover-text-panel h1 { font-size: clamp(2rem, 10vw, 3rem); }
+            .hero-intro { font-size: 14px; max-width: 100%; }
+
+            /* Images */
+            .festival-visual img { height: auto; max-height: 40vh; }
+            .program-visual img { height: auto; max-height: 36vh; }
+
+            /* KPI */
+            .kpi-row { flex-direction: column; }
+            .kpi-card { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 14px 0; }
+
+            /* Team */
+            .team-member, .persona-card, .closing-panel {
+                border-right: none;
+                border-bottom: 1px solid rgba(255,255,255,0.06);
+                padding: 16px 0;
+            }
+            .team-member img, .persona-card img { width: 60px !important; height: 60px !important; }
+            .team-member p { font-size: 12px; }
+
+            /* Hero bg slides (arthaus, etc) */
+            .hero-bg-slide .cover-text-panel { max-width: 90%; }
+            .hero-img-wrap img { width: 70% !important; }
+
+            /* Context slide video */
+            .context-video-frame { aspect-ratio: 9/14; max-height: 35vh; }
+
+            /* Pull quote */
+            .pull-quote p { font-size: 16px; }
+
+            /* Punchline */
+            .ctx-punchline p { font-size: 20px; }
+
+            /* Chip row */
+            .chip-row { flex-wrap: wrap; gap: 6px; }
+            .chip { font-size: 10px; padding: 4px 10px; }
+
+            /* Schedule timeline */
+            .timeline-row { flex-wrap: wrap; gap: 4px; }
+            .timeline-pill { font-size: 9px; padding: 3px 8px; }
+
+            /* Numbered items */
+            .numbered-item { padding: 10px 0; }
+            .numbered-item h3 { font-size: 14px; }
+            .numbered-item p { font-size: 12px; }
+
+            /* Content type cards */
+            .content-type-card { padding: 12px 0; }
+            .content-type-card h3 { font-size: 15px; }
+
+            /* Info panel */
+            .info-panel { font-size: 13px; }
+
+            /* Workshop cards */
+            .workshop-card h3 { font-size: 14px; }
+            .workshop-card p { font-size: 12px; }
+
+            /* Speaker items on mobile */
+            .speaker-items li { flex-direction: column; gap: 2px; }
+
+            /* Slide 14 video container */
+            #slide-cierre > div:first-child > div:first-child { width: 90% !important; height: 50% !important; }
         }
     </style>
 </head>
@@ -1116,8 +1191,6 @@
                     <div class="festival-visual">
                         <img src="show.png" alt="Show audiovisual de DataRaíz">
                     </div>
-                    <p class="festival-note">Pulso escénico · performance audiovisual en vivo</p>
-                    <p style="font-size: 12px; line-height: 1.48; color: rgba(246,247,251,0.42); margin-top: -4px; max-width: 90%;">Performance A/V que explora el colapso a través de un entorno digital que interactúa con el sonido en tiempo real. Música e imagen se generan y responden mutuamente — el sonido transforma el paisaje visual hasta que el sistema colapsa y destruye todo equilibrio armónico. El tema central: el balance entre la creación humana y los patrones destructivos como fuerzas inevitables de entropía.</p>
                 </div>
             </div>
         </div>
@@ -1322,7 +1395,7 @@
                             </li>
                             <li style="padding: 6px 0;">
                                 <span class="speaker-title" style="font-size:14px;">02 — Manu</span>
-                                <span class="speaker-caption" style="font-size:12px;">Bajada artística en desarrollo.</span>
+                                <span class="speaker-caption" style="font-size:12px; line-height:1.35;">Performance A/V en vivo. Entorno digital generativo que interactúa con el sonido en tiempo real — música e imagen se responden mutuamente hasta colapsar en patrones de entropía.</span>
                             </li>
                             <li style="padding: 6px 0;">
                                 <span class="speaker-title" style="font-size:14px;">03 — Lolo Armendariz</span>
