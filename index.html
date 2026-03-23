@@ -2,7 +2,7 @@
 <html lang="es">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>DataRaíz Ciclo Negro — Presentación 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -27,19 +27,10 @@
             background: #0a0a0a;
             color: var(--color-text);
             overflow: hidden;
-            margin: 0;
-            width: 100vw;
-            height: 100vh;
         }
 
         /* ── Wrapper ── */
-        .slides-wrapper {
-            position: absolute;
-            width: 1920px;
-            height: 1080px;
-            transform-origin: top left;
-            z-index: 1;
-        }
+        .slides-wrapper { position: relative; width: 100%; height: 100%; z-index: 1; }
 
         .slide-container {
             position: absolute;
@@ -47,7 +38,7 @@
             display: flex;
             flex-direction: column;
             justify-content: center;
-            padding: 64px 80px 132px;
+            padding: 48px 80px 80px;
             background: #0a0a0a;
             opacity: 0;
             visibility: hidden;
@@ -990,6 +981,25 @@
         /* ═══════════════════════════════════════
            RESPONSIVE
            ═══════════════════════════════════════ */
+        /* Short screens (lower-res laptops, e.g. 768px height) */
+        @media (max-height: 800px) {
+            .slide-container { padding: 28px 60px 60px; justify-content: flex-start; }
+            h2.slide-title { font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
+            .lead, .section-copy { font-size: 15px; }
+            p { font-size: 14px; line-height: 1.55; }
+            .kpi-value { font-size: clamp(1.4rem, 2.5vw, 2rem); }
+            .kpi-card { padding: 10px 24px 10px 0; }
+            .kpi-row { gap: 12px; }
+            .two-column { gap: 28px; }
+            .team-member p { font-size: 12px; line-height: 1.45; }
+        }
+        @media (max-height: 700px) {
+            .slide-container { padding: 20px 48px 48px; }
+            h2.slide-title { font-size: clamp(1.2rem, 2.2vw, 1.5rem); }
+            .lead, .section-copy { font-size: 14px; }
+            p { font-size: 13px; }
+        }
+
         @media (max-width: 1180px) {
             .slide-container { padding: 36px 32px 100px; }
             .two-column, .program-grid, .schedule-grid,
@@ -1012,8 +1022,6 @@
             .kpi-row { gap: 16px; }
             .kpi-card { padding: 14px 24px 14px 0; }
             .pull-quote p { font-size: 18px; }
-            #slide-caja-negra .pull-quote { margin: 0 32px; padding: 14px 0 0; }
-            #slide-caja-negra .pull-quote p { font-size: 1.1rem; }
         }
         @media (max-width: 820px) {
             body { overflow: hidden; }
@@ -1223,6 +1231,7 @@
                     <p class="lead">La Caja Negra es un dispositivo escénico heredado del teatro experimental: un espacio completamente oscuro, acústicamente controlado, donde se anulan todas las distracciones del entorno para que la experiencia sensorial sea absoluta.</p>
                     <p>En DataRaíz tomamos ese concepto y lo llevamos al cruce entre tecnología y arte: el negro total se convierte en la superficie donde las visuales generativas, la iluminación inmersiva y el sonido espacializado alcanzan su máxima potencia expresiva. La tecnología deja de ser un gadget para convertirse en un organismo vivo.</p>
                     <p>La configuración elimina la jerarquía entre escenario y público — todos están adentro de la obra.</p>
+                    <p style="margin-top: 10px; font-style: italic; font-size: 17px; color: rgba(246,247,251,0.7); letter-spacing: 0.02em;">El rito escénico como inmersión total, el contraste como lenguaje.</p>
                 </div>
                 <div class="content-area" style="display:flex; flex-direction:column; justify-content:center;">
                     <div class="kpi-row" style="flex-direction:column; gap:24px;">
@@ -1240,9 +1249,6 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class="pull-quote" style="margin: 0 80px; padding: 18px 0 0; border-top: 1px solid rgba(255,255,255,0.08); text-align: center;">
-                <p style="font-size: 1.3rem; letter-spacing: 0.04em; font-weight: 500; opacity: 0.95;"><em>El rito escénico como inmersión total, el contraste como lenguaje.</em></p>
             </div>
         </div>
 
@@ -1901,26 +1907,6 @@
             if (indicator) indicator.innerText = origIndicator;
         }
     }
-    </script>
-    <script>
-    /* ═══ PRESENTATION SCALER ═══ */
-    (function() {
-        function scalePresentation() {
-            const wrapper = document.querySelector('.slides-wrapper');
-            if (!wrapper) return;
-            const vw = window.innerWidth;
-            const vh = window.innerHeight;
-            const scaleX = vw / 1920;
-            const scaleY = vh / 1080;
-            const scale = Math.min(scaleX, scaleY);
-            wrapper.style.transform = 'scale(' + scale + ')';
-            wrapper.style.left = ((vw - 1920 * scale) / 2) + 'px';
-            wrapper.style.top = ((vh - 1080 * scale) / 2) + 'px';
-        }
-        scalePresentation();
-        window.addEventListener('resize', scalePresentation);
-        window.addEventListener('orientationchange', function() { setTimeout(scalePresentation, 200); });
-    })();
     </script>
 </body>
 </html>
