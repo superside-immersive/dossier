@@ -1,2068 +1,1737 @@
 <!DOCTYPE html>
-<html lang="en">
-    <!-- Google Tag Manager -->
-    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
-    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
-    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
-    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
-    })(window,document,'script','dataLayer','GTM-K68S7LCJ');</script>
-    <!-- End Google Tag Manager -->
-</head>
+<html lang="es">
+<head>
     <meta charset="UTF-8">
-    <!-- Google Tag Manager (noscript) -->
-    <noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-K68S7LCJ"
-    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-    <!-- End Google Tag Manager (noscript) -->
-
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Immersive Recap — Manuel Palenque</title>
+    <title>DataRaíz Ciclo Negro — Presentación 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500;1,600&family=Playfair+Display:ital,wght@0,400;0,500;0,600;0,700;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="https://unpkg.com/reactflow@11.11.4/dist/style.css">
     <style>
-/* ===========================================
-   IMMERSIVE RECAP — Stylesheet
-   Based on the Reddit Slides design system
-   =========================================== */
-
-:root {
-    --color-primary:       #d8ff85;
-    --color-primary-dark:  #b8e05a;
-    --color-primary-light: #e5ffa8;
-    --color-bg:            #1a2e28;
-    --color-bg-dark:       #0f1f1a;
-    --color-bg-light:      #f7f9f2;
-    --color-white:         #f7f9f2;
-    --color-text:          #f7f9f2;
-    --color-text-dark:     #1a2e28;
-    --color-text-muted:    #8a9a92;
-    --font-main:           'Inter Tight', sans-serif;
-    --font-display:        'Playfair Display', serif;
-    --font-title:          'Instrument Serif', serif;
-}
-
-* { box-sizing: border-box; margin: 0; padding: 0; }
-
-body {
-    background-color: var(--color-bg);
-    font-family: var(--font-main);
-    overflow: hidden;
-    height: 100vh;
-    width: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    position: relative;
-}
-
-.slides-wrapper {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-/* ── REEL SLIDE (persistent styles — immune to GSAP clearProps) ── */
-#slide-reel {
-    padding: 0 !important;
-    background: #0a0a0a !important;
-    overflow: hidden !important;
-}
-#slide-reel .reel-grid {
-    display: grid !important;
-    grid-template-columns: 1fr 1.7fr;
-    height: 100%;
-    position: relative;
-}
-#slide-reel .reel-left {
-    display: flex !important;
-    flex-direction: column;
-    justify-content: center;
-    padding: 50px 44px;
-    z-index: 2;
-    position: relative;
-    overflow: hidden;
-}
-#slide-reel .reel-left .accent-tag {
-    color: var(--color-primary) !important;
-    opacity: 0.8;
-    margin-bottom: 20px;
-}
-#slide-reel .reel-left h2 {
-    font-family: var(--font-title) !important;
-    font-size: 48px !important;
-    font-weight: 400 !important;
-    color: #f7f9f2 !important;
-    line-height: 1.0 !important;
-    margin-bottom: 16px !important;
-}
-#slide-reel .reel-left h2 em {
-    font-family: var(--font-display) !important;
-    font-style: italic;
-    color: var(--color-primary) !important;
-}
-#slide-reel .reel-cities {
-    font-size: 13px !important;
-    line-height: 1.8;
-    color: rgba(247,249,242,0.45) !important;
-    margin-bottom: 0 !important;
-}
-#slide-reel .reel-right {
-    position: relative !important;
-    overflow: hidden;
-}
-#slide-reel .reel-overlay {
-    position: absolute !important;
-    inset: 0;
-    background: linear-gradient(to right, #0a0a0a 0%, transparent 28%);
-    z-index: 1;
-    pointer-events: none;
-}
-#slide-reel video {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover;
-    display: block !important;
-}
-
-/* ── PROJECT MEDIA (video/image — immune to GSAP clearProps) ── */
-.project-video {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    display: block !important;
-    border-radius: 8px;
-    min-height: 260px;
-}
-.project-img {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    display: block !important;
-    border-radius: 8px;
-    min-height: 260px;
-}
-#slide-pipeline {
-    position: relative;
-}
-#slide-pipeline .pipeline-bg {
-    position: absolute !important;
-    inset: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.1;
-    z-index: 0;
-    pointer-events: none;
-}
-#slide-pipeline .pipeline-hero {
-    position: relative;
-    z-index: 1;
-}
-
-/* ── TILE HOVER MEDIA POPUP ── */
-.tile-media {
-    position: relative;
-    cursor: pointer;
-    isolation: isolate;
-}
-.tile-media .hover-img,
-.tile-media .hover-vid {
-    position: absolute;
-    top: calc(100% + 14px);
-    left: 50%;
-    transform: translateX(-50%) translateY(-10px) scale(0.96);
-    width: 300px;
-    border-radius: 16px;
-    box-shadow: 0 24px 72px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.08);
-    opacity: 0;
-    pointer-events: none;
-    transition: opacity 0.25s ease, transform 0.25s cubic-bezier(0.34,1.56,0.64,1);
-    z-index: 200;
-    display: block;
-    object-fit: cover;
-    overflow: hidden;
-}
-.tile-media:hover .hover-img,
-.tile-media:hover .hover-vid {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0) scale(1);
-    pointer-events: auto;
-    cursor: zoom-in;
-}
-
-/* ── Tile Lightbox ── */
-#tile-lightbox {
-    position: fixed;
-    inset: 0;
-    z-index: 9900;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background: rgba(5, 12, 10, 0);
-    pointer-events: none;
-    transition: background 0.3s ease;
-}
-#tile-lightbox.open {
-    background: rgba(5, 12, 10, 0.85);
-    pointer-events: auto;
-    cursor: zoom-out;
-}
-#tile-lightbox-inner {
-    width: 72vw;
-    max-width: 1080px;
-    max-height: 72vh;
-    border-radius: 18px;
-    overflow: hidden;
-    box-shadow: 0 40px 120px rgba(0,0,0,0.75), 0 0 0 1px rgba(255,255,255,0.07);
-    transform: scale(0.86);
-    opacity: 0;
-    transition: transform 0.38s cubic-bezier(0.34,1.35,0.64,1), opacity 0.28s ease;
-    cursor: auto;
-    background: #000;
-}
-#tile-lightbox.open #tile-lightbox-inner {
-    transform: scale(1);
-    opacity: 1;
-}
-#tile-lightbox-inner video,
-#tile-lightbox-inner img {
-    width: 100%;
-    max-height: 72vh;
-    display: block;
-    object-fit: contain;
-}
-
-/* AI slide: allow popup to overflow below the slide */
-#slide-ai {
-    overflow: visible !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    padding: 50px 80px !important;
-}
-#slide-ai .ai-slide-badge {
-    position: absolute !important;
-    top: 22px !important;
-    right: 28px !important;
-    z-index: 2 !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 7px !important;
-    padding: 6px 10px !important;
-    border-radius: 999px !important;
-    overflow: hidden !important;
-    box-shadow: 0 8px 22px rgba(26,46,40,0.04) !important;
-    color: #3a4a42 !important;
-    font-size: 10px !important;
-    font-weight: 700 !important;
-    letter-spacing: 0.08em !important;
-    text-transform: uppercase !important;
-    line-height: 1 !important;
-    white-space: nowrap !important;
-    pointer-events: none !important;
-}
-#slide-ai .ai-slide-badge::before {
-    content: '';
-    position: absolute;
-    inset: 0;
-    border-radius: inherit;
-    border: 1px solid rgba(184,224,90,0.38);
-    background-color: rgba(247,249,242,0.92);
-    animation: aiBadgePulse 3.6s ease-in-out infinite;
-}
-#slide-ai .ai-slide-badge > * {
-    position: relative;
-    z-index: 1;
-}
-#slide-ai .ai-slide-badge i {
-    color: #2a7a4f !important;
-}
-
-@keyframes aiBadgePulse {
-    0%, 100% {
-        background-color: rgba(247,249,242,0.92);
-        border-color: rgba(26,46,40,0.1);
-    }
-    50% {
-        background-color: rgba(216,255,133,0.55);
-        border-color: rgba(184,224,90,0.55);
-    }
-}
-#slide-ai .slide-title {
-    font-size: 38px !important;
-    margin-bottom: 8px !important;
-    color: var(--color-text-dark) !important;
-}
-#slide-ai > p {
-    font-size: 15px !important;
-    color: #4a5a52 !important;
-    margin-bottom: 28px !important;
-    opacity: 1 !important;
-}
-#slide-ai .tiled-content {
-    display: flex !important;
-    gap: 20px !important;
-    margin-top: 0 !important;
-    align-items: stretch !important;
-    width: 100% !important;
-}
-#slide-ai .tile {
-    display: flex !important;
-    flex-direction: column !important;
-    gap: 10px !important;
-    padding: 24px 20px !important;
-    flex: 1 !important;
-    border-radius: 12px !important;
-    background-color: rgba(26,46,40,0.06) !important;
-    border: 1px solid rgba(26,46,40,0.12) !important;
-}
-#slide-ai .tile .icon {
-    font-size: 24px !important;
-    color: var(--color-bg) !important;
-    margin-bottom: 4px !important;
-}
-#slide-ai .tile h3 {
-    font-size: 16px !important;
-    font-weight: 600 !important;
-    color: var(--color-text-dark) !important;
-    margin: 0 !important;
-}
-#slide-ai .tile p {
-    font-size: 13px !important;
-    color: #4a5a52 !important;
-    line-height: 1.5 !important;
-    margin: 0 !important;
-}
-#slide-ai .ai-slide-cta {
-    margin-top: 10px !important;
-    align-self: flex-start !important;
-    display: inline-flex !important;
-    align-items: center !important;
-    gap: 6px !important;
-    padding: 0 !important;
-    border-radius: 0 !important;
-    background: transparent !important;
-    color: #2a7a4f !important;
-    border: none !important;
-    box-shadow: none !important;
-    font-size: 12px !important;
-    font-weight: 700 !important;
-    line-height: 1.2 !important;
-    text-decoration: none !important;
-    transition: color 0.2s ease, transform 0.2s ease !important;
-}
-#slide-ai .ai-slide-cta:hover {
-    background: transparent !important;
-    color: var(--color-text-dark) !important;
-    transform: translateY(-1px) !important;
-    text-decoration: underline !important;
-}
-
-/* ── WORKFLOW SLIDE ── */
-#slide-workflow {
-    background: var(--color-bg-dark) !important;
-    display: flex !important;
-    flex-direction: column !important;
-    justify-content: center !important;
-    padding: 40px 60px !important;
-    overflow: hidden !important;
-}
-#slide-workflow .slide-title {
-    font-size: 38px !important;
-    margin-bottom: 4px !important;
-}
-#slide-workflow .slide-subtitle {
-    font-size: 15px !important;
-    color: var(--color-text-muted) !important;
-    margin-bottom: 20px !important;
-}
-#slide-workflow .workflow-container {
-    flex: 1 !important;
-    display: flex !important;
-    flex-direction: column !important;
-    min-height: 0 !important;
-    max-height: calc(100vh - 200px) !important;
-}
-#slide-workflow .react-flow__node {
-    font-family: var(--font-main) !important;
-}
-#slide-workflow .react-flow__edge-textbg {
-    rx: 6;
-    ry: 6;
-}
-
-/* ── VASTEROIDS ── */
-#slide-vasteroids .vasteroids-video {
-    width: 100% !important;
-    height: 100% !important;
-    object-fit: cover !important;
-    display: block !important;
-    border-radius: 8px;
-    min-height: 260px;
-}
-
-/* Floating comment popup */
-#vasteroids-comment {
-    position: absolute !important;
-    bottom: 64px;
-    left: 80px;
-    width: 270px;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 24px 60px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.07);
-    z-index: 10;
-    opacity: 0;
-    transform: translateY(22px);
-    pointer-events: none;
-}
-#vasteroids-comment img {
-    width: 100% !important;
-    display: block !important;
-    border-radius: 14px;
-}
-
-#reddit-comment {
-    position: absolute !important;
-    right: 110px;
-    bottom: 72px;
-    width: 245px;
-    border-radius: 14px;
-    overflow: hidden;
-    box-shadow: 0 24px 60px rgba(0,0,0,0.65), 0 0 0 1px rgba(255,255,255,0.07);
-    z-index: 10;
-    opacity: 0;
-    transform: translateY(22px);
-    pointer-events: none;
-}
-#reddit-comment img {
-    width: 100% !important;
-    display: block !important;
-    border-radius: 14px;
-}
-
-/* ── SLIDE BASE ── */
-.slide-container {
-    background-color: var(--color-bg-dark);
-    display: flex;
-    flex-direction: column;
-    height: 100vh;
-    width: 100vw;
-    justify-content: center;
-    overflow: hidden;
-    padding: 60px 80px;
-    position: absolute;
-    top: 0;
-    left: 0;
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-    color: var(--color-white);
-    transform: none;
-}
-
-.slide-container.active {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
-
-/* ── GRID VIEW ── */
-body.grid-view {
-    overflow: hidden;
-    align-items: center;
-    justify-content: center;
-}
-
-body.grid-view .slides-wrapper {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(380px, 1fr));
-    grid-auto-rows: 220px;
-    gap: 12px;
-    padding: 12px;
-    padding-bottom: 70px;
-    width: 100vw;
-    max-height: 100vh;
-    overflow-y: auto;
-    box-sizing: border-box;
-}
-
-body.grid-view .slide-container {
-    position: relative;
-    top: auto;
-    left: auto;
-    transform: none;
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-    width: 100%;
-    height: 100%;
-    border-radius: 12px;
-    cursor: pointer;
-    transition: box-shadow 0.2s ease, outline 0.2s ease;
-    outline: 2px solid transparent;
-    padding: 15px 20px 30px 20px;
-}
-
-body.grid-view .slide-container:hover {
-    box-shadow: 0 10px 30px rgba(216,255,133,0.3);
-    outline: 2px solid var(--color-primary);
-}
-
-body.grid-view .slide-container::after {
-    content: attr(data-slide-num);
-    position: absolute;
-    bottom: 6px;
-    right: 6px;
-    background: var(--color-primary);
-    color: #1a2e28;
-    width: 20px;
-    height: 20px;
-    border-radius: 50%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 11px;
-    font-weight: 700;
-    z-index: 10;
-}
-
-body.grid-view .slide-title        { font-size: 14px; margin-bottom: 8px; padding-left: 8px; border-left-width: 4px; }
-body.grid-view p, body.grid-view li { font-size: 8px; line-height: 1.3; margin-bottom: 4px; }
-body.grid-view h3                  { font-size: 10px; margin-bottom: 4px; }
-body.grid-view .title-layout h1    { font-size: 24px; margin-bottom: 8px; }
-body.grid-view .title-layout .subtitle { font-size: 10px; }
-body.grid-view .section-title-layout h2 { font-size: 20px; }
-body.grid-view .two-column         { gap: 10px; }
-body.grid-view .tile               { padding: 8px; border-radius: 6px; }
-body.grid-view .tile .icon         { font-size: 14px; margin-bottom: 4px; }
-body.grid-view .tile h3            { font-size: 8px; }
-body.grid-view .tile p             { font-size: 7px; }
-body.grid-view .tiled-content      { gap: 8px; margin-top: 8px; }
-body.grid-view #slide-ai .ai-slide-badge { top: 10px !important; right: 10px !important; font-size: 6px !important; padding: 3px 6px !important; gap: 3px !important; }
-body.grid-view #slide-ai .ai-slide-cta   { font-size: 7px !important; padding: 0 !important; gap: 3px !important; }
-body.grid-view .budget-badge       { font-size: 7px; padding: 2px 6px; }
-body.grid-view .stat-hero          { font-size: 32px; }
-body.grid-view .pipeline-row       { font-size: 7px; padding: 4px 0; }
-body.grid-view .team-name          { font-size: 9px; }
-body.grid-view .timeline-flow      { gap: 6px; margin-top: 8px; }
-body.grid-view .timeline-node      { padding: 6px 8px; min-width: auto; }
-body.grid-view .timeline-node h4   { font-size: 8px; }
-body.grid-view .timeline-node p    { font-size: 6px; }
-body.grid-view .journey-byline     { font-size: 7px; }
-
-/* ── TYPOGRAPHY ── */
-h1, h2, h3, h4 { color: var(--color-white); font-weight: 600; }
-
-p, li {
-    color: var(--color-text-muted);
-    font-size: 17px;
-    line-height: 1.5;
-    font-weight: 400;
-}
-
-strong { color: var(--color-white); font-weight: 600; }
-
-.slide-title {
-    font-size: 38px;
-    margin-bottom: 25px;
-    color: var(--color-white);
-    border-left: 8px solid var(--color-primary);
-    padding-left: 20px;
-    font-family: var(--font-title);
-    font-weight: 400;
-}
-
-/* ── LAYOUT: TITLE ── */
-.title-layout {
-    text-align: center;
-    background: linear-gradient(145deg, var(--color-bg-dark) 0%, var(--color-bg) 100%);
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0; left: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 60px;
-}
-
-.title-layout > * { position: relative; z-index: 2; }
-
-.title-layout h1 {
-    color: var(--color-white);
-    font-size: 78px;
-    margin-bottom: 16px;
-    font-family: var(--font-title);
-    font-weight: 400;
-    line-height: 1.05;
-}
-
-.title-layout h1 em {
-    color: var(--color-primary);
-    font-family: var(--font-display);
-    font-style: italic;
-}
-
-.title-layout .subtitle {
-    color: var(--color-primary);
-    font-family: var(--font-display);
-    font-size: 26px;
-    font-weight: 500;
-    font-style: italic;
-    margin-bottom: 40px;
-}
-
-.title-layout .byline {
-    color: var(--color-text-muted);
-    font-size: 15px;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    font-weight: 500;
-}
-
-.title-layout .byline strong {
-    color: var(--color-primary);
-    font-weight: 600;
-}
-
-.title-layout hr {
-    border: none;
-    border-top: 1px solid rgba(216,255,133,0.25);
-    width: 80px;
-    margin: 28px auto;
-}
-
-/* ── LAYOUT: SECTION DIVIDER ── */
-.section-title-layout {
-    text-align: center;
-    background: linear-gradient(145deg, var(--color-bg-dark) 0%, var(--color-bg) 50%, #122018 100%);
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0; left: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 80px;
-}
-
-.section-title-layout > * { position: relative; z-index: 2; }
-
-.section-title-layout hr {
-    border: none;
-    border-top: 1px solid rgba(216,255,133,0.25);
-    width: 60px;
-    margin: 24px auto;
-}
-
-.section-title-layout h2 {
-    font-family: var(--font-title);
-    font-size: 52px;
-    font-weight: 400;
-    color: var(--color-white);
-    line-height: 1.1;
-    max-width: 860px;
-}
-
-.section-title-layout h2 em {
-    color: var(--color-primary);
-    font-family: var(--font-display);
-    font-style: italic;
-}
-
-.section-title-layout p {
-    color: var(--color-text-muted);
-    font-size: 19px;
-    max-width: 620px;
-    margin-top: 20px;
-    line-height: 1.6;
-}
-
-.section-title-layout .label-tag {
-    font-size: 12px;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-primary);
-    font-weight: 600;
-    margin-bottom: 12px;
-}
-
-/* ── LAYOUT: TWO COLUMN ── */
-.two-column {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 40px;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-}
-
-.content-area {
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-    justify-content: center;
-    width: 100%;
-}
-
-/* ── LAYOUT: TILED ── */
-.tiled-content {
-    display: flex;
-    gap: 20px;
-    width: 100%;
-    align-items: stretch;
-    margin-top: 15px;
-}
-
-.tile {
-    background-color: rgba(216,255,133,0.05);
-    border: 1px solid rgba(216,255,133,0.15);
-    border-radius: 12px;
-    padding: 24px 20px;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    transition: border-color 0.2s ease;
-}
-
-.tile:hover { border-color: rgba(216,255,133,0.4); }
-
-.tile .icon {
-    font-size: 24px;
-    color: var(--color-primary);
-    margin-bottom: 4px;
-}
-
-.tile h3 {
-    font-size: 16px;
-    font-weight: 600;
-    color: var(--color-white);
-    margin: 0;
-}
-
-.tile p {
-    font-size: 14px;
-    color: var(--color-text-muted);
-    line-height: 1.5;
-    margin: 0;
-}
-
-/* ── LISTS ── */
-ul { list-style: none; }
-
-ul li {
-    margin-bottom: 10px;
-    padding-left: 25px;
-    position: relative;
-}
-
-ul li::before {
-    content: '\f138';
-    font-family: 'Font Awesome 6 Free';
-    font-weight: 900;
-    color: var(--color-primary);
-    position: absolute;
-    left: 0;
-    top: 3px;
-    font-size: 16px;
-}
-
-/* ── IMAGE PLACEHOLDER ── */
-.image-wrapper {
-    border-radius: 16px;
-    overflow: hidden;
-    height: 100%;
-    max-height: 460px;
-    width: 100%;
-    box-shadow: 0 10px 25px rgba(0,0,0,0.3);
-    background-color: transparent;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    border: 1px solid rgba(216,255,133,0.15);
-}
-
-.image-wrapper img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-}
-
-.image-placeholder {
-    border: 2px dashed rgba(216,255,133,0.2);
-    border-radius: 16px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    min-height: 320px;
-    color: rgba(216,255,133,0.3);
-    gap: 14px;
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-}
-
-.image-placeholder i { font-size: 2.8rem; }
-
-/* ── BUDGET BADGE ── */
-.budget-badge {
-    display: inline-block;
-    background: rgba(216,255,133,0.12);
-    border: 1px solid rgba(216,255,133,0.4);
-    color: var(--color-primary);
-    font-size: 13px;
-    font-weight: 700;
-    letter-spacing: 0.06em;
-    padding: 5px 14px;
-    border-radius: 20px;
-    margin-top: 4px;
-}
-
-/* ── LIGHT SLIDES ── */
-.slide--light {
-    background-color: var(--color-bg-light);
-    color: var(--color-text-dark);
-}
-
-.slide--light .slide-title {
-    color: var(--color-text-dark);
-    border-left-color: var(--color-bg);
-}
-
-.slide--light h1,
-.slide--light h2,
-.slide--light h3,
-.slide--light h4 { color: var(--color-text-dark); }
-
-.slide--light p,
-.slide--light li { color: #4a5a52; }
-
-.slide--light strong { color: var(--color-text-dark); }
-
-.slide--light ul li::before { color: var(--color-bg); }
-
-.slide--light .tile {
-    background-color: rgba(26,46,40,0.06);
-    border: 1px solid rgba(26,46,40,0.12);
-}
-
-.slide--light .tile .icon  { color: var(--color-bg); }
-.slide--light .tile h3     { color: var(--color-text-dark); }
-.slide--light .tile p      { color: #4a5a52; }
-
-.slide--light .image-placeholder {
-    border-color: rgba(26,46,40,0.2);
-    color: rgba(26,46,40,0.3);
-}
-
-/* ── TIMELINE JOURNEY ── */
-.timeline-flow {
-    display: flex;
-    gap: 0;
-    align-items: stretch;
-    width: 100%;
-    margin-top: 30px;
-}
-
-.timeline-node {
-    flex: 1;
-    position: relative;
-    background: rgba(216,255,133,0.05);
-    border: 1px solid rgba(216,255,133,0.15);
-    border-radius: 12px;
-    padding: 24px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 8px;
-}
-
-.timeline-node + .timeline-node {
-    margin-left: 0;
-}
-
-.timeline-connector {
-    display: flex;
-    align-items: center;
-    padding: 0 10px;
-    color: rgba(216,255,133,0.5);
-    font-size: 20px;
-    flex-shrink: 0;
-}
-
-.timeline-node .node-year {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-primary);
-}
-
-.timeline-node h4 {
-    font-family: var(--font-title);
-    font-size: 18px;
-    font-weight: 400;
-    color: var(--color-white);
-    line-height: 1.2;
-}
-
-.timeline-node p {
-    font-size: 13px;
-    color: var(--color-text-muted);
-    line-height: 1.5;
-    margin: 0;
-}
-
-.timeline-node.timeline-node--active {
-    border-color: rgba(216,255,133,0.5);
-    background: rgba(216,255,133,0.09);
-}
-
-.journey-byline {
-    font-size: 14px;
-    color: var(--color-text-muted);
-    font-style: italic;
-    font-family: var(--font-display);
-    margin-top: 24px;
-}
-
-/* ── PIPELINE RECAP ── */
-.pipeline-hero {
-    text-align: center;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100%;
-    width: 100%;
-}
-
-.stat-label {
-    font-size: 13px;
-    font-weight: 600;
-    letter-spacing: 0.16em;
-    text-transform: uppercase;
-    color: var(--color-primary);
-    margin-bottom: 18px;
-}
-
-.stat-hero {
-    font-family: var(--font-title);
-    font-size: 88px;
-    font-weight: 400;
-    color: var(--color-white);
-    line-height: 1;
-    margin-bottom: 10px;
-}
-
-.stat-hero em {
-    color: var(--color-primary);
-    font-family: var(--font-display);
-    font-style: italic;
-}
-
-.stat-sub {
-    font-size: 16px;
-    color: var(--color-text-muted);
-    margin-bottom: 48px;
-}
-
-.pipeline-rows {
-    width: 100%;
-    max-width: 700px;
-    border-top: 1px solid rgba(216,255,133,0.1);
-}
-
-.pipeline-row {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 14px 0;
-    border-bottom: 1px solid rgba(216,255,133,0.08);
-    font-size: 16px;
-}
-
-.pipeline-row .proj-name {
-    color: var(--color-white);
-    font-weight: 500;
-}
-
-.pipeline-row .proj-range {
-    color: var(--color-primary);
-    font-weight: 700;
-    font-size: 15px;
-    letter-spacing: 0.04em;
-}
-
-/* ── TEAM SLIDE ── */
-.team-grid {
-    display: flex;
-    flex-direction: column;
-    gap: 0;
-    width: 100%;
-    max-width: 700px;
-    margin-top: 10px;
-}
-
-.team-name {
-    display: grid;
-    grid-template-columns: auto 1fr auto;
-    align-items: center;
-    gap: 16px;
-    padding: 16px 0;
-    border-bottom: 1px solid rgba(216,255,133,0.08);
-    font-size: 18px;
-    color: var(--color-white);
-    font-weight: 400;
-    line-height: 1.2;
-}
-
-.team-name:last-child { border-bottom: none; }
-
-.team-name .dot {
-    width: 8px;
-    height: 8px;
-    border-radius: 50%;
-    background: var(--color-primary);
-    flex-shrink: 0;
-}
-
-.team-name .role {
-    font-size: 12px;
-    color: var(--color-text-muted);
-    margin-left: auto;
-    font-weight: 400;
-    letter-spacing: 0.05em;
-    white-space: nowrap;
-    text-align: right;
-    flex-shrink: 0;
-}
-
-.team-name.team-name--you .dot {
-    width: 10px;
-    height: 10px;
-    box-shadow: 0 0 0 3px rgba(216,255,133,0.25);
-}
-
-.team-name.team-name--you {
-    font-weight: 600;
-    color: var(--color-primary);
-}
-
-/* ── CLOSING SLIDE ── */
-.closing-layout {
-    text-align: center;
-    background: linear-gradient(145deg, var(--color-bg-dark) 0%, #0c1e14 100%);
-    height: 100%;
-    width: 100%;
-    position: absolute;
-    top: 0; left: 0;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 80px;
-}
-
-.closing-layout > * { position: relative; z-index: 2; }
-
-.closing-layout .closing-headline {
-    font-family: var(--font-title);
-    font-size: 72px;
-    font-weight: 400;
-    color: var(--color-white);
-    line-height: 1.1;
-    margin-bottom: 20px;
-}
-
-.closing-layout .closing-headline em {
-    color: var(--color-primary);
-    font-family: var(--font-display);
-    font-style: italic;
-}
-
-.closing-layout .closing-sub {
-    font-size: 18px;
-    color: var(--color-text-muted);
-    max-width: 540px;
-    line-height: 1.6;
-    margin-bottom: 40px;
-}
-
-.closing-layout .closing-byline {
-    font-size: 13px;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: rgba(216,255,133,0.5);
-    margin-top: 40px;
-}
-
-/* ── ABOUT PLACEHOLDER SLIDE ── */
-.about-placeholder {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: flex-start;
-    height: 100%;
-    gap: 20px;
-}
-
-.about-note {
-    display: inline-block;
-    border: 1px dashed rgba(216,255,133,0.3);
-    color: rgba(216,255,133,0.5);
-    font-size: 12px;
-    font-weight: 500;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    padding: 8px 16px;
-    border-radius: 6px;
-    margin-top: 10px;
-}
-
-/* ── SLIDE INDICATOR ── */
-.slide-indicator {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: rgba(15,31,26,0.85);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(216,255,133,0.15);
-    color: var(--color-text-muted);
-    font-size: 13px;
-    font-weight: 500;
-    letter-spacing: 0.08em;
-    padding: 8px 20px;
-    border-radius: 20px;
-    z-index: 1000;
-    pointer-events: none;
-}
-
-/* ── CONTROLS ── */
-.controls {
-    position: fixed;
-    bottom: 20px;
-    right: 24px;
-    z-index: 1000;
-    display: flex;
-    gap: 10px;
-}
-
-.controls button {
-    background: rgba(15,31,26,0.85);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(216,255,133,0.2);
-    color: var(--color-primary);
-    font-size: 14px;
-    padding: 8px 16px;
-    border-radius: 20px;
-    cursor: pointer;
-    font-family: var(--font-main);
-    font-weight: 500;
-    letter-spacing: 0.06em;
-    transition: all 0.2s ease;
-}
-
-.controls button:hover {
-    background: rgba(216,255,133,0.1);
-    border-color: rgba(216,255,133,0.5);
-}
-
-/* ── ACCENT TAG ── */
-.accent-tag {
-    display: inline-block;
-    font-size: 12px;
-    font-weight: 600;
-    letter-spacing: 0.14em;
-    text-transform: uppercase;
-    color: var(--color-primary);
-    margin-bottom: 14px;
-}
-
-/* ── URGENCY TILES ── */
-.urgency-tile {
-    background: rgba(216,255,133,0.04);
-    border: 1px solid rgba(216,255,133,0.12);
-    border-left: 4px solid var(--color-primary);
-    border-radius: 8px;
-    padding: 18px 20px;
-    display: flex;
-    flex-direction: column;
-    gap: 6px;
-}
-
-.urgency-tile h4 {
-    font-size: 15px;
-    font-weight: 600;
-    color: var(--color-white);
-    margin: 0;
-}
-
-.urgency-tile p {
-    font-size: 13px;
-    color: var(--color-text-muted);
-    line-height: 1.5;
-    margin: 0;
-}
-
-.urgency-grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 16px;
-    margin-top: 20px;
-    width: 100%;
-}
-
-body.grid-view .urgency-tile h4 { font-size: 7px; }
-body.grid-view .urgency-tile p  { font-size: 6px; }
-body.grid-view .urgency-grid    { gap: 6px; margin-top: 8px; }
-
-/* ── Unified Closing Slide ── */
-#slide-whynow {
-    display: flex !important;
-    align-items: center !important;
-    justify-content: center !important;
-}
-.closing-unified {
-    display: flex;
-    flex-direction: column;
-    gap: 36px;
-    max-width: 900px;
-    width: 100%;
-}
-.closing-unified__header h2 {
-    font-family: var(--font-display);
-    font-size: 52px;
-    font-weight: 400;
-    line-height: 1.1;
-}
-.closing-unified__grid {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 14px;
-}
-.cu-tile {
-    display: flex;
-    align-items: flex-start;
-    gap: 16px;
-    background: rgba(216,255,133,0.04);
-    border: 1px solid rgba(216,255,133,0.12);
-    border-radius: 12px;
-    padding: 20px 22px;
-}
-.cu-tile__icon {
-    font-size: 20px;
-    color: var(--color-primary);
-    margin-top: 2px;
-    flex-shrink: 0;
-    width: 28px;
-    text-align: center;
-}
-.cu-tile h4 {
-    font-size: 14px;
-    font-weight: 600;
-    color: var(--color-white);
-    margin: 0 0 5px;
-    letter-spacing: 0.01em;
-}
-.cu-tile p {
-    font-size: 13px;
-    color: var(--color-text-muted);
-    line-height: 1.55;
-    margin: 0;
-}
-.closing-unified__footer {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-}
-
-/* ── VIDEO LOADING STATE ── */
-.video-loading-shell {
-    position: relative;
-}
-.video-loading-overlay {
-    position: absolute;
-    inset: 0;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    z-index: 3;
-    opacity: 1;
-    visibility: visible;
-    transition: opacity 0.35s ease, visibility 0.35s ease, transform 0.35s ease;
-    pointer-events: none;
-    background:
-        radial-gradient(circle at top, rgba(216,255,133,0.18), transparent 48%),
-        linear-gradient(135deg, rgba(15,31,26,0.92), rgba(26,46,40,0.78));
-    backdrop-filter: blur(14px);
-    -webkit-backdrop-filter: blur(14px);
-}
-.video-loading-shell.video-ready .video-loading-overlay {
-    opacity: 0;
-    visibility: hidden;
-}
-.video-loading-shell.video-error .video-loading-overlay {
-    background:
-        radial-gradient(circle at top, rgba(255,160,160,0.14), transparent 48%),
-        linear-gradient(135deg, rgba(35,18,18,0.94), rgba(26,16,16,0.82));
-}
-.video-loading-card {
-    min-width: 190px;
-    max-width: 260px;
-    padding: 18px 22px;
-    border-radius: 18px;
-    border: 1px solid rgba(216,255,133,0.18);
-    background: rgba(247,249,242,0.05);
-    box-shadow: 0 20px 60px rgba(0,0,0,0.26), inset 0 1px 0 rgba(255,255,255,0.04);
-    text-align: center;
-}
-.video-loading-ring {
-    width: 42px;
-    height: 42px;
-    margin: 0 auto 14px;
-    border-radius: 50%;
-    border: 2px solid rgba(247,249,242,0.12);
-    border-top-color: var(--color-primary);
-    box-shadow: 0 0 18px rgba(216,255,133,0.24);
-    animation: recapVideoSpin 1s linear infinite;
-}
-.video-loading-title {
-    font-size: 11px;
-    font-weight: 700;
-    letter-spacing: 0.18em;
-    text-transform: uppercase;
-    color: var(--color-primary);
-    margin-bottom: 7px;
-}
-.video-loading-subtitle {
-    font-size: 13px;
-    line-height: 1.5;
-    color: rgba(247,249,242,0.76);
-}
-.video-loading-bar {
-    width: 100%;
-    height: 4px;
-    margin-top: 14px;
-    border-radius: 999px;
-    background: rgba(247,249,242,0.08);
-    overflow: hidden;
-    position: relative;
-}
-.video-loading-bar::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    width: 38%;
-    border-radius: inherit;
-    background: linear-gradient(90deg, transparent, var(--color-primary), transparent);
-    animation: recapVideoBar 1.15s ease-in-out infinite;
-}
-.tile-media .video-loading-overlay {
-    inset: auto;
-    top: calc(100% + 14px);
-    left: 50%;
-    width: 300px;
-    height: 170px;
-    border-radius: 16px;
-    transform: translateX(-50%) translateY(-10px) scale(0.96);
-    opacity: 0;
-    visibility: hidden;
-    box-shadow: 0 24px 72px rgba(0,0,0,0.45), 0 0 0 1px rgba(255,255,255,0.08);
-    overflow: hidden;
-}
-.tile-media:hover .video-loading-shell:not(.video-ready) .video-loading-overlay {
-    opacity: 1;
-    visibility: visible;
-    transform: translateX(-50%) translateY(0) scale(1);
-}
-#tile-lightbox .video-loading-overlay {
-    border-radius: 18px;
-}
-
-@keyframes recapVideoSpin {
-    to { transform: rotate(360deg); }
-}
-
-@keyframes recapVideoBar {
-    0% { transform: translateX(-120%); }
-    100% { transform: translateX(320%); }
-}
-
+        :root {
+            --color-primary: #f4f4f4;
+            --color-white: #f2f2f2;
+            --color-text: rgba(242, 242, 242, 0.92);
+            --color-muted: rgba(242, 242, 242, 0.54);
+            --font-main: 'Space Grotesk', sans-serif;
+            --font-title: 'Space Grotesk', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { width: 100%; height: 100%; }
+
+        body {
+            font-family: var(--font-main);
+            background: #0a0a0a;
+            color: var(--color-text);
+            overflow: hidden;
+        }
+
+        /* ── Wrapper ── */
+        .slides-wrapper { position: relative; width: 100%; height: 100%; z-index: 1; }
+
+        .slide-container {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 64px 80px 132px;
+            background: #0a0a0a;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            overflow: hidden;
+        }
+        .slide-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        /* ── Ambient (subtle) ── */
+        .ambient-grid, .ambient-noise {
+            position: absolute; pointer-events: none; z-index: 0;
+        }
+        .ambient-grid {
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+            background-size: 64px 64px;
+            mask-image: radial-gradient(circle at center, black 20%, transparent 80%);
+            opacity: 0.4;
+        }
+        .ambient-noise {
+            inset: 0; opacity: 0.03;
+            background-image: radial-gradient(rgba(255,255,255,0.4) 0.6px, transparent 0.6px);
+            background-size: 20px 20px;
+        }
+
+        /* ── Z-index content ── */
+        .content-stack, .title-layout, .section-title-layout,
+        .two-column, .content-area, .content-container {
+            position: relative; z-index: 1;
+        }
+
+        /* ═══════════════════════════════════════
+           TITLE / COVER
+           ═══════════════════════════════════════ */
+        .title-layout, .section-title-layout {
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center; height: 100%;
+        }
+        .title-layout h1, .section-title-layout h2 {
+            font-family: var(--font-title); font-weight: 700;
+            line-height: 0.94; letter-spacing: -0.05em;
+            text-transform: uppercase;
+        }
+        .title-layout h1 { font-size: clamp(4.2rem, 8vw, 7.9rem); max-width: 960px; }
+        .section-title-layout h2 { font-size: clamp(3.2rem, 6vw, 5.3rem); max-width: 980px; }
+
+        .title-layout h1 em, .section-title-layout h2 em,
+        .slide-title em, .stat-hero em {
+            font-family: var(--font-title); font-style: normal; color: var(--color-primary);
+        }
+
+        .eyebrow, .accent-tag, .label-tag {
+            display: inline-flex; align-items: center; gap: 10px;
+            font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+            color: rgba(242,242,242,0.35); font-weight: 500;
+            margin-bottom: 18px; font-family: var(--font-mono);
+        }
+
+        .subtitle, .hero-kicker, .hero-intro,
+        .section-copy, .lead, p, li {
+            color: var(--color-muted); font-size: 17px; line-height: 1.6;
+        }
+        .hero-kicker {
+            max-width: 900px; font-size: 22px; margin-top: 16px;
+            color: rgba(242,242,242,0.78); text-transform: uppercase;
+            letter-spacing: 0.16em;
+        }
+        .hero-intro {
+            max-width: 620px; margin-top: 22px; font-size: 16px;
+            font-family: var(--font-mono); letter-spacing: 0.035em;
+            text-transform: uppercase;
+            color: rgba(242,242,242,0.74);
+        }
+        .cover-subline {
+            width: min(490px, 72vw); margin-top: 26px;
+            padding: 16px 0 14px;
+            border-top: 1px solid rgba(255,255,255,0.12);
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            text-align: center; font-family: var(--font-mono);
+            font-size: 15px; letter-spacing: 0.42em;
+            text-transform: uppercase; color: rgba(242,242,242,0.46);
+        }
+        .cover-text-panel {
+            position: relative;
+            padding: 26px 34px 22px;
+            border-radius: 28px;
+            background: radial-gradient(circle at center, rgba(10,10,10,0.54) 0%, rgba(10,10,10,0.38) 52%, rgba(10,10,10,0.08) 100%);
+        }
+        .cover-text-panel h1,
+        .cover-text-panel .cover-subline,
+        .cover-text-panel .hero-intro {
+            text-shadow: 0 2px 12px rgba(0,0,0,0.22);
+        }
+        .slide-title {
+            font-family: var(--font-title); font-weight: 700;
+            font-size: clamp(2.3rem, 4vw, 3.6rem); line-height: 0.98;
+            color: var(--color-white);
+            border-left: 3px solid rgba(255,255,255,0.14);
+            padding-left: 16px; margin-bottom: 20px;
+            letter-spacing: -0.04em; text-transform: uppercase;
+        }
+        .section-copy { max-width: 760px; margin-top: 22px; }
+        .lead { font-size: 19px; color: rgba(246,247,251,0.72); }
+
+        /* ═══════════════════════════════════════
+           TWO COLUMN
+           ═══════════════════════════════════════ */
+        .two-column {
+            display: grid;
+            grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
+            gap: 48px; align-items: start; min-height: 0;
+        }
+        .two-column.equal { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+        .content-area, .content-container {
+            display: flex; flex-direction: column; gap: 20px; min-height: 0;
+        }
+
+        /* ═══════════════════════════════════════
+           HEADINGS
+           ═══════════════════════════════════════ */
+        h2, h3, h4, strong { color: var(--color-white); }
+        h3 { font-size: 20px; margin-bottom: 6px; font-weight: 600; }
+        h4 {
+            font-size: 14px; letter-spacing: 0.14em;
+            text-transform: uppercase; margin-bottom: 8px;
+            color: rgba(246,247,251,0.8); font-family: var(--font-mono);
+        }
+
+        /* ═══════════════════════════════════════
+           NUMBERED ITEMS (replaces icon-box tiles)
+           ═══════════════════════════════════════ */
+        .numbered-list {
+            display: flex; flex-direction: column; gap: 0;
+        }
+        .numbered-item {
+            display: grid;
+            grid-template-columns: 48px 1fr;
+            gap: 0 16px; padding: 20px 0;
+            border-top: 1px solid rgba(255,255,255,0.07);
+        }
+        .numbered-item:last-child { border-bottom: 1px solid rgba(255,255,255,0.07); }
+        .numbered-item .n {
+            font-family: var(--font-mono); font-size: 13px;
+            font-weight: 400; color: rgba(255,255,255,0.22);
+            padding-top: 2px; letter-spacing: 0.04em;
+        }
+        .numbered-item h3 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+        .numbered-item p { font-size: 15px; line-height: 1.55; color: var(--color-muted); }
+
+        /* Tighter numbered items on slide 3 to prevent overflow */
+        #slide-festival .numbered-item { padding: 12px 0; }
+        #slide-festival .numbered-item h3 { font-size: 16px; margin-bottom: 2px; }
+        #slide-festival .numbered-item p { font-size: 14px; line-height: 1.45; }
+        #slide-festival .lead { font-size: 15px; line-height: 1.5; }
+
+        /* Cover-style hero background slides */
+        .hero-bg-slide {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .hero-bg-slide .hero-img-wrap {
+            width: 78%; height: 78%; position: relative;
+        }
+        .hero-bg-slide .hero-img-wrap img {
+            width: 100%; height: 100%; object-fit: cover;
+            display: block; opacity: 0.82;
+        }
+        .hero-bg-slide .hero-img-fade {
+            position: absolute; inset: -1px;
+            background:
+                linear-gradient(to right, #0a0a0a 0%, transparent 18%, transparent 82%, #0a0a0a 100%),
+                linear-gradient(to bottom, #0a0a0a 0%, transparent 18%, transparent 82%, #0a0a0a 100%);
+        }
+        .hero-bg-slide .hero-scrim {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            pointer-events: none; z-index: 1;
+        }
+        .hero-bg-slide .hero-scrim-inner {
+            width: min(780px, 74vw); height: min(560px, 60vh);
+            background: radial-gradient(circle at center,
+                rgba(10,10,10,0.62) 0%, rgba(10,10,10,0.40) 50%,
+                rgba(10,10,10,0.12) 78%, rgba(10,10,10,0) 100%);
+        }
+
+        /* ── Tile (kept for GSAP compat — flat) ── */
+        .tile { padding: 20px 0; border-top: 1px solid rgba(255,255,255,0.07); }
+        .tile:last-child { border-bottom: 1px solid rgba(255,255,255,0.07); }
+        .tile h3 { font-size: 18px; margin-bottom: 4px; }
+        .tile p { font-size: 15px; line-height: 1.55; }
+
+        /* Tile in column grid */
+        .tiled-content { display: grid; gap: 0; margin-top: 8px; }
+        .tiled-content.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        .tiled-content.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .tiled-content .tile {
+            border-top: none; border-bottom: none;
+            border-left: 1px solid rgba(255,255,255,0.08);
+            padding: 0 24px;
+        }
+        .tiled-content .tile:first-child { border-left: none; padding-left: 0; }
+
+        /* ═══════════════════════════════════════
+           PULL QUOTE (left border, no box)
+           ═══════════════════════════════════════ */
+        .pull-quote {
+            position: relative; padding: 0 0 0 24px;
+            border-left: 2px solid rgba(255,255,255,0.15);
+            margin: 8px 0;
+        }
+        .pull-quote p {
+            font-family: var(--font-main); font-size: 22px;
+            line-height: 1.4; color: rgba(246,247,251,0.85);
+            text-transform: uppercase; letter-spacing: 0.03em;
+        }
+
+        /* ═══════════════════════════════════════
+           KPI (flat dividers, no box)
+           ═══════════════════════════════════════ */
+        .kpi-row { display: flex; flex-wrap: wrap; gap: 0; margin-top: 20px; }
+        .kpi-card {
+            padding: 16px 32px 16px 0;
+            border-right: 1px solid rgba(255,255,255,0.07);
+            background: none;
+        }
+        .kpi-card:last-child { border-right: none; }
+        .kpi-value {
+            font-family: var(--font-title);
+            font-size: 32px; font-weight: 700; color: var(--color-white);
+            line-height: 1; margin-bottom: 6px; letter-spacing: -0.04em;
+            text-transform: uppercase;
+        }
+        .kpi-label {
+            font-size: 11px; letter-spacing: 0.14em;
+            text-transform: uppercase; color: var(--color-muted);
+            font-family: var(--font-mono);
+        }
+        .stat-hero {
+            font-family: var(--font-title);
+            font-size: clamp(3.2rem, 6vw, 5.5rem);
+            line-height: 0.95; color: var(--color-white);
+            margin-bottom: 16px; letter-spacing: -0.04em;
+            text-transform: uppercase; font-weight: 700;
+        }
+
+        /* ═══════════════════════════════════════
+           CLEAN LIST (dash bullets)
+           ═══════════════════════════════════════ */
+        ul.clean-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+        ul.clean-list li, .check-list li { display: flex; align-items: flex-start; gap: 14px; }
+        .bullet {
+            flex-shrink: 0; font-family: var(--font-mono);
+            font-size: 14px; font-weight: 400;
+            color: rgba(255,255,255,0.3); margin-top: 2px;
+        }
+
+        /* ═══════════════════════════════════════
+           SCHEDULE (flat dividers)
+           ═══════════════════════════════════════ */
+        .schedule-grid {
+            display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0; margin-top: 12px;
+        }
+        .schedule-band {
+            padding: 20px 28px 20px 0;
+            border-right: 1px solid rgba(255,255,255,0.06);
+            background: none;
+        }
+        .schedule-band:last-child { border-right: none; }
+        .schedule-band:first-child { padding-left: 0; }
+        .schedule-label {
+            font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+            color: rgba(255,255,255,0.3); font-weight: 500;
+            margin-bottom: 10px; font-family: var(--font-mono);
+        }
+        .schedule-band h3 { font-size: 18px; margin-bottom: 6px; }
+        .schedule-band p { font-size: 14px; line-height: 1.5; }
+
+        /* ═══════════════════════════════════════
+           PROGRAM / SPEAKER LISTS (no box)
+           ═══════════════════════════════════════ */
+        .program-grid {
+            display: grid; grid-template-columns: 1.2fr 0.8fr;
+            gap: 48px; margin-top: 24px;
+        }
+        .content-type-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 6px;
+        }
+        .content-type-card {
+            padding: 16px 0 18px 16px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            border-left: 1px solid rgba(255,255,255,0.08);
+        }
+        .content-type-card:last-child {
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .content-type-meta {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+            color: rgba(255,255,255,0.34);
+        }
+        .content-type-card h3 {
+            margin-bottom: 6px;
+            font-size: 22px;
+        }
+        .content-type-card p {
+            font-size: 15px;
+            line-height: 1.55;
+        }
+        .content-type-card.taller {
+            border-left-color: rgba(72, 163, 255, 0.34);
+        }
+        .content-type-card.taller .content-type-meta,
+        .content-type-card.taller p {
+            color: rgba(214, 234, 255, 0.72);
+        }
+        .content-type-card.charla {
+            border-left-color: rgba(155, 214, 68, 0.34);
+        }
+        .content-type-card.charla .content-type-meta,
+        .content-type-card.charla p {
+            color: rgba(231, 247, 201, 0.72);
+        }
+        .content-type-card.performance {
+            border-left-color: rgba(241, 150, 197, 0.34);
+        }
+        .content-type-card.performance .content-type-meta,
+        .content-type-card.performance p {
+            color: rgba(255, 228, 240, 0.72);
+        }
+        .ecosystem-layout {
+            display: grid;
+            grid-template-columns: 0.95fr 1.05fr;
+            gap: 40px;
+            align-items: start;
+        }
+        .program-visual {
+            position: relative;
+            margin-top: 6px;
+            overflow: visible;
+        }
+        .program-visual img {
+            display: block;
+            width: 100%;
+            height: min(52vh, 460px);
+            object-fit: contain;
+            object-position: center top;
+            filter: saturate(0.98) contrast(1.02);
+        }
+        .program-visual video {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 220px;
+            object-fit: cover;
+            filter: saturate(0.94) contrast(1.02);
+        }
+        .context-video-frame {
+            position: relative;
+            width: min(100%, 360px);
+            aspect-ratio: 9 / 13;
+            margin: 0 auto 10px;
+            overflow: hidden;
+        }
+        .context-video-frame video {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #050505;
+            filter: saturate(0.94) contrast(1.02);
+        }
+        .context-video-frame::after {
+            content: none;
+        }
+        .context-points {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0 18px;
+            margin-top: 4px;
+        }
+        .context-point {
+            padding: 10px 0;
+            border-top: 1px solid rgba(255,255,255,0.07);
+        }
+        .context-point:nth-last-child(-n+2) {
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+        .context-point .n {
+            display: block;
+            margin-bottom: 6px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: rgba(255,255,255,0.22);
+            letter-spacing: 0.04em;
+        }
+        .context-point h3 {
+            font-size: 17px;
+            margin-bottom: 4px;
+        }
+        .context-point p {
+            font-size: 13px;
+            line-height: 1.42;
+            color: var(--color-muted);
+        }
+        .festival-visual {
+            position: relative;
+            margin-top: 6px;
+            overflow: visible;
+        }
+        .festival-visual img {
+            display: block;
+            width: 100%;
+            height: min(72vh, 720px);
+            object-fit: contain;
+            object-position: center top;
+            filter: saturate(0.98) contrast(1.02);
+        }
+        .festival-visual::after {
+            content: none;
+        }
+        .festival-note {
+            margin-top: 8px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.34);
+            font-family: var(--font-mono);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .audience-layout {
+            display: grid;
+            grid-template-columns: 1.02fr 0.98fr;
+            gap: 38px;
+            align-items: start;
+            margin-top: 10px;
+        }
+        .audience-visual {
+            position: relative;
+            margin-top: 6px;
+            overflow: visible;
+        }
+        .audience-visual img {
+            display: block;
+            width: 100%;
+            height: min(52vh, 460px);
+            object-fit: contain;
+            object-position: center;
+            filter: saturate(0.98) contrast(1.02);
+        }
+        .audience-note {
+            margin-top: 10px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.34);
+            font-family: var(--font-mono);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        #slide-contexto .content-area {
+            gap: 14px;
+        }
+        #slide-contexto .lead {
+            font-size: 16px; line-height: 1.55;
+            color: rgba(246,247,251,0.68);
+        }
+        #slide-contexto .ctx-secondary {
+            font-size: 15px; line-height: 1.52;
+            color: rgba(246,247,251,0.48);
+            margin-top: -6px;
+        }
+        /* ── punchline ── */
+        #slide-contexto .ctx-punchline {
+            margin-top: 14px; padding-top: 14px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        #slide-contexto .ctx-punch-label {
+            display: block; font-family: var(--font-mono);
+            font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+            color: rgba(255,255,255,0.28); margin-bottom: 10px;
+        }
+        #slide-contexto .ctx-punchline p {
+            font-family: var(--font-title);
+            font-size: 26px; line-height: 1.22;
+            color: #fff; margin: 0;
+            font-weight: 600; letter-spacing: -0.01em;
+        }
+        #slide-contexto .ctx-punchline em {
+            font-style: italic; color: rgba(255,255,255,0.55);
+        }
+        #slide-contexto .pull-quote p {
+            font-size: 18px; line-height: 1.34;
+        }
+        .program-visual::after {
+            content: none;
+        }
+        .workshop-cards {
+            display: grid;
+            gap: 14px;
+            margin-top: 14px;
+        }
+        .workshop-card {
+            padding-top: 14px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .workshop-meta {
+            display: block;
+            margin-bottom: 6px;
+            color: rgba(255,255,255,0.32);
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+        }
+        .media-caption {
+            font-size: 12px;
+            color: rgba(255,255,255,0.34);
+            margin-top: 10px;
+            font-family: var(--font-mono);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .timeline-options {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 6px;
+        }
+        .timeline-option {
+            padding-left: 14px;
+            border-left: 1px solid rgba(255,255,255,0.08);
+        }
+        .timeline-option:first-child {
+            padding-left: 0;
+            border-left: none;
+        }
+        .timeline-option h4 {
+            margin-bottom: 10px;
+            font-size: 13px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.38);
+            font-family: var(--font-mono);
+        }
+        .mini-timeline {
+            display: grid;
+            gap: 0;
+        }
+        .mini-slot {
+            display: grid;
+            grid-template-columns: 44px 1fr;
+            gap: 10px;
+            padding: 7px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .mini-slot:last-child { border-bottom: none; }
+        .slot-time {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: rgba(255,255,255,0.32);
+            letter-spacing: 0.06em;
+        }
+        .slot-text {
+            font-size: 13px;
+            line-height: 1.35;
+            color: rgba(242,242,242,0.82);
+        }
+        .timeline-single {
+            margin-top: 6px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .activity-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0 14px;
+        }
+        .legend-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.02);
+            color: rgba(242,242,242,0.78);
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+        }
+        .legend-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        .timeline-head,
+        .timeline-row {
+            display: grid;
+            grid-template-columns: 72px 1.15fr 0.85fr;
+            gap: 16px;
+        }
+        .timeline-head {
+            padding: 10px 0 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.34);
+        }
+        .timeline-row {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            align-items: start;
+        }
+        .timeline-row:last-child { border-bottom: none; }
+        .timeline-time {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.06em;
+            color: rgba(255,255,255,0.34);
+            padding-top: 2px;
+        }
+        .timeline-cell {
+            min-height: 100%;
+        }
+        .timeline-pill {
+            display: inline-block;
+            padding: 6px 9px;
+            margin: 0 6px 6px 0;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.04);
+            color: rgba(242,242,242,0.9);
+            font-size: 12px;
+            line-height: 1.25;
+        }
+        .timeline-pill.subtle {
+            color: rgba(242,242,242,0.7);
+            background: rgba(255,255,255,0.02);
+        }
+        .timeline-pill.taller, .legend-dot.taller {
+            background: rgba(72, 163, 255, 0.14);
+            border-color: rgba(72, 163, 255, 0.24);
+            color: rgba(214, 234, 255, 0.96);
+        }
+        .timeline-pill.charla, .legend-dot.charla {
+            background: rgba(155, 214, 68, 0.14);
+            border-color: rgba(155, 214, 68, 0.24);
+            color: rgba(231, 247, 201, 0.96);
+        }
+        .timeline-pill.performance, .legend-dot.performance {
+            background: rgba(241, 150, 197, 0.14);
+            border-color: rgba(241, 150, 197, 0.24);
+            color: rgba(255, 228, 240, 0.96);
+        }
+        .timeline-pill.demo, .legend-dot.demo {
+            background: rgba(164, 177, 193, 0.14);
+            border-color: rgba(164, 177, 193, 0.24);
+            color: rgba(230, 236, 242, 0.96);
+        }
+        .timeline-pill.institucional, .legend-dot.institucional {
+            background: rgba(184, 154, 214, 0.14);
+            border-color: rgba(184, 154, 214, 0.24);
+            color: rgba(238, 228, 247, 0.96);
+        }
+        .timeline-note {
+            margin-top: 12px;
+            font-size: 12px;
+            line-height: 1.45;
+            color: rgba(255,255,255,0.34);
+            font-family: var(--font-mono);
+        }
+        .program-column, .speaker-list { padding: 0; background: none; border: none; }
+        .program-column h3, .speaker-list h3 {
+            margin-bottom: 16px; padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .program-list, .speaker-items, .check-list {
+            list-style: none; display: flex; flex-direction: column; gap: 0;
+        }
+        .program-list li, .speaker-items li, .check-list li {
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .program-list li:last-child, .speaker-items li:last-child,
+        .check-list li:last-child { border-bottom: none; }
+        .list-note {
+            font-size: 13px; color: rgba(255,255,255,0.32);
+            margin-top: 12px; font-family: var(--font-mono);
+        }
+        .speaker-title {
+            display: block; font-size: 15px; font-weight: 600;
+            color: var(--color-white); margin-bottom: 3px;
+        }
+        .speaker-caption { font-size: 14px; color: var(--color-muted); }
+
+        /* ═══════════════════════════════════════
+           PERSONA / AUDIENCE (flat columns)
+           ═══════════════════════════════════════ */
+        .audience-grid, .team-grid, .closing-grid {
+            display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0;
+        }
+        .persona-card {
+            padding: 0 32px 0 0;
+            border-right: 1px solid rgba(255,255,255,0.06);
+            background: none;
+        }
+        .persona-card:last-child { border-right: none; }
+        .persona-badge, .team-role {
+            display: block; margin-bottom: 10px; padding: 0;
+            background: none; border: none;
+            color: rgba(255,255,255,0.35); font-size: 11px; font-weight: 500;
+            letter-spacing: 0.16em; text-transform: uppercase;
+            font-family: var(--font-mono);
+        }
+        .persona-card h3 { margin-bottom: 8px; }
+        .persona-card p { font-size: 15px; line-height: 1.5; }
+
+        /* ═══════════════════════════════════════
+           PARTNERSHIP GRID (2x2 with dividers)
+           ═══════════════════════════════════════ */
+        .partnership-grid {
+            display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0;
+        }
+        .partnership-grid .tile {
+            border-top: none; border-bottom: none;
+            border-left: 1px solid rgba(255,255,255,0.06);
+            padding: 20px 24px;
+        }
+        .partnership-grid .tile:nth-child(odd) { border-left: none; padding-left: 0; }
+        .partnership-grid .tile:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,0.06); }
+
+        /* ═══════════════════════════════════════
+           TEAM (flat columns)
+           ═══════════════════════════════════════ */
+        .team-member {
+            padding: 0 32px 0 0;
+            border-right: 1px solid rgba(255,255,255,0.06);
+            background: none;
+        }
+        .team-member:last-child { border-right: none; }
+        .team-member h3 { margin-bottom: 8px; }
+        .team-member p { font-size: 13px; line-height: 1.48; color: rgba(246,247,251,0.62); }
+        .team-member p + p { margin-top: 6px; }
+
+        /* ═══════════════════════════════════════
+           INFO PANEL (top border only)
+           ═══════════════════════════════════════ */
+        .info-panel {
+            padding: 20px 0 0;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            background: none;
+        }
+        .info-panel p { font-size: 15px; line-height: 1.55; }
+
+        /* ═══════════════════════════════════════
+           CLOSING PANELS (flat columns)
+           ═══════════════════════════════════════ */
+        .closing-panel {
+            padding: 0 32px 0 0;
+            border-right: 1px solid rgba(255,255,255,0.06);
+            background: none;
+        }
+        .closing-panel:last-child { border-right: none; }
+        .closing-panel h3 { margin-bottom: 8px; }
+        .closing-panel p { font-size: 15px; line-height: 1.55; }
+
+        /* ═══════════════════════════════════════
+           CONTACT (plain text, no icon boxes)
+           ═══════════════════════════════════════ */
+        .contact-strip {
+            margin-top: 28px; display: flex; gap: 48px;
+            padding: 20px 0 0;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            background: none;
+        }
+        .contact-item { display: flex; flex-direction: column; gap: 4px; }
+        .contact-item span {
+            font-size: 11px; text-transform: uppercase;
+            letter-spacing: 0.14em; color: rgba(242,242,242,0.3);
+            font-family: var(--font-mono);
+        }
+        .contact-item strong { font-size: 16px; font-weight: 500; word-break: break-word; }
+
+        /* ═══════════════════════════════════════
+           CHIPS (flat text with / dividers)
+           ═══════════════════════════════════════ */
+        .chip-row { display: flex; flex-wrap: wrap; gap: 0; align-items: center; }
+        .chip {
+            display: inline-flex; padding: 0;
+            background: none; border: none;
+            font-size: 15px; color: rgba(255,255,255,0.55);
+            font-family: var(--font-mono);
+            text-transform: uppercase; letter-spacing: 0.06em;
+        }
+        .chip-divider {
+            display: inline-block; margin: 0 16px;
+            color: rgba(255,255,255,0.18);
+            font-family: var(--font-mono); font-size: 14px;
+        }
+
+        /* ═══════════════════════════════════════
+           PILLAR GRID (stacked, varied scale)
+           ═══════════════════════════════════════ */
+        .pillar-grid { display: flex; flex-direction: column; gap: 0; }
+        .pillar-grid .tile {
+            border-top: 1px solid rgba(255,255,255,0.06);
+            border-bottom: none; padding: 18px 0;
+        }
+        .pillar-grid .tile:last-child { border-bottom: 1px solid rgba(255,255,255,0.06); }
+
+        /* ═══════════════════════════════════════
+           IMAGE PLACEHOLDER
+           ═══════════════════════════════════════ */
+        .img-placeholder {
+            background: #111; border: 1px solid rgba(255,255,255,0.06);
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-mono); font-size: 11px;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            color: rgba(255,255,255,0.15);
+        }
+        .img-placeholder.landscape { aspect-ratio: 16 / 9; }
+        .img-placeholder.square { aspect-ratio: 1 / 1; width: 64px; }
+        .img-placeholder.tall { aspect-ratio: 3 / 4; min-height: 200px; }
+
+        /* ═══════════════════════════════════════
+           LAYER STACK (ecosistema)
+           ═══════════════════════════════════════ */
+        .layer-stack { display: flex; flex-direction: column; gap: 0; margin-top: 12px; }
+        .layer-item {
+            display: grid; grid-template-columns: 56px 1fr;
+            gap: 0 16px; padding: 18px 0;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .layer-item:last-child { border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .layer-item .depth {
+            font-family: var(--font-mono); font-size: 11px;
+            color: rgba(255,255,255,0.2); text-transform: uppercase;
+            letter-spacing: 0.08em; padding-top: 3px;
+        }
+        .layer-item h3 { font-size: 18px; margin-bottom: 4px; }
+        .layer-item p { font-size: 15px; line-height: 1.5; }
+
+        /* ═══════════════════════════════════════
+           STATEMENT ROWS (alianza)
+           ═══════════════════════════════════════ */
+        .statement-list { display: flex; flex-direction: column; gap: 0; margin-top: 8px; }
+        .statement-item {
+            display: grid; grid-template-columns: 56px 1fr;
+            gap: 0 16px; padding: 24px 0;
+            border-top: 1px solid rgba(255,255,255,0.07);
+        }
+        .statement-item:last-child { border-bottom: 1px solid rgba(255,255,255,0.07); }
+        .statement-item .n {
+            font-family: var(--font-mono); font-size: 28px;
+            font-weight: 300; color: rgba(255,255,255,0.12); line-height: 1;
+        }
+        .statement-item h3 { font-size: 20px; margin-bottom: 6px; }
+        .statement-item p { font-size: 15px; line-height: 1.55; }
+
+        /* ═══════════════════════════════════════
+           CONTROLS
+           ═══════════════════════════════════════ */
+        .controls-bar {
+            position: fixed; left: 50%; bottom: 12px;
+            transform: translateX(-50%);
+            display: flex; align-items: center; gap: 8px;
+            z-index: 20; padding: 7px 8px;
+            border-radius: 999px;
+            background: rgba(10,10,10,0.88);
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.34);
+        }
+        .control-button {
+            width: 36px; height: 36px; border: none;
+            border-radius: 999px;
+            display: inline-flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.06); color: var(--color-white);
+            cursor: pointer; transition: transform 0.2s ease, background 0.2s ease;
+            font-size: 13px;
+        }
+        .control-button:hover {
+            transform: translateY(-2px); background: rgba(255,255,255,0.12);
+        }
+        .slide-indicator {
+            position: fixed; top: 20px; right: 20px; z-index: 20;
+            padding: 10px 14px; border-radius: 999px;
+            background: rgba(10,10,10,0.88);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: var(--color-white); font-size: 11px;
+            letter-spacing: 0.18em; text-transform: uppercase;
+            backdrop-filter: blur(14px); font-family: var(--font-mono);
+        }
+        .flowchart-sidebar, .sidebar-overlay { display: none; }
+
+        /* ═══════════════════════════════════════
+           GRID VIEW
+           ═══════════════════════════════════════ */
+        body.grid-view { overflow: hidden; }
+        body.grid-view .slides-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            grid-auto-rows: 220px; gap: 12px;
+            width: 100vw; max-height: 100vh;
+            padding: 12px 12px 86px; overflow-y: auto;
+        }
+        body.grid-view .slide-container {
+            position: relative; opacity: 1; visibility: visible;
+            pointer-events: auto; padding: 20px 22px 34px; height: 100%;
+        }
+        body.grid-view .slide-container::after {
+            content: attr(data-slide-num);
+            position: absolute; right: 12px; bottom: 12px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.9); color: #10141c;
+            font-size: 11px; font-weight: 700;
+            width: 24px; height: 24px; border-radius: 999px;
+        }
+        body.grid-view .slide-title { font-size: 24px; }
+        body.grid-view .title-layout h1, body.grid-view .section-title-layout h2 { font-size: 32px; }
+        body.grid-view p, body.grid-view li, body.grid-view .lead,
+        body.grid-view .speaker-caption { font-size: 11px; line-height: 1.35; }
+        body.grid-view .controls-bar { display: none; }
+
+        /* ═══════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════ */
+        @media (max-width: 1180px) {
+            .slide-container { padding: 42px 36px 122px; }
+            .two-column, .program-grid, .schedule-grid,
+            .tiled-content.four, .tiled-content.three, .partnership-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .audience-grid, .team-grid, .closing-grid {
+                grid-template-columns: 1fr;
+            }
+            .persona-card, .team-member, .closing-panel {
+                border-right: none;
+                border-bottom: 1px solid rgba(255,255,255,0.06);
+                padding: 20px 0;
+            }
+            .contact-strip { flex-direction: column; gap: 16px; }
+        }
+        @media (max-width: 820px) {
+            .slide-container { padding: 28px 20px 118px; overflow-y: auto; }
+            .two-column, .program-grid, .schedule-grid,
+            .tiled-content, .partnership-grid,
+            .audience-grid, .team-grid, .closing-grid {
+                grid-template-columns: 1fr;
+            }
+            .tiled-content .tile {
+                border-left: none;
+                border-bottom: 1px solid rgba(255,255,255,0.06);
+                padding: 16px 0;
+            }
+            .schedule-band {
+                border-right: none;
+                border-bottom: 1px solid rgba(255,255,255,0.06);
+                padding: 16px 0;
+            }
+            .title-layout h1, .section-title-layout h2, .stat-hero {
+                font-size: clamp(2.8rem, 12vw, 4.4rem);
+            }
+            .controls-bar { bottom: 10px; }
+        }
     </style>
 </head>
 <body>
+    <div class="slides-wrapper">
 
-<div class="slides-wrapper">
-
-    <!-- ═══════════════════════════════════════════
-         SLIDE 1 — TITLE
-         ═══════════════════════════════════════════ -->
-    <div class="slide-container active" id="slide-title">
-        <div class="title-layout">
-            <p class="accent-tag"><i class="fa fa-mountain-sun"></i> &nbsp;Superside · Experiential Tech</p>
-            <h1><em>Immersive</em> Recap</h1>
-            <p class="subtitle">A short history & what we do</p>
-            <hr>
-            <p class="byline"><strong>Manuel Palenque</strong> &nbsp;·&nbsp; Lead Creative Technologist &nbsp;·&nbsp; Superside</p>
-        </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SLIDE 2 — ABOUT MANUEL
-         ═══════════════════════════════════════════ -->
-    <div class="slide-container slide--light" id="slide-about">
-        <div class="two-column" style="gap:60px;">
-            <div class="content-area" style="justify-content:center;gap:0;">
-                <p class="accent-tag" style="color:#2a7a4f;opacity:0.85;"><i class="fa fa-user"></i> &nbsp;Who I Am</p>
-                <h2 style="font-family:var(--font-title);font-size:40px;font-weight:400;color:var(--color-text-dark);line-height:1.1;margin-bottom:18px;">Manuel<br><em style="font-family:var(--font-display);font-style:italic;color:#2a7a4f;">Palenque</em></h2>
-
-                <ul style="list-style:none;padding:0;margin:0 0 22px 0;display:flex;flex-direction:column;gap:11px;">
-                    <li style="display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.6;color:#3a4a42;">
-                        <span style="color:#2a7a4f;font-size:16px;line-height:1.4;flex-shrink:0;">&#8594;</span>
-                        <span><strong style="color:var(--color-text-dark);">Lead Creative Technologist &amp; Visual Artist</strong> — 15+ years building immersive AV experiences</span>
-                    </li>
-                    <li style="display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.6;color:#3a4a42;">
-                        <span style="color:#2a7a4f;font-size:16px;line-height:1.4;flex-shrink:0;">&#8594;</span>
-                        <span>Work exhibited across art, tech, and design festivals in Europe, Asia, and the Americas</span>
-                    </li>
-                    <li style="display:flex;gap:12px;align-items:flex-start;font-size:14px;line-height:1.6;color:#3a4a42;">
-                        <span style="color:#2a7a4f;font-size:16px;line-height:1.4;flex-shrink:0;">&#8594;</span>
-                        <span>Founder of <a href="https://dataraiz.io" target="_blank" style="color:#2a7a4f;font-weight:600;text-decoration:none;border-bottom:2px solid #2a7a4f;">dataraiz.io</a> — medialab and creative tech education space</span>
-                    </li>
-                </ul>
-
-                <p style="font-size:11px;font-weight:700;letter-spacing:0.1em;color:#2a7a4f;text-transform:uppercase;margin-bottom:12px;">What I build</p>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;">
-                    <div style="font-size:12px;color:#3a4a42;background:rgba(26,46,40,0.05);border:1px solid rgba(26,46,40,0.1);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;">
-                        <i class="fa fa-cube" style="color:#2a7a4f;width:14px;text-align:center;"></i> Real-Time 3D &amp; WebGL
-                    </div>
-                    <div style="font-size:12px;color:#3a4a42;background:rgba(26,46,40,0.05);border:1px solid rgba(26,46,40,0.1);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;">
-                        <i class="fa fa-mobile-screen" style="color:#2a7a4f;width:14px;text-align:center;"></i> AR &amp; Mixed Reality
-                    </div>
-                    <div style="font-size:12px;color:#3a4a42;background:rgba(26,46,40,0.05);border:1px solid rgba(26,46,40,0.1);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;">
-                        <i class="fa fa-gamepad" style="color:#2a7a4f;width:14px;text-align:center;"></i> Custom Games &amp; Interactive
-                    </div>
-                    <div style="font-size:12px;color:#3a4a42;background:rgba(26,46,40,0.05);border:1px solid rgba(26,46,40,0.1);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;">
-                        <i class="fa fa-vr-cardboard" style="color:#2a7a4f;width:14px;text-align:center;"></i> VR Experiences
-                    </div>
-                    <div style="font-size:12px;color:#3a4a42;background:rgba(26,46,40,0.05);border:1px solid rgba(26,46,40,0.1);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;">
-                        <i class="fa fa-lightbulb" style="color:#2a7a4f;width:14px;text-align:center;"></i> Immersive Installations
-                    </div>
-                    <div style="font-size:12px;color:#3a4a42;background:rgba(26,46,40,0.05);border:1px solid rgba(26,46,40,0.1);border-radius:8px;padding:8px 12px;display:flex;align-items:center;gap:8px;">
-                        <i class="fa fa-chart-bar" style="color:#2a7a4f;width:14px;text-align:center;"></i> Data Visualization
-                    </div>
+        <!-- ═══ 01 COVER ═══ -->
+        <div class="slide-container active" id="slide-cover" style="background: #0a0a0a; overflow:hidden;">
+            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+                <div style="width:75%; height:75%; position:relative;">
+                    <img src="cajanegra2.png" alt="" style="width:100%; height:100%; object-fit:cover; display:block; opacity:0.8;">
+                    <div style="position:absolute; inset:-1px; background: 
+                        linear-gradient(to right, #0a0a0a 0%, transparent 18%, transparent 82%, #0a0a0a 100%),
+                        linear-gradient(to bottom, #0a0a0a 0%, transparent 18%, transparent 82%, #0a0a0a 100%);
+                    "></div>
                 </div>
             </div>
-            <div class="content-area" style="justify-content:center;align-items:center;">
-                <img src="art.jpg" alt="Manuel Palenque" style="width:100%;height:auto;max-height:82%;object-fit:contain;border-radius:16px;display:block;border:1px solid rgba(26,46,40,0.15);box-shadow:0 20px 60px rgba(0,0,0,0.12);">
+            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:1;">
+                <div style="width:min(760px, 72vw); height:min(540px, 58vh); background: radial-gradient(circle at center, rgba(10,10,10,0.60) 0%, rgba(10,10,10,0.38) 50%, rgba(10,10,10,0.10) 78%, rgba(10,10,10,0) 100%);"></div>
             </div>
-        </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SLIDE 3 — REEL
-         ═══════════════════════════════════════════ -->
-    <div class="slide-container" id="slide-reel">
-        <div class="reel-grid">
-            <!-- Left text panel -->
-            <div class="reel-left">
-                <p class="accent-tag"><i class="fa fa-film"></i> &nbsp;Reel</p>
-                <h2>15 years.<br><em>In motion.</em></h2>
-                <p class="reel-cities">Tokyo &mdash; Hong Kong &mdash; Berlin &mdash; United States</p>
-                <ul style="list-style:none;padding:0;margin-top:28px;display:flex;flex-direction:column;gap:14px;">
-                    <li style="display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.6;color:rgba(255,255,255,0.6);">
-                        <span style="color:var(--color-primary);flex-shrink:0;">&#8594;</span>
-                        <span>Coordinated large-scale immersive shows in <strong style="color:rgba(255,255,255,0.85);">Tokyo, Hong Kong, Berlin</strong> and across the US — from concept to execution</span>
-                    </li>
-                    <li style="display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.6;color:rgba(255,255,255,0.6);">
-                        <span style="color:var(--color-primary);flex-shrink:0;">&#8594;</span>
-                        <span>Speaker and educator on immersive tech, creative coding, and interactive design</span>
-                    </li>
-                    <li style="display:flex;gap:10px;align-items:flex-start;font-size:13px;line-height:1.6;color:rgba(255,255,255,0.6);">
-                        <span style="color:var(--color-primary);flex-shrink:0;">&#8594;</span>
-                        <span>@ <strong style="color:rgba(255,255,255,0.85);">Superside</strong> since November 2024 — building the experiential tech practice</span>
-                    </li>
-                </ul>
-            </div>
-            <!-- Right video panel -->
-            <div class="reel-right">
-                <!-- Gradient overlay blending left edge into dark panel -->
-                <div class="reel-overlay"></div>
-                <video autoplay loop muted playsinline preload="auto">
-                    <source src="reelshort.mp4" type="video/mp4">
-                </video>
-            </div>
-        </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SLIDE 4 — THE JOURNEY (Timeline)
-         ═══════════════════════════════════════════ -->
-    <div class="slide-container" id="slide-journey">
-        <h2 class="slide-title">The Journey</h2>
-        <p style="margin-bottom: 0; font-size:16px;">How we got from creative experiments to enterprise-scale immersive experiences.</p>
-        <div class="timeline-flow">
-            <div class="timeline-node">
-                <span class="node-year">Nov 2024 — Start</span>
-                <h4>Creative Technologist<br>&amp; AR Developer</h4>
-                <p>Joined Superside. First projects in AR filters, interactive prototypes, and emerging-format content for enterprise brands.</p>
-            </div>
-            <div class="timeline-connector"><i class="fa fa-arrow-right"></i></div>
-            <div class="timeline-node">
-                <span class="node-year">Dec 2024 — Scale</span>
-                <h4>No onboarding.<br>Straight to work.</h4>
-                <p>Brought a development capacity that didn't exist before. Led AR-first projects using AI — and taught the team entirely new ways of working, expanding what Superside could technically offer.</p>
-            </div>
-            <div class="timeline-connector"><i class="fa fa-arrow-right"></i></div>
-            <div class="timeline-node timeline-node--active">
-                <span class="node-year">2025 — Breakthrough</span>
-                <h4>Reddit Magic Mirror<br>2025 &amp; Beyond</h4>
-                <p>Delivered the headline experiential project of the year. Established a repeatable playbook for high-visibility enterprise event tech.</p>
-            </div>
-            <div class="timeline-connector"><i class="fa fa-arrow-right"></i></div>
-            <div class="timeline-node timeline-node--active">
-                <span class="node-year">2026 — Now</span>
-                <h4>Cross-Studio<br>Experiential Practice</h4>
-                <p>$300K+ active pipeline. Multiple blue-chip clients. A clear case for a dedicated Experiential Tech team spanning all Studios.</p>
-            </div>
-        </div>
-        <p class="journey-byline">"From one engineer with a creative idea to a practice generating real enterprise revenue."</p>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SLIDE 4 — PHILOSOPHY / SECTION DIVIDER
-         ═══════════════════════════════════════════ -->
-    <div class="slide-container" id="slide-philosophy">
-        <div class="section-title-layout">
-            <p class="label-tag"><i class="fa fa-bolt"></i> &nbsp;What Drives Us</p>
-            <hr>
-            <h2>We build the <em>unexpected.</em><br>New. Different. Unanticipated.</h2>
-            <p>Our edge isn't just technical — it's the willingness to attempt things that shouldn't be possible and deliver them live.</p>
-            <div style="display:flex; gap:32px; margin-top:40px; text-align:center; justify-content:center;">
-                <div style="display:flex;flex-direction:column;align-items:center;gap:8px;min-width:140px;">
-                    <i class="fa fa-star" style="font-size:28px;color:var(--color-primary);"></i>
-                    <span style="font-size:13px;font-weight:600;color:var(--color-white);letter-spacing:0.05em;">Events-First</span>
-                    <span style="font-size:12px;color:var(--color-text-muted);">Live moments create the strongest impressions</span>
-                </div>
-                <div style="display:flex;flex-direction:column;align-items:center;gap:8px;min-width:140px;">
-                    <i class="fa fa-handshake" style="font-size:28px;color:var(--color-primary);"></i>
-                    <span style="font-size:13px;font-weight:600;color:var(--color-white);letter-spacing:0.05em;">Enterprise Trust</span>
-                    <span style="font-size:12px;color:var(--color-text-muted);">Deep relationships that go beyond deliverables</span>
-                </div>
-                <div style="display:flex;flex-direction:column;align-items:center;gap:8px;min-width:140px;">
-                    <i class="fa fa-person-rays" style="font-size:28px;color:var(--color-primary);"></i>
-                    <span style="font-size:13px;font-weight:600;color:var(--color-white);letter-spacing:0.05em;">Human Edge</span>
-                    <span style="font-size:12px;color:var(--color-text-muted);">There are still no robots at a trade show booth</span>
+            <div class="title-layout" style="position:relative; z-index:1;">
+                <div class="cover-text-panel">
+                    <h1>DataRaíz<br><em>Ciclo Negro</em></h1>
+                    <div class="cover-subline">Contraste Inmersivo</div>
+                    <p class="hero-intro">Un recorrido inmersivo que cruza masterclasses de tecnología, instalaciones de arte interactivo y performances audiovisuales en vivo.</p>
+                    <p class="hero-intro" style="opacity:0.72; font-size:13px; letter-spacing:0.18em; margin-top:10px; max-width:none;">2026</p>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 5 — AI-POWERED WORKFLOWS
-         ═══════════════════════════════════════════ -->
-    <div class="slide-container slide--light" id="slide-ai">
-        <div class="ai-slide-badge"><i class="fa-solid fa-wand-magic-sparkles" aria-hidden="true"></i><span>This deck was built with AI</span></div>
-        <h2 class="slide-title">AI-Powered Workflows</h2>
-        <p>Every project runs on a fully AI-enabled pipeline — from first concept to client delivery. Speed and quality aren't a tradeoff anymore.</p>
-        <div class="tiled-content">
-            <div class="tile tile-media">
-                <video class="hover-vid" src="ai.mp4" muted loop playsinline preload="metadata"></video>
-                <div class="icon"><i class="fa fa-code"></i></div>
-                <h3>AI-Assisted Coding</h3>
-                <p>From rapid prototyping to debugging complex interactive scenes — compressing weeks into days.</p>
-            </div>
-            <div class="tile tile-media">
-                <img class="hover-img" src="aqui.png" alt="3D Asset Generation preview">
-                <div class="icon"><i class="fa fa-cube"></i></div>
-                <h3>3D Asset Generation</h3>
-                <p>AI-generated 3D models and textures at a fraction of traditional production cost.</p>
-            </div>
-            <div class="tile tile-media">
-                <video class="hover-vid" src="viz.mp4" muted loop playsinline preload="metadata"></video>
-                <div class="icon"><i class="fa fa-chart-bar"></i></div>
-                <h3>Data Viz &amp; Insights</h3>
-                <p>Raw event data into interactive visualizations — live dashboards, AR overlays, and more.</p>
-                <a class="ai-slide-cta" href="https://superside-immersive.github.io/supersidersglobally/" target="_blank" rel="noopener noreferrer">View example ↗</a>
-            </div>
-            <div class="tile tile-media">
-                <video class="hover-vid" src="mcpfigma.mp4" muted loop playsinline preload="metadata"></video>
-                <div class="icon"><i class="fa fa-plug"></i></div>
-                <h3>MCP Connections</h3>
-                <p>AI connected directly into <strong>Figma, Blender, Unity</strong> — seamless cross-tool workflows.</p>
+        <!-- ═══ 02 CONTEXTO ═══ -->
+        <div class="slide-container" id="slide-contexto">
+            <div class="two-column" style="grid-template-columns: 0.88fr 1.12fr; gap: 32px; align-items: start;">
+                <div class="content-area" style="justify-content:center;">
+                    <div class="context-video-frame" style="width:100%; aspect-ratio: 9/14; margin-bottom: 10px;">
+                        <video autoplay muted loop playsinline preload="auto" aria-label="Visual de texto en movimiento para contexto DataRaíz">
+                            <source src="screentext.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="pull-quote" style="margin: 0;">
+                        <p>"La escena hierve. Falta el espacio que la contenga."</p>
+                    </div>
+                </div>
+                <div class="content-area">
+                    <p class="accent-tag" style="font-size: 0.95rem; letter-spacing: 0.18em; border: 1px solid rgba(255,255,255,0.15); padding: 6px 16px; display: inline-block;">El escenario actual</p>
+                    <h2 class="slide-title">Un ecosistema de <em>silos</em></h2>
+                    <p class="lead">Vivimos en un ecosistema de silos: el arte, la tecnología y la ciencia siguen atrapados en órbitas aisladas, desperdiciando el potencial explosivo de su colisión. Mientras la técnica avanza a ritmos vertiginosos, la producción artística se topa con un muro de cristal que restringe el acceso a las herramientas de vanguardia.</p>
+                    <p class="ctx-secondary">La escena local hierve; el talento y la urgencia creativa circulan en abundancia, pero faltan plataformas de hibridación y convergencia que rompan la inercia. Es hora de dinamitar las fronteras disciplinares y crear espacios de cruce real donde el código, la materia y la teoría se fundan sin jerarquías.</p>
+                    <div class="ctx-punchline">
+                        <span class="ctx-punch-label">La oportunidad</span>
+                        <p>Crear un punto de encuentro real<br>para una escena que <em>no acepta fronteras</em>.</p>
+                    </div>
+                </div>
             </div>
         </div>
-    </div>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 6 — WORKFLOW FLOWCHART
-         ═══════════════════════════════════════════ -->
-    <div class="slide-container" id="slide-workflow">
-        <h2 class="slide-title">Our Workflow</h2>
-        <p class="slide-subtitle">How we take projects from brief to delivery — two paths, one team.</p>
-        <div class="workflow-container" id="workflow-root"></div>
-    </div>
+        <!-- ═══ 03 FESTIVAL ═══ -->
+        <div class="slide-container" id="slide-festival">
+            <div class="ambient-noise"></div>
+            <div class="two-column" style="grid-template-columns: 1.16fr 0.84fr; gap: 34px; align-items: start;">
+                <div class="content-area">
+                    <p class="accent-tag">Ciclo DataRaíz</p>
+                    <h2 class="slide-title">Un <em>nodo de convergencia</em> vivo</h2>
+                    <p class="lead">La tecnología deja de ser una herramienta aislada para experimentarse como un lenguaje expresivo, sensible y humano. DataRaíz construye un territorio donde la biología dialoga con el código, la danza con los sensores y el diseño visual con la electrónica.</p>
+                    <div class="numbered-list" style="margin-top: 8px;">
+                        <div class="numbered-item tile">
+                            <span class="n">01</span>
+                            <div>
+                                <h3>Experiencia</h3>
+                                <p>Festival inmersivo de 12 horas que transforma el espacio en un ecosistema vibrante: workshops técnicos, cruce con industria creativa y un cierre A/V de vanguardia.</p>
+                            </div>
+                        </div>
+                        <div class="numbered-item tile">
+                            <span class="n">02</span>
+                            <div>
+                                <h3>Puente</h3>
+                                <p>Conecta la demanda de la industria tecnológica con talento emergente disruptivo, proyectando una red profesional desde Buenos Aires hacia el mundo.</p>
+                            </div>
+                        </div>
+                        <div class="numbered-item tile">
+                            <span class="n">03</span>
+                            <div>
+                                <h3>Alianza</h3>
+                                <p>Convoca infraestructura de primer nivel y una dirección técnica-curatorial respaldada por trayectoria en plataformas como MUTEK y Node Forum Berlín.</p>
+                            </div>
+                        </div>
+                        <div class="numbered-item tile">
+                            <span class="n">04</span>
+                            <div>
+                                <h3>Impacto</h3>
+                                <p>Activa a una comunidad de creadores y desarrolladores que ya está definiendo el futuro del lenguaje digital contemporáneo.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-area" style="gap: 12px;">
+                    <div class="festival-visual">
+                        <img src="show.png" alt="Show audiovisual de DataRaíz">
+                    </div>
+                    <p class="festival-note">Pulso escénico · performance audiovisual en vivo</p>
+                </div>
+            </div>
+        </div>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 7 — PROJECT: VAsteroids
-         ═══════════════════════════════════════════ -->
-    <div class="slide-container" id="slide-vasteroids">
-        <div class="two-column">
+        <!-- ═══ 04 CAJA NEGRA ═══ -->
+        <div class="slide-container" id="slide-caja-negra">
+            <div class="two-column">
+                <div class="content-area">
+                    <p class="accent-tag">La experiencia · Caja Negra</p>
+                    <h2 class="slide-title">La Experiencia: <em>Caja Negra</em></h2>
+                    <p class="lead">La Caja Negra es un dispositivo escénico heredado del teatro experimental: un espacio completamente oscuro, acústicamente controlado, donde se anulan todas las distracciones del entorno para que la experiencia sensorial sea absoluta.</p>
+                    <p>En DataRaíz tomamos ese concepto y lo llevamos al cruce entre tecnología y arte: el negro total se convierte en la superficie donde las visuales generativas, la iluminación inmersiva y el sonido espacializado alcanzan su máxima potencia expresiva. La tecnología deja de ser un gadget para convertirse en un organismo vivo.</p>
+                    <p>La configuración elimina la jerarquía entre escenario y público — todos están adentro de la obra.</p>
+                </div>
+                <div class="content-area" style="display:flex; flex-direction:column; justify-content:center;">
+                    <div class="kpi-row" style="flex-direction:column; gap:24px;">
+                        <div class="kpi-card">
+                            <div class="kpi-value">Silencio</div>
+                            <div class="kpi-label">como lienzo escénico</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-value">Negro</div>
+                            <div class="kpi-label">como contraste expresivo</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-value">Inmersión</div>
+                            <div class="kpi-label">atención profunda y foco total</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="pull-quote" style="margin: 0 80px; padding: 28px 0; border-top: 1px solid rgba(255,255,255,0.08); text-align: center;">
+                <p style="font-size: 1.5rem; letter-spacing: 0.04em; font-weight: 500; opacity: 0.95;"><em>El rito escénico como inmersión total, el contraste como lenguaje.</em></p>
+            </div>
+        </div>
+
+        <!-- ═══ 05 ECOSISTEMA ═══ -->
+        <div class="slide-container" id="slide-ecosistema">
+            <div class="ambient-grid"></div>
+            <div class="ecosystem-layout" style="grid-template-columns: 1.08fr 0.92fr; gap: 34px; height: 100%; align-content: center;">
+                <div class="content-area">
+                    <p class="accent-tag">Un mismo espacio, múltiples capas</p>
+                    <h2 class="slide-title">Un ecosistema en <em>tiempo real</em></h2>
+                    <p class="lead">La jornada se organiza como un recorrido continuo bajo cuatro ejes: formación técnica intensiva, experimentación en procesos abiertos, conversatorios para intercambio de ideas y shows audiovisuales que atraviesan toda la experiencia.</p>
+                    <div class="program-visual" style="margin-top: 16px;">
+                        <img src="taller2.png" alt="Workshop técnico de DataRaíz">
+                    </div>
+                    <p class="media-caption">El núcleo técnico en acción · formación, herramientas y práctica aplicada</p>
+                </div>
+                <div class="content-area">
+                    <div class="layer-stack">
+                        <div class="layer-item tile">
+                            <span class="depth">Capa 01</span>
+                            <div>
+                                <h3>El núcleo técnico</h3>
+                                <p>Talleres hands-on donde los participantes acceden a hardware y software al que normalmente no llegarían. DataRaíz rompe la barrera económica del equipamiento y pone los fierros en manos de quienes los necesitan para crear.</p>
+                            </div>
+                        </div>
+                        <div class="layer-item tile">
+                            <span class="depth">Capa 02</span>
+                            <div>
+                                <h3>La zona de riesgo</h3>
+                                <p>Un espacio de producción en vivo y procesos abiertos. Ahí algo puede fallar, mutar o sorprender — y eso es exactamente lo que lo convierte en arte contemporáneo.</p>
+                            </div>
+                        </div>
+                        <div class="layer-item tile">
+                            <span class="depth">Capa 03</span>
+                            <div>
+                                <h3>Interfaz crítica</h3>
+                                <p>Charlas y conversatorios donde artistas, tecnólogos y científicos debaten futuros posibles y desafíos de la escena actual.</p>
+                            </div>
+                        </div>
+                        <div class="layer-item tile">
+                            <span class="depth">Capa 04</span>
+                            <div>
+                                <h3>Pulso sensorial</h3>
+                                <p>Shows audiovisuales en vivo como hilo conductor: una descarga de energía generativa que cohesiona toda la jornada.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 06 PROGRAMACIÓN ═══ -->
+        <div class="slide-container" id="slide-programacion">
             <div class="content-area">
-                <p class="accent-tag"><i class="fa fa-gamepad-modern"></i> &nbsp;Project</p>
-                <h2 class="slide-title" style="border-left-width:0;padding-left:0;font-size:44px;">VAsteroids</h2>
-                <span class="budget-badge">$33,000 – $36,000</span>
-                <br><br>
-                <ul style="margin-top:8px;">
-                    <li>Born from the energy generated by <strong>Connectria</strong>, a retro-game activation that stopped the floor.</li>
-                    <li>VAST renewed their contract and are excited to continue developing the game project further.</li>
-                    <li>Proved that bold, creative proposals from our team are a direct lever for <strong>elevating the client relationship.</strong></li>
-                    <li>When we bring something unexpected and exciting, clients don't just stay — they invest more.</li>
-                </ul>
-            </div>
-            <div>
-                <video class="vasteroids-video" autoplay loop muted playsinline preload="auto">
-                    <source src="vasteroids.mp4" type="video/mp4">
-                </video>
-            </div>
-        </div>
-        <!-- Floating comment card — animates in on slide load -->
-        <div id="vasteroids-comment">
-            <img src="image%20copy.png" alt="Client comment">
-        </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SLIDE 8 — PROJECT: Reddit
-         ═══════════════════════════════════════════ -->
-    <div class="slide-container" id="slide-reddit">
-        <div class="two-column">
-            <div class="content-area">
-                <p class="accent-tag"><i class="fa fa-circle-r"></i> &nbsp;Project</p>
-                <h2 class="slide-title" style="border-left-width:0;padding-left:0;font-size:44px;">Reddit</h2>
-                <span class="budget-badge">$76,000 – $90,000</span>
-                <br><br>
-                <ul style="margin-top:8px;">
-                    <li><strong>Magic Mirror 2025</strong> was a clear success and became the launchpad for the next phase of the relationship.</li>
-                    <li>For <strong>2026</strong>, Reddit has already confirmed <strong>two events: OMR and Cannes</strong>, with additional opportunities expected throughout the year.</li>
-                    <li>We proposed a <strong>modular system</strong> so the experience can scale up, add new features, and adapt to each event's size and goals.</li>
-                    <li>This is evolving into a <strong>year-round partnership</strong> with strong creative upside and repeat business potential.</li>
-                </ul>
-            </div>
-            <div>
-                <video class="project-video" autoplay loop muted playsinline preload="auto">
-                    <source src="redditmiami.mp4" type="video/mp4">
-                </video>
-            </div>
-        </div>
-        <div id="reddit-comment">
-            <img src="image%20copy%202.png" alt="Reddit client comment">
-        </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SLIDE 9 — PROJECT: Albertsons AMC
-         ═══════════════════════════════════════════ -->
-    <div class="slide-container" id="slide-albertsons">
-        <div class="two-column">
-            <div class="content-area">
-                <p class="accent-tag"><i class="fa fa-store"></i> &nbsp;Project</p>
-                <h2 class="slide-title" style="border-left-width:0;padding-left:0;font-size:44px;">Albertsons AMC</h2>
-                <span class="budget-badge">$121,875 – $159,250</span>
-                <br><br>
-                <ul style="margin-top:8px;">
-                    <li>A direct consequence of Reddit's success — this client noticed and came to us.</li>
-                    <li>Scope: <strong>full booth design and concept</strong> + multiple immersive experiences throughout the space.</li>
-                    <li>Unique challenge: guiding a client <em>new to immersive</em> — translating ambition into executable activations.</li>
-                    <li>High probability of <strong>recurring event work</strong> across their retail and media calendar.</li>
-                </ul>
-            </div>
-            <div>
-                <img class="project-img" src="albertsons.png" alt="Albertsons AMC Booth">
-            </div>
-        </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SLIDE 10 — PROJECT: Wurth VR
-         ═══════════════════════════════════════════ -->
-    <div class="slide-container" id="slide-wurth">
-        <div class="two-column">
-            <div class="content-area">
-                <p class="accent-tag"><i class="fa fa-vr-cardboard"></i> &nbsp;Project</p>
-                <h2 class="slide-title" style="border-left-width:0;padding-left:0;font-size:44px;">Wurth VR</h2>
-                <span class="budget-badge">$71,950 – $78,610</span>
-                <br><br>
-                <ul style="margin-top:8px;">
-                    <li>A <strong>VR experience</strong> designed for scalability across multiple trade shows and events.</li>
-                    <li>Built to run without on-site specialist support — once deployed, it travels.</li>
-                    <li>Demonstrates our ability to deliver <strong>standalone immersive products</strong>, not just one-off activations.</li>
-                    <li>Opens the door to hardware-as-a-service models for future engagements.</li>
-                </ul>
-            </div>
-            <div>
-                <img class="project-img" src="image.png" alt="Wurth VR">
-            </div>
-        </div>
-    </div>
-
-    <!-- ═══════════════════════════════════════════
-         SLIDE 11 — PIPELINE RECAP
-         ═══════════════════════════════════════════ -->
-    <div class="slide-container" id="slide-pipeline">
-        <div class="pipeline-hero">
-            <p class="stat-label"><i class="fa fa-chart-line"></i> &nbsp;Active Q1 Experiential Pipeline</p>
-            <h2 class="stat-hero"><em>$302K</em> – $363K</h2>
-            <p class="stat-sub">Delivering through early May 2026</p>
-            <div class="pipeline-rows">
-                <div class="pipeline-row">
-                    <span class="proj-name">Reddit Experience</span>
-                    <span class="proj-range">$76,000 – $90,000</span>
-                </div>
-                <div class="pipeline-row">
-                    <span class="proj-name">Albertsons AMC Booth</span>
-                    <span class="proj-range">$121,875 – $159,250</span>
-                </div>
-                <div class="pipeline-row">
-                    <span class="proj-name">Wurth VR</span>
-                    <span class="proj-range">$71,950 – $78,610</span>
-                </div>
-                <div class="pipeline-row">
-                    <span class="proj-name">VAST (VAsteroids)</span>
-                    <span class="proj-range">$33,000 – $36,000</span>
+                <p class="accent-tag">Programación</p>
+                <h2 class="slide-title">Un flujo constante para audiencias diversas</h2>
+                <div class="program-grid" style="grid-template-columns: 0.78fr 1.22fr; gap: 34px; margin-top: 24px; align-items: start;">
+                    <div class="program-column">
+                        <h3>Tipos de contenido</h3>
+                        <div class="content-type-list">
+                            <div class="content-type-card taller">
+                                <span class="content-type-meta">Mañana / tarde</span>
+                                <h3>Workshops intensivos</h3>
+                                <p>Transferencia técnica en formato concentrado, con foco en práctica, herramientas y experimentación aplicada.</p>
+                            </div>
+                            <div class="content-type-card charla">
+                                <span class="content-type-meta">Tarde</span>
+                                <h3>Instalaciones + conversatorios</h3>
+                                <p>Procesos abiertos, demos y cruces de ideas para activar diálogo entre comunidad, industria y escena local.</p>
+                            </div>
+                            <div class="content-type-card performance">
+                                <span class="content-type-meta">Noche</span>
+                                <h3>Performances audiovisuales</h3>
+                                <p>Cierre sensorial con shows en vivo que consolidan el carácter inmersivo y colectivo del festival.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="speaker-list" style="margin-top: 0;">
+                        <h3>Cronograma seleccionado</h3>
+                        <div class="activity-legend">
+                            <span class="legend-chip"><span class="legend-dot taller"></span>Taller</span>
+                            <span class="legend-chip"><span class="legend-dot charla"></span>Activación / charla</span>
+                            <span class="legend-chip"><span class="legend-dot performance"></span>Performance</span>
+                        </div>
+                        <div class="timeline-single">
+                            <div class="timeline-head">
+                                <span>Horario</span>
+                                <span>Venue</span>
+                                <span>Hall</span>
+                            </div>
+                            <div class="timeline-row">
+                                <span class="timeline-time">09:00</span>
+                                <div class="timeline-cell"></div>
+                                <div class="timeline-cell"><span class="timeline-pill subtle">Recepción</span></div>
+                            </div>
+                            <div class="timeline-row">
+                                <span class="timeline-time">11:00–13:00</span>
+                                <div class="timeline-cell"><span class="timeline-pill taller">Taller práctico</span></div>
+                                <div class="timeline-cell"><span class="timeline-pill charla">Open interactivo jam</span></div>
+                            </div>
+                            <div class="timeline-row">
+                                <span class="timeline-time">13:00–16:00</span>
+                                <div class="timeline-cell"><span class="timeline-pill taller">Taller + show off del show de la noche</span></div>
+                                <div class="timeline-cell">
+                                    <span class="timeline-pill charla">Apertura técnica</span>
+                                    <span class="timeline-pill charla">Cultura</span>
+                                    <span class="timeline-pill charla">Ciencia / arte</span>
+                                    <span class="timeline-pill charla">Mesa comercial</span>
+                                    <span class="timeline-pill charla">Cierre</span>
+                                </div>
+                            </div>
+                            <div class="timeline-row">
+                                <span class="timeline-time">17:00–22:00</span>
+                                <div class="timeline-cell">
+                                    <span class="timeline-pill performance">Colli</span>
+                                    <span class="timeline-pill performance">Lolo + Dani</span>
+                                    <span class="timeline-pill performance">Mteo</span>
+                                    <span class="timeline-pill performance">Pablo Verón</span>
+                                    <span class="timeline-pill performance">MANU</span>
+                                    <span class="timeline-pill performance">DJ</span>
+                                </div>
+                                <div class="timeline-cell"><span class="timeline-pill charla">Espacio de intercambio</span></div>
+                            </div>
+                        </div>
+                        <p class="timeline-note">Lectura sintética del flujo de jornada: formación técnica, activación simultánea del hall y bloque final de performances.</p>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 12 — THE TEAM
-         ═══════════════════════════════════════════ -->
-    <div class="slide-container" id="slide-team">
-        <div class="two-column">
+        <!-- ═══ 07 CRÍTICA / SENSORIAL ═══ -->
+        <div class="slide-container" id="slide-critica-sensorial">
+            <div class="two-column" style="grid-template-columns: 0.82fr 1.18fr; gap: 28px;">
+                <div class="content-area" style="gap: 10px;">
+                    <p class="accent-tag">Interfaz crítica</p>
+                    <h2 class="slide-title" style="font-size: clamp(1.6rem, 3vw, 2.4rem);">Conversatorios que piensan la escena</h2>
+                    <div class="speaker-list">
+                        <ul class="speaker-items" style="gap: 0;">
+                            <li style="padding: 8px 0;">
+                                <span class="speaker-title" style="font-size:15px;">La Conciencia de la Máquina</span>
+                                <span class="speaker-caption" style="font-size:13px;">Pensar el arte técnico, su genealogía y su responsabilidad ética.</span>
+                            </li>
+                            <li style="padding: 8px 0;">
+                                <span class="speaker-title" style="font-size:15px;">Identidades Sintéticas</span>
+                                <span class="speaker-caption" style="font-size:13px;">IA, estética 3D y nuevas formas de creación digital.</span>
+                            </li>
+                            <li style="padding: 8px 0;">
+                                <span class="speaker-title" style="font-size:15px;">Programar el Futuro</span>
+                                <span class="speaker-caption" style="font-size:13px;">Cómo la gestión cultural diseña ecosistemas sostenibles.</span>
+                            </li>
+                            <li style="padding: 8px 0;">
+                                <span class="speaker-title" style="font-size:15px;">La Escena del Futuro</span>
+                                <span class="speaker-caption" style="font-size:13px;">Qué buscan hoy curadores, productores y espacios culturales.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content-area" style="gap: 8px;">
+                    <p class="accent-tag">Pulso sensorial</p>
+                    <h2 class="slide-title" style="font-size: clamp(1.6rem, 3vw, 2.4rem);">Line-up en construcción</h2>
+                    <div class="program-visual" style="margin: 0;">
+                        <img src="colli.png" alt="Visual de Agustín Colli" style="height: min(28vh, 200px);">
+                    </div>
+                    <div class="speaker-list">
+                        <ul class="speaker-items" style="gap: 0;">
+                            <li style="padding: 6px 0;">
+                                <span class="speaker-title" style="font-size:14px;">01 — Agustín Colli</span>
+                                <span class="speaker-caption" style="font-size:12px; line-height:1.35;">Artista audiovisual y performer. Miembro de SETUP VISUAL. Performance A/V en vivo con música electrónica y pixel LED sincronizado.</span>
+                            </li>
+                            <li style="padding: 6px 0;">
+                                <span class="speaker-title" style="font-size:14px;">02 — Manu</span>
+                                <span class="speaker-caption" style="font-size:12px;">Bajada artística en desarrollo.</span>
+                            </li>
+                            <li style="padding: 6px 0;">
+                                <span class="speaker-title" style="font-size:14px;">03 — Lolo Armendariz</span>
+                                <span class="speaker-caption" style="font-size:12px; line-height:1.35;">Programador y artista visual, cofundador de Holaplan. Creador de «Karne» (simulaciones orgánicas con código y shaders). Performance generativa en vivo.</span>
+                            </li>
+                            <li style="padding: 6px 0;">
+                                <span class="speaker-title" style="font-size:14px;">04 — XXXX</span>
+                                <span class="speaker-caption" style="font-size:12px;">Cuarta performance aún abierta a confirmación curatorial.</span>
+                            </li>
+                        </ul>
+                        <p class="list-note" style="font-size:11px; margin-top:4px;">Programación viva: la estructura del festival ya existe y el line-up se termina de afinar con aliados y confirmaciones.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 08 AUDIENCIA ═══ -->
+        <div class="slide-container" id="slide-audiencia">
+            <div class="ambient-grid"></div>
             <div class="content-area">
-                <p class="accent-tag"><i class="fa fa-people-group"></i> &nbsp;Our Core Specialists</p>
-                <h2 class="slide-title" style="margin-bottom:10px;">The Team</h2>
-                <p style="margin-bottom:20px;">Five specialists with deep experience in experiential tech. Currently scattered across studios. The capability exists — it just needs a center.</p>
+                <p class="accent-tag">Comunidad & audiencia</p>
+                <h2 class="slide-title">Una <em>comunidad creativa activa</em></h2>
+                <div class="audience-layout">
+                    <div class="content-area" style="gap: 10px;">
+                        <div class="audience-visual">
+                            <img src="workshops.png" alt="Comunidad y workshops de DataRaíz">
+                        </div>
+                        <p class="audience-note">Comunidad activa · formación, intercambio y escena en movimiento</p>
+                    </div>
+                    <div class="audience-grid" style="grid-template-columns: 1fr; gap: 0;">
+                        <div class="persona-card" style="border-right:none; border-bottom:1px solid rgba(255,255,255,0.06); padding: 0 0 22px 0;">
+                            <span class="persona-badge">Artistas y gestores</span>
+                            <h3>Agenda cultural contemporánea</h3>
+                            <p>Artistas visuales, sonoros y escénicos junto a curadores del circuito de arte contemporáneo que definen la conversación cultural actual.</p>
+                        </div>
+                        <div class="persona-card" style="border-right:none; border-bottom:1px solid rgba(255,255,255,0.06); padding: 22px 0;">
+                            <span class="persona-badge">Sector creativo</span>
+                            <h3>Líderes y productores</h3>
+                            <p>Directores, productores y profesionales que buscan nuevas fronteras en narrativa digital, innovación y experiencias inmersivas.</p>
+                        </div>
+                        <div class="persona-card" style="border-right:none; padding: 22px 0 0 0;">
+                            <span class="persona-badge">Formación</span>
+                            <h3>Talento emergente</h3>
+                            <p>Estudiantes avanzados y docentes de artes electrónicas y diseño que usan la tecnología como herramienta democratizadora y expresiva.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 09 POR QUÉ ARTHAUS ═══ -->
+        <div class="slide-container" id="slide-porque-arthaus" style="background:#0a0a0a; overflow:hidden;">
+            <div class="hero-bg-slide">
+                <div class="hero-img-wrap" style="width:55%; height:55%;">
+                    <img src="arthaus-copy.png" alt="ArtHaus venue">
+                    <div class="hero-img-fade"></div>
+                </div>
+            </div>
+            <div class="hero-bg-slide hero-scrim">
+                <div class="hero-scrim-inner"></div>
+            </div>
+            <div class="section-title-layout" style="position:relative; z-index:2;">
+                <div class="cover-text-panel">
+                    <p class="label-tag" style="color:rgba(242,242,242,0.5);">La sede</p>
+                    <h2 style="font-family:var(--font-title); font-weight:700; line-height:0.94; letter-spacing:-0.05em; text-transform:uppercase; font-size:clamp(3.2rem, 6vw, 5.3rem); max-width:980px;">El Venue Perfecto:<br><em>Por qué ArtHaus</em></h2>
+                    <p class="section-copy" style="max-width:640px; margin-top:18px; text-shadow:0 2px 12px rgba(0,0,0,0.22);">DataRaíz requiere un ecosistema espacial y sonoro preciso. Elegimos ArtHaus porque su infraestructura acústica de primer nivel, su diseño arquitectónico y su posicionamiento en la escena cultural contemporánea lo convierten en el espacio ideal para albergar este formato.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 10 COPRODUCCIÓN ═══ -->
+        <div class="slide-container" id="slide-coproduccion">
+            <div class="ambient-noise"></div>
+            <div class="content-area">
+                <p class="accent-tag">Coproducción</p>
+                <h2 class="slide-title">ArtHaus como Co-Presentador <em>Institucional</em></h2>
+                <p class="lead">Nuestra organización provee una inversión consolidada en curaduría transdisciplinaria, convocatoria de talento de primer nivel, desarrollo de red profesional hipersegmentada y producción ejecutiva. Ofrecemos este robusto ecosistema de contenidos en formato «llave en mano» para la programación anual de ArtHaus. A cambio, ArtHaus aporta su infraestructura física y técnica, capitalizando este evento como inversión equitativa en la coproducción.</p>
+                <div class="statement-list">
+                    <div class="statement-item tile">
+                        <span class="n">01</span>
+                        <div>
+                            <h3>Contenido llave en mano</h3>
+                            <p>Curaduría, convocatoria de talento de rango internacional, diseño pedagógico de talleres, producción ejecutiva y convocatoria orgánica de nichos altamente especializados de la industria digital y del software.</p>
+                        </div>
+                    </div>
+                    <div class="statement-item tile">
+                        <span class="n">02</span>
+                        <div>
+                            <h3>Ahorro vs. producción propia</h3>
+                            <p>Conceptualizar, producir y ejecutar un festival de arte tecnológico desde cero representaría para ArtHaus una erogación formidable: curadores especializados, cachés en divisa extranjera, diseño pedagógico y el esfuerzo de convocar comunidades escurridizas. DataRaíz absorbe íntegramente esa inversión.</p>
+                        </div>
+                    </div>
+                    <div class="statement-item tile">
+                        <span class="n">03</span>
+                        <div>
+                            <h3>Inversión equitativa</h3>
+                            <p>ArtHaus capitaliza el evento como parte de su programación anual sin erogación presupuestaria adicional. Su aporte en infraestructura física y técnica equivale a su porcentaje de inversión en la coproducción.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 11 ROI INSTITUCIONAL ═══ -->
+        <div class="slide-container" id="slide-roi-institucional">
+            <div class="two-column" style="grid-template-columns: 1.15fr 0.85fr; gap: 32px; align-items: start;">
+                <div class="content-area">
+                    <p class="accent-tag">Valor institucional</p>
+                    <h2 class="slide-title">Qué gana <em>ArtHaus</em></h2>
+                    <div style="display:flex; flex-direction:column; gap:0;">
+                        <div class="tile">
+                            <h3>Nuevas audiencias</h3>
+                            <p>DataRaíz atrae hacia Bartolomé Mitre 434 comunidades de creadores digitales, artistas audiovisuales, live-coders e investigadores — perfiles que amplían el alcance cultural de la fundación hacia territorios emergentes.</p>
+                        </div>
+                        <div class="tile">
+                            <h3>Circuito contemporáneo global</h3>
+                            <p>Asociar ArtHaus a un festival alineado con plataformas internacionales de artes electrónicas lo inserta en la conversación global del arte y la tecnología, con una curaduría independiente y de vanguardia.</p>
+                        </div>
+                        <div class="tile">
+                            <h3>Programación de autor, lista para habitar</h3>
+                            <p>ArtHaus recibe un ecosistema curatorial completo — dirección artística, convocatoria de talento de primer nivel y diseño pedagógico — sin asumir la complejidad de construirlo desde cero.</p>
+                        </div>
+                    </div>
+                    <div class="info-panel">
+                        <p>Un programa que expande la identidad cultural de ArtHaus sin comprometer su línea institucional.</p>
+                    </div>
+                </div>
+                <div class="content-area" style="gap: 12px; justify-content: center;">
+                    <div style="position:relative; width:100%; aspect-ratio:9/14; overflow:hidden;">
+                        <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; display:block;"><source src="PARTICLES_1.mp4" type="video/mp4"></video>
+                    </div>
+                    <p class="festival-note">Partículas · visual generativo en tiempo real</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 11 EQUIPO ═══ -->
+        <div class="slide-container" id="slide-equipo">
+            <div class="ambient-grid"></div>
+            <div class="content-area">
+                <p class="accent-tag">Dirección y equipo</p>
+                <h2 class="slide-title">Dirección y <em>equipo</em></h2>
                 <div class="team-grid">
-                    <div class="team-name"><div class="dot"></div> Federico Perini <span class="role">Creative Lead 3D</span></div>
-                    <div class="team-name"><div class="dot"></div> Victor Alonso <span class="role">UX / 3D Artist</span></div>
-                    <div class="team-name"><div class="dot"></div> Javier Velazquez <span class="role">Creative Technologist</span></div>
-                    <div class="team-name"><div class="dot"></div> Carolina Piedrahita <span class="role">Producer</span></div>
-                    <div class="team-name team-name--you"><div class="dot"></div> Manuel Palenque <span class="role" style="color:var(--color-primary);opacity:0.8;">Lead Creative Technologist</span></div>
+                    <div class="team-member">
+                        <img src="manuelpalenque.png" alt="Manuel Palenque" style="width:80px; height:80px; border-radius:50%; object-fit:cover; margin-bottom:12px;">
+                        <span class="team-role">Dirección general & creativa</span>
+                        <h3>Manuel Palenque</h3>
+                        <p>Creative Technologist y artista visual con +15 años de experiencia en experiencias audiovisuales inmersivas e instalaciones interactivas. Mantiene una carrera dual como innovador de alto nivel en la industria y performer prolífico. Actualmente es Senior Creative Technologist en Superside, liderando proyectos inmersivos para líderes tecnológicos globales como Meta, Microsoft, NVIDIA y Reddit.</p>
+                        <p>Como artista y educador, desarrolló una extensa trayectoria internacional — performances, exhibiciones y workshops en Tokio, Hong Kong, Berlín, Barcelona, Bogotá y Ciudad de México. Dirigió sistemas de video técnico para shows de gran escala como Fuerza Bruta y desarrolló experiencias interactivas para Cirque du Soleil y el World Economic Forum.</p>
+                        <p>Cofundador y coordinador de DATARAIZ.io. Su práctica actual se centra en la integración de IA generativa, WebXR y motores en tiempo real, empujando constantemente los límites de la interacción humana en entornos digitales y físicos.</p>
+                        <p style="margin-top:10px; font-size:12px; font-family: var(--font-mono); letter-spacing: 0.06em;"><a href="https://drive.google.com/file/d/1kLrnObQFyhzh26G9HhrdDi8vIFDMCJCN/view" target="_blank" rel="noopener noreferrer" style="color: rgba(242,242,242,0.72); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.18);">Ver CV</a></p>
+                    </div>
+                    <div class="team-member">
+                        <img src="martinlopez.png" alt="Martín López Palermo" style="width:80px; height:80px; border-radius:50%; object-fit:cover; margin-bottom:12px;">
+                        <span class="team-role">Producción & estrategia tecnológica</span>
+                        <h3>Martín López Palermo</h3>
+                        <p>Ingeniero electrónico y tecnólogo creativo en la intersección de arte, ciencia y tecnología. +15 años desarrollando sistemas electrónicos, audiovisuales e interactivos en contextos artísticos, culturales y científicos.</p>
+                        <p>Desde 2007 trabaja de forma independiente en el campo multimedia: instalaciones interactivas, entornos escénicos, interfaces experimentales y sistemas tecnológicos a medida para artistas, instituciones y eventos de gran escala. Su práctica se fundamenta en electrónica, sistemas embebidos, tecnologías de sonido y video e interacción en tiempo real.</p>
+                        <p>Cofundador y coordinador de DATARAIZ.io. Actualmente trabaja en la industria biotecnológica liderando el desarrollo de sistemas tecnológicos innovadores — electrónica, automatización e ingeniería de sistemas — integrando investigación científica, diseño de ingeniería y colaboración interdisciplinaria.</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="ivana.png" alt="Ivana Lombroni" style="width:80px; height:80px; border-radius:50%; object-fit:cover; margin-bottom:12px;">
+                        <span class="team-role">Investigación & diseño de procesos culturales</span>
+                        <h3>Ivana Lombroni</h3>
+                        <p>Investigadora senior en innovación en la Universidad Politécnica de Madrid y diseñadora de procesos culturales. Su práctica se fundamenta en una arquitectura de meta-diseño sistémico desarrollada en su tesis doctoral sobre creación de Living Labs. +15 años de experiencia.</p>
+                        <p>Articula enfoques transdisciplinarios para la conceptualización, implementación colectiva y despliegue de intervenciones tecnológicas basadas en evidencia, entendiendo el arte y la creatividad como espacios de experimentación situada y producción de conocimiento.</p>
+                        <p>A través del diseño de dispositivos y metodologías participativas, explora nociones como territorio, ecosistema y agencia, activando procesos que conectan cuerpos, territorios y tecnologías mediante una lógica relacional. Radicada en Europa desde 2016, actualmente es directora del LifeSpace Living Lab en la Universidad.</p>
+                    </div>
                 </div>
             </div>
-            <div class="content-area">
-                <div style="background:rgba(216,255,133,0.04);border:1px solid rgba(216,255,133,0.12);border-radius:16px;padding:32px;height:100%;max-height:420px;display:flex;flex-direction:column;justify-content:center;gap:20px;">
-                    <p style="font-size:15px;line-height:1.7;">Without a central point of coordination, we risk:</p>
-                    <ul style="font-size:15px;">
-                        <li>Capacity bottlenecks at critical delivery moments</li>
-                        <li>Scoping errors on high-risk activations</li>
-                        <li>Client relationship gaps between projects</li>
-                        <li>Missed upsells on follow-on event work</li>
-                    </ul>
-                    <p style="font-size:14px;font-style:italic;font-family:var(--font-display);color:var(--color-text-muted);">"The talent is here. It needs a home."</p>
+        </div>
+
+        <!-- ═══ 13 MANIFIESTO ═══ -->
+        <div class="slide-container" id="slide-manifiesto">
+            <div class="ambient-noise"></div>
+            <div class="section-title-layout">
+                <img src="dtr.png" alt="Sello DataRaíz" style="width: min(180px, 22vw); height: auto; object-fit: contain; margin-bottom: 28px; opacity: 0.88; filter: saturate(0.92) contrast(1.04);">
+                <p class="label-tag">Manifiesto</p>
+                <h2>Manifiesto DataRaíz:<br><em>El futuro es colectivo</em></h2>
+                <p class="section-copy">Somos la interfaz crítica donde la tecnología de punta, la formación y el pulso de la pista se cruzan. DataRaíz es el ecosistema donde las marcas prueban su hardware en la vida real, los creadores expanden sus herramientas y el público vive la vanguardia electrónica desde adentro. Formá parte de la raíz.</p>
+                <div class="chip-row" style="justify-content:center; margin-top:28px;">
+                    <span class="chip">Formación</span>
+                    <span class="chip-divider">/</span>
+                    <span class="chip">Comunidad</span>
+                    <span class="chip-divider">/</span>
+                    <span class="chip">Experimentación</span>
+                    <span class="chip-divider">/</span>
+                    <span class="chip">Vanguardia</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 14 CIERRE ═══ -->
+        <div class="slide-container" id="slide-cierre" style="overflow:hidden; background:#0a0a0a;">
+            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+                <div style="width:60%; height:60%; position:relative;">
+                    <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; display:block; opacity:0.7;"><source src="bosque.mp4" type="video/mp4"></video>
+                    <div style="position:absolute; inset:-1px; background:
+                        linear-gradient(to right, #0a0a0a 0%, transparent 20%, transparent 80%, #0a0a0a 100%),
+                        linear-gradient(to bottom, #0a0a0a 0%, transparent 20%, transparent 80%, #0a0a0a 100%);
+                    "></div>
+                </div>
+            </div>
+            <div class="content-area" style="position:relative; z-index:1;">
+                <p class="accent-tag">Proyección & cierre</p>
+                <h2 class="slide-title">DataRaíz 2026: primera edición, base de una plataforma escalable</h2>
+                <div class="closing-grid">
+                    <div class="closing-panel">
+                        <h3>Formato cuidado e íntimo</h3>
+                        <p>La primera edición está pensada como un dispositivo preciso y potente: experiencia cercana, dirección curatorial fuerte y foco en calidad de vínculo.</p>
+                    </div>
+                    <div class="closing-panel">
+                        <h3>Crecimiento modular</h3>
+                        <p>El festival nace con capacidad de expandirse en futuras ediciones sin perder identidad, método ni profundidad de experiencia.</p>
+                    </div>
+                    <div class="closing-panel">
+                        <h3>Plataforma de formación y creación</h3>
+                        <p>Más que una fecha, DataRaíz se plantea como infraestructura cultural para sostener aprendizaje, experimentación y comunidad a largo plazo.</p>
+                    </div>
+                </div>
+                <div class="contact-strip">
+                    <div class="contact-item">
+                        <span>Web</span>
+                        <strong>dataraiz.io</strong>
+                    </div>
+                    <div class="contact-item">
+                        <span>Instagram</span>
+                        <strong>@dataraiz.talleres</strong>
+                    </div>
+                    <div class="contact-item">
+                        <span>Email</span>
+                        <strong>dataraiz.talleres@gmail.com</strong>
+                    </div>
+                </div>
+                <div class="pull-quote" style="margin-top: 24px;">
+                    <p>Buscamos aliados para co-crear la primera edición.</p>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 13 — THE VISION
-         ═══════════════════════════════════════════ -->
-    <div class="slide-container" id="slide-vision">
-        <div class="section-title-layout">
-            <p class="label-tag"><i class="fa fa-compass"></i> &nbsp;The Proposal</p>
-            <hr>
-            <h2>A cross-studio<br><em>Experiential Tech</em> team</h2>
-            <p>One team. One point of contact. Plugs into every Studio and delivers with confidence on every high-margin experiential opportunity Superside pursues.</p>
-            <div class="tiled-content" style="max-width:860px;margin-top:40px;">
-                <div class="tile" style="text-align:left;">
-                    <div class="icon"><i class="fa fa-bullhorn"></i></div>
-                    <h3>Technical Sales Lead</h3>
-                    <p>Own the client conversation on experiential proposals — from scoping to close. Speak both creative and engineering fluently.</p>
-                </div>
-                <div class="tile" style="text-align:left;">
-                    <div class="icon"><i class="fa fa-sliders"></i></div>
-                    <h3>Scope &amp; Resource Hub</h3>
-                    <p>Single point for approving technical scopes, allocating specialists, and preventing over-commitment across simultaneous projects.</p>
-                </div>
-                <div class="tile" style="text-align:left;">
-                    <div class="icon"><i class="fa fa-circle-check"></i></div>
-                    <h3>Flawless Execution</h3>
-                    <p>Accountable end-to-end. From concept deck to event floor — no handoff gaps, no execution surprises, no client second-guessing.</p>
-                </div>
-            </div>
-        </div>
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="flowchart-sidebar" id="flowchartSidebar"></div>
+
+    <div class="slide-indicator" id="slideIndicator">1 / 14</div>
+
+    <div class="controls-bar" aria-label="Controles de presentación">
+        <button class="control-button" type="button" onclick="prevSlide()" aria-label="Slide anterior">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <button class="control-button" type="button" onclick="nextSlide()" aria-label="Slide siguiente">
+            <i class="fa-solid fa-arrow-right"></i>
+        </button>
+        <div style="width:1px; height:20px; background:rgba(255,255,255,0.12); margin:0 4px;"></div>
+        <button class="control-button" type="button" id="btnDownloadPDF" onclick="exportPDF()" aria-label="Descargar PDF" title="Descargar PDF">
+            <i class="fa-solid fa-file-pdf"></i>
+        </button>
     </div>
 
-    <!-- ═══════════════════════════════════════════
-         SLIDE 14 — CLOSING: THE PRACTICE IS LIVE
-         ═══════════════════════════════════════════ -->
-    <div class="slide-container" id="slide-whynow">
-        <div class="closing-unified">
-            <div class="closing-unified__header">
-                <p class="accent-tag" style="font-size:13px;margin-bottom:16px;"><i class="fa fa-bullhorn"></i> &nbsp;The Next Step</p>
-                <h2 style="font-family:var(--font-display);font-size:52px;font-weight:400;color:var(--color-white);margin:0 0 16px;">Superside needs to know<br><em style="color:var(--color-primary);">what we can build.</em></h2>
-                <p style="font-size:16px;color:var(--color-text-muted);max-width:720px;line-height:1.6;">The capability is real, the team is here, and the results speak for themselves. The missing piece is visibility — making sure every Studio at Superside knows to bring us in when the opportunity calls for something extraordinary.</p>
-            </div>
-            <div class="closing-unified__grid">
-                <div class="cu-tile">
-                    <div class="cu-tile__icon"><i class="fa fa-sitemap"></i></div>
-                    <div>
-                        <h4>One Clear Point of Contact</h4>
-                        <p>Any Studio, any client, any brief with an experiential angle — one person to call who knows exactly what's possible and how to scope it.</p>
-                    </div>
-                </div>
-                <div class="cu-tile">
-                    <div class="cu-tile__icon"><i class="fa fa-wand-magic-sparkles"></i></div>
-                    <div>
-                        <h4>Capabilities Most Studios Don't Know Exist</h4>
-                        <p>Real-time 3D, AI pipelines, interactive event tech, custom games — this is already being delivered. It just isn't visible across the organization yet.</p>
-                    </div>
-                </div>
-                <div class="cu-tile">
-                    <div class="cu-tile__icon"><i class="fa fa-arrow-up-right-dots"></i></div>
-                    <div>
-                        <h4>Every Studio Is a Growth Channel</h4>
-                        <p>The more Studios that know what we offer, the more enterprise clients get exposed to it — and the bigger the pipeline of high-margin experiential work.</p>
-                    </div>
-                </div>
-                <div class="cu-tile">
-                    <div class="cu-tile__icon"><i class="fa fa-circle-nodes"></i></div>
-                    <div>
-                        <h4>Internal Visibility = External Revenue</h4>
-                        <p>Formalizing this role creates a feedback loop: Studios bring leads, we deliver, clients scale — and Superside owns a space no other agency can match.</p>
-                    </div>
-                </div>
-            </div>
-            <div class="closing-unified__footer">
-            </div>
-        </div>
-    </div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Observer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.2/jspdf.umd.min.js"></script>
+    <script src="animations.js"></script>
+    <script src="gsap-animations.js"></script>
+    <script>
+    /* ═══ PDF EXPORT ═══ */
+    async function exportPDF() {
+        const btn = document.getElementById('btnDownloadPDF');
+        const icon = btn.querySelector('i');
+        const origClass = icon.className;
+        icon.className = 'fa-solid fa-spinner fa-spin';
+        btn.style.pointerEvents = 'none';
 
-</div><!-- /slides-wrapper -->
+        const indicator = document.getElementById('slideIndicator');
+        const origIndicator = indicator ? indicator.innerText : '';
 
-<!-- ── TILE LIGHTBOX OVERLAY ── -->
-<div id="tile-lightbox">
-    <div id="tile-lightbox-inner"></div>
-</div>
+        try {
+            const { jsPDF } = window.jspdf;
+            const slides = Array.from(document.querySelectorAll('.slide-container:not(.gsap-clone)'));
+            const totalSlides = slides.length;
 
-<!-- ── INDICATOR & CONTROLS ── -->
-<div class="slide-indicator" id="slideIndicator">1 / 14</div>
+            /* Work at 1920×1080 for crisp PDF */
+            const W = 1920;
+            const H = 1080;
 
-<!-- ── SCRIPTS ── -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Observer.min.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"></script>
-<script src="animations.js"></script>
-<script src="gsap-animations.js"></script>
-<script>
-    function attachVideoLoadingState(video) {
-        if (!video || video.dataset.loadingBound === 'true') return;
+            const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [W, H], compress: true });
 
-        var shell = video.parentElement;
-        if (!shell) return;
+            /* Hide UI elements */
+            const controlsBar = document.querySelector('.controls-bar');
+            const slideInd = document.querySelector('.slide-indicator');
+            if (controlsBar) controlsBar.style.display = 'none';
+            if (slideInd) slideInd.style.display = 'none';
 
-        shell.classList.add('video-loading-shell');
+            for (let i = 0; i < totalSlides; i++) {
+                if (indicator) indicator.innerText = `Exportando ${i + 1} / ${totalSlides}…`;
 
-        var label = video.getAttribute('data-loading-label') || 'Loading video';
-        var subtitle = video.getAttribute('data-loading-subtitle') || 'Preparing media';
-        var overlay = shell.querySelector(':scope > .video-loading-overlay');
-
-        if (!overlay) {
-            overlay = document.createElement('div');
-            overlay.className = 'video-loading-overlay';
-            overlay.innerHTML = [
-                '<div class="video-loading-card">',
-                    '<div class="video-loading-ring"></div>',
-                    '<div class="video-loading-title">Loading</div>',
-                    '<div class="video-loading-subtitle"></div>',
-                    '<div class="video-loading-bar"></div>',
-                '</div>'
-            ].join('');
-            shell.appendChild(overlay);
-        }
-
-        var subtitleEl = overlay.querySelector('.video-loading-subtitle');
-        if (subtitleEl) subtitleEl.textContent = subtitle || label;
-
-        function setReady(isReady) {
-            shell.classList.toggle('video-ready', !!isReady);
-            if (isReady) shell.classList.remove('video-error');
-        }
-
-        function setError() {
-            shell.classList.remove('video-ready');
-            shell.classList.add('video-error');
-            if (subtitleEl) subtitleEl.textContent = 'Still fetching media…';
-        }
-
-        function checkReady() {
-            if (video.readyState >= 2) setReady(true);
-        }
-
-        video.dataset.loadingBound = 'true';
-        if (!video.getAttribute('preload')) {
-            video.setAttribute('preload', video.autoplay ? 'auto' : 'metadata');
-        }
-
-        if (video.readyState < 2) {
-            shell.classList.remove('video-ready');
-        } else {
-            setReady(true);
-        }
-
-        video.addEventListener('loadeddata', checkReady);
-        video.addEventListener('canplay', checkReady);
-        video.addEventListener('playing', checkReady);
-        video.addEventListener('error', setError);
-    }
-
-    function initVideoLoadingStates(root) {
-        (root || document).querySelectorAll('video').forEach(function(video) {
-            attachVideoLoadingState(video);
-        });
-    }
-
-    initVideoLoadingStates(document);
-
-    // Hover video play/pause for all .tile-media elements
-    document.querySelectorAll('.tile-media').forEach(function(el) {
-        var vid = el.querySelector('.hover-vid');
-        if (!vid) return;
-        el.addEventListener('mouseenter', function() { vid.currentTime = 0; vid.play(); });
-        el.addEventListener('mouseleave', function() { vid.pause(); vid.currentTime = 0; });
-    });
-
-    // Tile-media lightbox
-    (function() {
-        var lb     = document.getElementById('tile-lightbox');
-        var lbIn   = document.getElementById('tile-lightbox-inner');
-        var lbVid  = null;
-
-        function openLightbox(src, isVideo) {
-            lbIn.innerHTML = '';
-            lbVid = null;
-            if (isVideo) {
-                var v = document.createElement('video');
-                v.src = src;
-                v.autoplay = true;
-                v.loop = true;
-                v.muted = true;
-                v.preload = 'auto';
-                v.setAttribute('data-loading-subtitle', 'Opening preview');
-                v.setAttribute('playsinline', '');
-                lbIn.appendChild(v);
-                lbVid = v;
-                attachVideoLoadingState(v);
-                v.play();
-            } else {
-                var img = document.createElement('img');
-                img.src = src;
-                lbIn.appendChild(img);
-            }
-            lb.classList.add('open');
-        }
-
-        function closeLightbox() {
-            lb.classList.remove('open');
-            setTimeout(function() {
-                if (lbVid) { lbVid.pause(); }
-                lbIn.innerHTML = '';
-                lbVid = null;
-            }, 380);
-        }
-
-        // Click backdrop to close
-        lb.addEventListener('click', function(e) {
-            if (e.target === lb) closeLightbox();
-        });
-
-        // ESC to close
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') closeLightbox();
-        });
-
-        // Wire up click on the whole tile to open lightbox
-        document.querySelectorAll('.tile-media').forEach(function(tile) {
-            tile.style.cursor = 'pointer';
-            tile.addEventListener('click', function(e) {
-                if (e.target.closest('a, button')) return;
-                var vid = tile.querySelector('.hover-vid');
-                var img = tile.querySelector('.hover-img');
-                if (vid) {
-                    openLightbox(vid.getAttribute('src'), true);
-                } else if (img) {
-                    openLightbox(img.getAttribute('src'), false);
-                }
-            });
-        });
-    })();
-
-    // Floating comment popups — animate in when slide becomes active
-    (function () {
-        function initSlidePopup(slideId, popupId, delay) {
-            const slide = document.getElementById(slideId);
-            const popup = document.getElementById(popupId);
-            if (!slide || !popup) return;
-
-            let wasActive = false;
-            let animTimer = null;
-
-            new MutationObserver(function () {
-                const isActive = slide.classList.contains('active');
-                if (isActive === wasActive) return; // no real change
-                wasActive = isActive;
-
-                if (isActive) {
-                    clearTimeout(animTimer);
-                    if (window.gsap) {
-                        gsap.killTweensOf(popup);
-                        gsap.set(popup, { opacity: 0, y: 22 });
-                        animTimer = setTimeout(function () {
-                            gsap.to(popup, { opacity: 1, y: 0, duration: 0.6, ease: 'back.out(1.3)' });
-                        }, delay || 450);
+                /* Make only this slide visible */
+                slides.forEach((s, idx) => {
+                    if (idx === i) {
+                        s.style.opacity = '1';
+                        s.style.visibility = 'visible';
+                        s.style.pointerEvents = 'auto';
+                        s.classList.add('active');
+                    } else {
+                        s.style.opacity = '0';
+                        s.style.visibility = 'hidden';
+                        s.style.pointerEvents = 'none';
+                        s.classList.remove('active');
                     }
-                } else {
-                    clearTimeout(animTimer);
-                    if (window.gsap) gsap.set(popup, { opacity: 0, y: 22 });
+                });
+
+                /* Replace videos with canvas frames */
+                const videos = slides[i].querySelectorAll('video');
+                const videoData = [];
+                for (const video of videos) {
+                    try {
+                        if (video.readyState < 2) {
+                            await new Promise((resolve) => {
+                                video.addEventListener('loadeddata', resolve, { once: true });
+                                setTimeout(resolve, 2000);
+                            });
+                        }
+                        const vc = document.createElement('canvas');
+                        vc.width = video.videoWidth || video.clientWidth || 400;
+                        vc.height = video.videoHeight || video.clientHeight || 300;
+                        const vCtx = vc.getContext('2d');
+                        vCtx.drawImage(video, 0, 0, vc.width, vc.height);
+
+                        const img = document.createElement('img');
+                        img.src = vc.toDataURL('image/jpeg', 0.92);
+                        img.style.cssText = window.getComputedStyle(video).cssText;
+                        img.style.width = video.getBoundingClientRect().width + 'px';
+                        img.style.height = video.getBoundingClientRect().height + 'px';
+                        img.style.objectFit = window.getComputedStyle(video).objectFit || 'cover';
+                        img.style.display = 'block';
+
+                        videoData.push({ video, img, parent: video.parentNode });
+                        video.parentNode.insertBefore(img, video);
+                        video.style.display = 'none';
+                    } catch (e) {
+                        console.warn('Could not capture video frame:', e);
+                    }
                 }
-            }).observe(slide, { attributes: true, attributeFilter: ['class'] });
+
+                /* Wait for layout */
+                await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+                /* Capture */
+                const canvas = await html2canvas(slides[i], {
+                    width: W,
+                    height: H,
+                    scale: 2,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#0a0a0a',
+                    logging: false,
+                    windowWidth: W,
+                    windowHeight: H,
+                    onclone: (clonedDoc) => {
+                        const clonedSlide = clonedDoc.querySelectorAll('.slide-container')[i];
+                        if (clonedSlide) {
+                            clonedSlide.style.position = 'relative';
+                            clonedSlide.style.width = W + 'px';
+                            clonedSlide.style.height = H + 'px';
+                        }
+                    }
+                });
+
+                /* Restore videos */
+                for (const vd of videoData) {
+                    vd.video.style.display = '';
+                    if (vd.img.parentNode) vd.img.parentNode.removeChild(vd.img);
+                }
+
+                /* Add page */
+                if (i > 0) pdf.addPage([W, H], 'landscape');
+                const imgData = canvas.toDataURL('image/jpeg', 0.92);
+                pdf.addImage(imgData, 'JPEG', 0, 0, W, H);
+            }
+
+            /* Restore slide state */
+            slides.forEach((s, idx) => {
+                s.style.opacity = '';
+                s.style.visibility = '';
+                s.style.pointerEvents = '';
+                s.classList.remove('active');
+            });
+            slides[currentIndex].classList.add('active');
+            if (controlsBar) controlsBar.style.display = '';
+            if (slideInd) slideInd.style.display = '';
+            if (indicator) indicator.innerText = origIndicator;
+
+            pdf.save('DataRaiz-CicloNegro-Dossier.pdf');
+
+        } catch (err) {
+            console.error('PDF export failed:', err);
+            alert('Error al exportar PDF: ' + err.message);
+        } finally {
+            icon.className = origClass;
+            btn.style.pointerEvents = '';
+            const controlsBar = document.querySelector('.controls-bar');
+            const slideInd = document.querySelector('.slide-indicator');
+            if (controlsBar) controlsBar.style.display = '';
+            if (slideInd) slideInd.style.display = '';
+            if (indicator) indicator.innerText = origIndicator;
         }
-
-        function initFloatingCommentPopups() {
-            initSlidePopup('slide-vasteroids', 'vasteroids-comment', 450);
-            initSlidePopup('slide-reddit', 'reddit-comment', 450);
-        }
-
-        if (document.readyState === 'loading') {
-            document.addEventListener('DOMContentLoaded', initFloatingCommentPopups);
-        } else {
-            initFloatingCommentPopups();
-        }
-    })();
-</script>
-
-<!-- React + ReactFlow (UMD) for workflow slide -->
-<script src="https://unpkg.com/react@18/umd/react.production.min.js"></script>
-<script src="https://unpkg.com/react-dom@18/umd/react-dom.production.min.js"></script>
-<script src="https://unpkg.com/reactflow@11.11.4/dist/umd/index.js"></script>
-<script src="workflow-flow.js"></script>
-
+    }
+    </script>
 </body>
 </html>

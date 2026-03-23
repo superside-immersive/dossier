@@ -1,0 +1,1464 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DataRaíz Ciclo Negro — Presentación 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --color-primary: #f4f4f4;
+            --color-primary-soft: rgba(255, 255, 255, 0.1);
+            --color-secondary: #b8b8b8;
+            --color-accent: #8d8d8d;
+            --color-bg: #0a0a0a;
+            --color-bg-soft: #111111;
+            --color-panel: rgba(18, 18, 18, 0.92);
+            --color-panel-strong: rgba(10, 10, 10, 0.98);
+            --color-border: rgba(255, 255, 255, 0.09);
+            --color-white: #f2f2f2;
+            --color-text: rgba(242, 242, 242, 0.92);
+            --color-muted: rgba(242, 242, 242, 0.54);
+            --color-dark-text: #11141c;
+            --font-main: 'Space Grotesk', sans-serif;
+            --font-title: 'Space Grotesk', sans-serif;
+            --font-display: 'Space Grotesk', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+            --shadow-soft: 0 18px 50px rgba(0, 0, 0, 0.28);
+            --shadow-strong: 0 32px 90px rgba(0, 0, 0, 0.42);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html,
+        body {
+            width: 100%;
+            height: 100%;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(180deg, #0a0a0a 0%, #111111 100%);
+            background-size: 56px 56px, 56px 56px, 100% 100%;
+            color: var(--color-text);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .slides-wrapper {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+        }
+
+        .slide-container {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 58px 72px 86px;
+            background: linear-gradient(180deg, rgba(11, 11, 11, 0.96) 0%, rgba(17, 17, 17, 0.95) 100%);
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            overflow: hidden;
+        }
+
+        .slide-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        .slide--light {
+            background: linear-gradient(180deg, rgba(12, 12, 12, 0.98) 0%, rgba(18, 18, 18, 0.97) 100%);
+            color: var(--color-white);
+        }
+
+        .slide--light p,
+        .slide--light li,
+        .slide--light .eyebrow,
+        .slide--light .meta-line,
+        .slide--light .chip,
+        .slide--light .kpi-label,
+        .slide--light .schedule-label,
+        .slide--light .list-note {
+            color: rgba(242, 242, 242, 0.54);
+        }
+
+        .slide--light .slide-title,
+        .slide--light h1,
+        .slide--light h2,
+        .slide--light h3,
+        .slide--light h4,
+        .slide--light strong,
+        .slide--light .stat-hero {
+            color: var(--color-white);
+        }
+
+        .slide--light .card,
+        .slide--light .tile,
+        .slide--light .info-panel,
+        .slide--light .schedule-band,
+        .slide--light .persona-card,
+        .slide--light .program-column,
+        .slide--light .speaker-list,
+        .slide--light .contact-strip,
+        .slide--light .closing-panel,
+        .slide--light .team-member {
+            background: rgba(18, 18, 18, 0.92);
+            border-color: rgba(255, 255, 255, 0.09);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .ambient-grid,
+        .ambient-noise {
+            position: absolute;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .ambient-grid {
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255, 255, 255, 0.03) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, 0.03) 1px, transparent 1px);
+            background-size: 56px 56px;
+            mask-image: radial-gradient(circle at center, black 30%, transparent 85%);
+            opacity: 0.5;
+        }
+
+        .ambient-noise {
+            inset: 0;
+            opacity: 0.04;
+            background-image: radial-gradient(rgba(255, 255, 255, 0.5) 0.7px, transparent 0.7px);
+            background-size: 18px 18px;
+        }
+
+        .content-stack,
+        .title-layout,
+        .section-title-layout,
+        .two-column,
+        .content-area,
+        .content-container {
+            position: relative;
+            z-index: 1;
+        }
+
+        .title-layout,
+        .section-title-layout {
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            height: 100%;
+        }
+
+        .title-layout h1,
+        .section-title-layout h2 {
+            font-family: var(--font-title);
+            font-weight: 700;
+            line-height: 0.94;
+            letter-spacing: -0.05em;
+            text-transform: uppercase;
+        }
+
+        .title-layout h1 {
+            font-size: clamp(4.2rem, 8vw, 7.9rem);
+            max-width: 960px;
+            font-weight: 700;
+        }
+
+        .title-layout h1 em,
+        .section-title-layout h2 em,
+        .hero-kicker em,
+        .stat-hero em,
+        .slide-title em {
+            font-family: var(--font-title);
+            font-style: normal;
+            color: var(--color-primary);
+        }
+
+        .eyebrow,
+        .accent-tag,
+        .label-tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 12px;
+            letter-spacing: 0.18em;
+            text-transform: uppercase;
+            color: rgba(242, 242, 242, 0.48);
+            font-weight: 700;
+            margin-bottom: 18px;
+            font-family: var(--font-mono);
+        }
+
+        .subtitle,
+        .hero-kicker,
+        .hero-intro,
+        .section-copy,
+        .lead,
+        p,
+        li {
+            color: var(--color-muted);
+            font-size: 17px;
+            line-height: 1.6;
+        }
+
+        .hero-kicker {
+            max-width: 900px;
+            font-size: 22px;
+            margin-top: 16px;
+            color: rgba(242, 242, 242, 0.78);
+            font-family: var(--font-main);
+            text-transform: uppercase;
+            letter-spacing: 0.16em;
+        }
+
+        .hero-intro {
+            max-width: 760px;
+            margin-top: 24px;
+            font-size: 15px;
+            font-family: var(--font-mono);
+            letter-spacing: 0.06em;
+            text-transform: uppercase;
+        }
+
+        .meta-line {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            margin-top: 34px;
+            color: rgba(242, 242, 242, 0.38);
+            font-size: 13px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+        }
+
+        .slide-title {
+            font-family: var(--font-title);
+            font-weight: 700;
+            font-size: clamp(2.3rem, 4vw, 3.6rem);
+            line-height: 0.98;
+            color: var(--color-white);
+            border-left: 4px solid rgba(255, 255, 255, 0.18);
+            padding-left: 16px;
+            margin-bottom: 20px;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+        }
+
+        .section-title-layout h2 {
+            font-size: clamp(3.2rem, 6vw, 5.3rem);
+            max-width: 980px;
+        }
+
+        .section-copy {
+            max-width: 760px;
+            margin-top: 22px;
+        }
+
+        .two-column {
+            display: grid;
+            grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
+            gap: 28px;
+            align-items: stretch;
+            min-height: 0;
+        }
+
+        .two-column.equal {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .content-area,
+        .content-container {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+            min-height: 0;
+        }
+
+        .card,
+        .tile,
+        .info-panel,
+        .persona-card,
+        .schedule-band,
+        .program-column,
+        .speaker-list,
+        .contact-strip,
+        .closing-panel,
+        .team-member {
+            background: var(--color-panel);
+            border: 1px solid var(--color-border);
+            border-radius: 24px;
+            box-shadow: var(--shadow-soft);
+            backdrop-filter: blur(14px);
+        }
+
+        .card,
+        .tile,
+        .program-column,
+        .speaker-list,
+        .closing-panel,
+        .team-member {
+            padding: 22px 22px 20px;
+        }
+
+        .info-panel,
+        .persona-card,
+        .schedule-band,
+        .contact-strip {
+            padding: 24px;
+        }
+
+        .lead {
+            font-size: 19px;
+            color: rgba(246, 247, 251, 0.78);
+        }
+
+        .slide--light .lead,
+        .slide--light .hero-intro,
+        .slide--light .hero-kicker {
+            color: rgba(242, 242, 242, 0.76);
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 16px;
+        }
+
+        .card-grid.three,
+        .tiled-content.three {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .tiled-content.four,
+        .card-grid.four {
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+        }
+
+        .tiled-content {
+            display: grid;
+            gap: 16px;
+            margin-top: 12px;
+        }
+
+        .tile .icon,
+        .card .icon {
+            width: 46px;
+            height: 46px;
+            border-radius: 14px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--color-primary);
+            font-size: 18px;
+            margin-bottom: 14px;
+        }
+
+        .slide--light .tile .icon,
+        .slide--light .card .icon {
+            color: var(--color-primary);
+            background: rgba(255, 255, 255, 0.06);
+        }
+
+        h2,
+        h3,
+        h4,
+        strong {
+            color: var(--color-white);
+        }
+
+        h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+            font-weight: 600;
+        }
+
+        h4 {
+            font-size: 15px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            color: rgba(246, 247, 251, 0.92);
+            font-family: var(--font-mono);
+        }
+
+        ul.clean-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 14px;
+        }
+
+        ul.clean-list li,
+        .check-list li {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+        }
+
+        .bullet {
+            width: 28px;
+            height: 28px;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--color-primary);
+            flex-shrink: 0;
+            margin-top: 1px;
+            font-size: 11px;
+        }
+
+        .slide--light .bullet {
+            background: rgba(255, 255, 255, 0.08);
+            color: var(--color-primary);
+        }
+
+        .chip-row,
+        .tag-row,
+        .kpi-row {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .chip,
+        .tag {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 14px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            font-size: 13px;
+            color: var(--color-muted);
+            font-family: var(--font-mono);
+            text-transform: uppercase;
+            letter-spacing: 0.08em;
+        }
+
+        .slide--light .chip,
+        .slide--light .tag {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .stat-hero {
+            font-family: var(--font-title);
+            font-size: clamp(3.2rem, 6vw, 5.5rem);
+            line-height: 0.95;
+            color: var(--color-white);
+            margin-bottom: 16px;
+            letter-spacing: -0.04em;
+            text-transform: uppercase;
+            font-weight: 700;
+        }
+
+        .kpi-row {
+            margin-top: 14px;
+        }
+
+        .kpi-card {
+            min-width: 150px;
+            padding: 16px 18px;
+            border-radius: 20px;
+            background: rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .slide--light .kpi-card {
+            background: rgba(255, 255, 255, 0.04);
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .kpi-value {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--color-white);
+            line-height: 1;
+            margin-bottom: 7px;
+        }
+
+        .slide--light .kpi-value {
+            color: var(--color-white);
+        }
+
+        .kpi-label {
+            font-size: 12px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: var(--color-muted);
+        }
+
+        .pull-quote {
+            padding: 26px 28px;
+            border-radius: 26px;
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: var(--shadow-soft);
+        }
+
+        .pull-quote p {
+            font-family: var(--font-main);
+            font-size: 24px;
+            line-height: 1.35;
+            color: rgba(246, 247, 251, 0.9);
+            text-transform: uppercase;
+            letter-spacing: 0.04em;
+        }
+
+        .slide--light .pull-quote {
+            background: linear-gradient(145deg, rgba(255, 255, 255, 0.06), rgba(255, 255, 255, 0.03));
+            border-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .slide--light .pull-quote p {
+            color: rgba(242, 242, 242, 0.9);
+        }
+
+        .schedule-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .schedule-label {
+            font-size: 12px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: var(--color-primary);
+            font-weight: 700;
+            margin-bottom: 10px;
+        }
+
+        .slide--light .schedule-label {
+            color: rgba(242, 242, 242, 0.5);
+        }
+
+        .program-grid,
+        .audience-grid,
+        .alliance-grid,
+        .partnership-grid,
+        .team-grid,
+        .pillar-grid,
+        .closing-grid {
+            display: grid;
+            gap: 16px;
+        }
+
+        .program-grid {
+            grid-template-columns: 1.2fr 0.8fr;
+            margin-top: 18px;
+        }
+
+        .audience-grid,
+        .alliance-grid,
+        .partnership-grid,
+        .pillar-grid,
+        .closing-grid,
+        .team-grid {
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+        }
+
+        .program-column h3,
+        .speaker-list h3,
+        .persona-card h3,
+        .closing-panel h3,
+        .team-member h3 {
+            margin-bottom: 12px;
+        }
+
+        .program-list,
+        .speaker-items,
+        .check-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .program-list li,
+        .speaker-items li,
+        .check-list li {
+            padding: 14px 0 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.08);
+        }
+
+        .slide--light .program-list li,
+        .slide--light .speaker-items li,
+        .slide--light .check-list li {
+            border-top-color: rgba(255, 255, 255, 0.08);
+        }
+
+        .program-list li:first-child,
+        .speaker-items li:first-child,
+        .check-list li:first-child {
+            border-top: none;
+            padding-top: 0;
+        }
+
+        .list-note {
+            font-size: 13px;
+            color: var(--color-muted);
+        }
+
+        .speaker-title {
+            display: block;
+            font-size: 15px;
+            font-weight: 700;
+            color: var(--color-white);
+            margin-bottom: 4px;
+        }
+
+        .slide--light .speaker-title {
+            color: var(--color-white);
+        }
+
+        .speaker-caption {
+            font-size: 14px;
+            color: var(--color-muted);
+        }
+
+        .persona-card .persona-badge,
+        .team-role {
+            display: inline-flex;
+            margin-bottom: 12px;
+            padding: 7px 11px;
+            border-radius: 999px;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--color-primary);
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+        }
+
+        .slide--light .persona-card .persona-badge,
+        .slide--light .team-role {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--color-primary);
+        }
+
+        .contact-strip {
+            margin-top: 20px;
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 14px;
+        }
+
+        .contact-item {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            min-width: 0;
+        }
+
+        .contact-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 12px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--color-primary);
+            flex-shrink: 0;
+        }
+
+        .slide--light .contact-icon {
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--color-primary);
+        }
+
+        .contact-item span {
+            display: block;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.12em;
+            color: rgba(242, 242, 242, 0.42);
+            margin-bottom: 3px;
+            font-family: var(--font-mono);
+        }
+
+        .contact-item strong {
+            font-size: 16px;
+            font-weight: 600;
+            word-break: break-word;
+        }
+
+        .cover-subline {
+            width: min(490px, 72vw);
+            margin-top: 26px;
+            padding: 16px 0 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.12);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.12);
+            text-align: center;
+            font-family: var(--font-mono);
+            font-size: 15px;
+            letter-spacing: 0.42em;
+            text-transform: uppercase;
+            color: rgba(242, 242, 242, 0.46);
+        }
+
+        .closing-panel {
+            min-height: 220px;
+        }
+
+        .controls-bar {
+            position: fixed;
+            left: 50%;
+            bottom: 20px;
+            transform: translateX(-50%);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            z-index: 20;
+            padding: 10px 12px;
+            border-radius: 999px;
+            background: rgba(10, 10, 10, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 20px 50px rgba(0, 0, 0, 0.34);
+        }
+
+        .control-button {
+            width: 44px;
+            height: 44px;
+            border: none;
+            border-radius: 999px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.06);
+            color: var(--color-white);
+            cursor: pointer;
+            transition: transform 0.2s ease, background 0.2s ease;
+        }
+
+        .control-button:hover {
+            transform: translateY(-2px);
+            background: rgba(255, 255, 255, 0.12);
+        }
+
+        .slide-indicator {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 20;
+            padding: 12px 16px;
+            border-radius: 999px;
+            background: rgba(10, 10, 10, 0.88);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            color: var(--color-white);
+            font-size: 12px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            backdrop-filter: blur(14px);
+            font-family: var(--font-mono);
+        }
+
+        .flowchart-sidebar,
+        .sidebar-overlay {
+            display: none;
+        }
+
+        body.grid-view {
+            overflow: hidden;
+        }
+
+        body.grid-view .slides-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            grid-auto-rows: 220px;
+            gap: 12px;
+            width: 100vw;
+            max-height: 100vh;
+            padding: 12px 12px 86px;
+            overflow-y: auto;
+        }
+
+        body.grid-view .slide-container {
+            position: relative;
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+            padding: 20px 22px 34px;
+            border-radius: 18px;
+            height: 100%;
+            box-shadow: var(--shadow-soft);
+        }
+
+        body.grid-view .slide-container::after {
+            content: attr(data-slide-num);
+            position: absolute;
+            right: 12px;
+            bottom: 12px;
+            width: 24px;
+            height: 24px;
+            border-radius: 999px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.9);
+            color: #10141c;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        body.grid-view .slide-title {
+            font-size: 24px;
+            padding-left: 12px;
+            border-left-width: 5px;
+            margin-bottom: 12px;
+        }
+
+        body.grid-view .title-layout h1,
+        body.grid-view .section-title-layout h2 {
+            font-size: 32px;
+        }
+
+        body.grid-view .hero-kicker,
+        body.grid-view .hero-intro,
+        body.grid-view p,
+        body.grid-view li,
+        body.grid-view .lead,
+        body.grid-view .speaker-caption {
+            font-size: 11px;
+            line-height: 1.35;
+        }
+
+        body.grid-view .card-grid,
+        body.grid-view .tiled-content,
+        body.grid-view .schedule-grid,
+        body.grid-view .program-grid,
+        body.grid-view .audience-grid,
+        body.grid-view .alliance-grid,
+        body.grid-view .partnership-grid,
+        body.grid-view .team-grid,
+        body.grid-view .pillar-grid,
+        body.grid-view .closing-grid,
+        body.grid-view .two-column,
+        body.grid-view .contact-strip {
+            gap: 8px;
+        }
+
+        body.grid-view .card,
+        body.grid-view .tile,
+        body.grid-view .program-column,
+        body.grid-view .speaker-list,
+        body.grid-view .persona-card,
+        body.grid-view .team-member,
+        body.grid-view .closing-panel,
+        body.grid-view .info-panel,
+        body.grid-view .schedule-band,
+        body.grid-view .contact-strip {
+            padding: 12px;
+            border-radius: 14px;
+        }
+
+        body.grid-view .icon,
+        body.grid-view .contact-icon,
+        body.grid-view .bullet {
+            transform: scale(0.82);
+            transform-origin: left top;
+            margin-bottom: 6px;
+        }
+
+        body.grid-view .controls-bar {
+            display: none;
+        }
+
+        @media (max-width: 1180px) {
+            .slide-container {
+                padding: 42px 34px 86px;
+            }
+
+            .two-column,
+            .program-grid,
+            .audience-grid,
+            .alliance-grid,
+            .partnership-grid,
+            .team-grid,
+            .pillar-grid,
+            .closing-grid,
+            .schedule-grid,
+            .contact-strip,
+            .card-grid.three,
+            .card-grid.four,
+            .tiled-content.three,
+            .tiled-content.four {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+        }
+
+        @media (max-width: 820px) {
+            .slide-container {
+                padding: 28px 20px 92px;
+                overflow-y: auto;
+            }
+
+            .two-column,
+            .program-grid,
+            .audience-grid,
+            .alliance-grid,
+            .partnership-grid,
+            .team-grid,
+            .pillar-grid,
+            .closing-grid,
+            .schedule-grid,
+            .contact-strip,
+            .card-grid,
+            .tiled-content {
+                grid-template-columns: 1fr;
+            }
+
+            .title-layout h1,
+            .section-title-layout h2,
+            .stat-hero {
+                font-size: clamp(2.8rem, 12vw, 4.4rem);
+            }
+
+            .controls-bar {
+                bottom: 14px;
+            }
+
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-wrapper">
+        <div class="slide-container active" id="slide-cover">
+            <div class="ambient-grid"></div>
+            <div class="ambient-noise"></div>
+            <div class="title-layout">
+                <p class="eyebrow"><i class="fa-solid fa-circle"></i> Portada</p>
+                <h1>DataRaíz<br><em>Ciclo Negro</em></h1>
+                <div class="cover-subline">Contraste Inmersivo</div>
+                <p class="hero-intro">Laboratorio de experimentación viva / Argentina, edición 2026</p>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide-contexto">
+            <div class="ambient-grid"></div>
+            <div class="two-column equal">
+                <div class="content-area">
+                    <p class="accent-tag"><i class="fa-solid fa-triangle-exclamation"></i> El escenario actual</p>
+                    <h2 class="slide-title">Un ecosistema de <em>silos</em></h2>
+                    <p class="lead">El arte, la tecnología y la ciencia siguen atrapados en órbitas aisladas. La técnica avanza con velocidad, pero el acceso a herramientas de vanguardia todavía está concentrado y deja a gran parte de la escena sin plataformas reales de cruce.</p>
+                    <ul class="clean-list">
+                        <li>
+                            <span class="bullet"><i class="fa-solid fa-code-branch"></i></span>
+                            <span>La innovación queda en manos de pocos cuando la producción artística no puede acceder a infraestructura, transferencia técnica y comunidad.</span>
+                        </li>
+                        <li>
+                            <span class="bullet"><i class="fa-solid fa-bolt"></i></span>
+                            <span>La escena local hierve: hay talento, urgencia creativa y deseo de hibridación, pero faltan espacios que rompan la inercia disciplinar.</span>
+                        </li>
+                        <li>
+                            <span class="bullet"><i class="fa-solid fa-circle-nodes"></i></span>
+                            <span>La oportunidad está en crear un territorio común donde código, materia y teoría se fundan sin jerarquías.</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="content-area">
+                    <div class="pull-quote">
+                        <p>“No necesitamos más compartimentos estancos, sino un punto de encuentro real para una escena que no acepta fronteras.”</p>
+                    </div>
+                    <div class="card-grid">
+                        <div class="card">
+                            <div class="icon"><i class="fa-solid fa-unlock"></i></div>
+                            <h3>Acceso</h3>
+                            <p>Democratizar herramientas, procesos y metodologías que hoy permanecen encapsuladas.</p>
+                        </div>
+                        <div class="card">
+                            <div class="icon"><i class="fa-solid fa-people-arrows"></i></div>
+                            <h3>Convergencia</h3>
+                            <p>Activar cruces reales entre artistas, tecnólogos, científicos, productores y gestores.</p>
+                        </div>
+                        <div class="card">
+                            <div class="icon"><i class="fa-solid fa-seedling"></i></div>
+                            <h3>Escena local</h3>
+                            <p>Canalizar la potencia creativa ya existente hacia una infraestructura compartida y sostenible.</p>
+                        </div>
+                        <div class="card">
+                            <div class="icon"><i class="fa-solid fa-star-of-life"></i></div>
+                            <h3>Nueva existencia</h3>
+                            <p>Usar la fricción entre lo humano y lo digital para producir nuevas formas sensibles de experiencia.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide-festival">
+            <div class="ambient-noise"></div>
+            <div class="content-area">
+                <p class="accent-tag"><i class="fa-solid fa-circle-radiation"></i> DataRaíz Festival</p>
+                <h2 class="slide-title">No es un evento: es un <em>nodo de convergencia</em></h2>
+                <p class="lead">La tecnología deja de ser una herramienta aislada para experimentarse como un lenguaje expresivo, sensible y humano. DataRaíz construye un territorio donde la biología dialoga con el código, la danza con los sensores y el diseño visual con la electrónica.</p>
+                <div class="tiled-content four">
+                    <div class="tile">
+                        <div class="icon"><i class="fa-solid fa-hourglass-half"></i></div>
+                        <h3>Experiencia</h3>
+                        <p>Festival inmersivo de 12 horas que transforma el espacio en un ecosistema vibrante: workshops técnicos, cruce con industria creativa y un cierre A/V de vanguardia.</p>
+                    </div>
+                    <div class="tile">
+                        <div class="icon"><i class="fa-solid fa-bridge"></i></div>
+                        <h3>Puente</h3>
+                        <p>Conecta la demanda de la industria tecnológica con talento emergente disruptivo, proyectando una red profesional desde Buenos Aires hacia el mundo.</p>
+                    </div>
+                    <div class="tile">
+                        <div class="icon"><i class="fa-solid fa-handshake-angle"></i></div>
+                        <h3>Alianza</h3>
+                        <p>Convoca infraestructura de primer nivel y una dirección técnica-curatorial respaldada por trayectoria en plataformas como MUTEK y Node Forum Berlín.</p>
+                    </div>
+                    <div class="tile">
+                        <div class="icon"><i class="fa-solid fa-bullseye"></i></div>
+                        <h3>Impacto</h3>
+                        <p>Activa a una comunidad de creadores y desarrolladores que ya está definiendo el futuro del lenguaje digital contemporáneo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide-caja-negra">
+            <div class="two-column">
+                <div class="content-area">
+                    <p class="accent-tag"><i class="fa-solid fa-cube"></i> La experiencia · Caja Negra DTR</p>
+                    <h2 class="slide-title">Cuando la arquitectura desaparece</h2>
+                    <p class="lead">Un entorno inmersivo donde el cuerpo, la luz, el sonido y la data ocupan el protagonismo. El público deja de ser observador para convertirse en parte activa de la experiencia y potenciar la humanización de la tecnología.</p>
+                    <div class="kpi-row">
+                        <div class="kpi-card">
+                            <div class="kpi-value">Silencio</div>
+                            <div class="kpi-label">como lienzo escénico</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-value">Negro</div>
+                            <div class="kpi-label">como contraste expresivo</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-value">Inmersión</div>
+                            <div class="kpi-label">sin jerarquía escenario/público</div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-area">
+                    <div class="info-panel">
+                        <h3>Sacralidad del acto teatral</h3>
+                        <ul class="check-list">
+                            <li>
+                                <span class="bullet"><i class="fa-solid fa-moon"></i></span>
+                                <span>La oscuridad no es vacío: es la superficie necesaria para que luz, sonido y data adquieran dimensión física.</span>
+                            </li>
+                            <li>
+                                <span class="bullet"><i class="fa-solid fa-sun"></i></span>
+                                <span>En un mundo saturado de estímulos, el negro absoluto permite que las visuales generativas y la iluminación inmersiva alcancen máxima potencia expresiva.</span>
+                            </li>
+                            <li>
+                                <span class="bullet"><i class="fa-solid fa-eye"></i></span>
+                                <span>La configuración de Caja Negra elimina la jerarquía tradicional entre escenario y público para habilitar atención profunda y foco real.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container slide--light" id="slide-ecosistema">
+            <div class="ambient-grid"></div>
+            <div class="content-area">
+                <p class="accent-tag"><i class="fa-solid fa-layer-group"></i> Un mismo espacio, múltiples capas</p>
+                <h2 class="slide-title">Un ecosistema en <em>tiempo real</em></h2>
+                <p class="lead">La jornada se organiza como un recorrido continuo bajo cuatro ejes: formación técnica intensiva, experimentación en procesos abiertos, conversatorios para intercambio de ideas y shows audiovisuales que atraviesan toda la experiencia.</p>
+                <div class="tiled-content four">
+                    <div class="tile">
+                        <div class="icon"><i class="fa-solid fa-microchip"></i></div>
+                        <h3>El núcleo técnico</h3>
+                        <p>Transferencia de conocimiento sin filtros. Talleres hands-on donde la teoría se ensucia las manos con la práctica.</p>
+                    </div>
+                    <div class="tile">
+                        <div class="icon"><i class="fa-solid fa-flask-vial"></i></div>
+                        <h3>La zona de riesgo</h3>
+                        <p>Instalaciones interactivas y procesos abiertos que exponen la belleza del ensayo y el error ante la mirada del espectador.</p>
+                    </div>
+                    <div class="tile">
+                        <div class="icon"><i class="fa-solid fa-comments"></i></div>
+                        <h3>Interfaz crítica</h3>
+                        <p>Charlas y conversatorios donde artistas, tecnólogos y científicos debaten futuros posibles y desafíos de la escena actual.</p>
+                    </div>
+                    <div class="tile">
+                        <div class="icon"><i class="fa-solid fa-wave-square"></i></div>
+                        <h3>Pulso sensorial</h3>
+                        <p>Shows audiovisuales en vivo como hilo conductor: una descarga de energía generativa que cohesiona toda la jornada.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide-programacion">
+            <div class="ambient-noise"></div>
+            <div class="content-area">
+                <p class="accent-tag"><i class="fa-solid fa-calendar-days"></i> Programación</p>
+                <h2 class="slide-title">Un flujo constante para audiencias diversas</h2>
+                <div class="schedule-grid">
+                    <div class="schedule-band">
+                        <div class="schedule-label">Mañana / tarde</div>
+                        <h3>Workshops intensivos</h3>
+                        <p>Transferencia técnica en formato concentrado, con foco en práctica, herramientas y experimentación aplicada.</p>
+                    </div>
+                    <div class="schedule-band">
+                        <div class="schedule-label">Tarde</div>
+                        <h3>Instalaciones + conversatorios</h3>
+                        <p>Procesos abiertos, demos y cruces de ideas para activar diálogo entre comunidad, industria y escena local.</p>
+                    </div>
+                    <div class="schedule-band">
+                        <div class="schedule-label">Noche</div>
+                        <h3>Performances audiovisuales</h3>
+                        <p>Cierre sensorial con shows en vivo que consolidan el carácter inmersivo y colectivo del festival.</p>
+                    </div>
+                </div>
+
+                <div class="program-grid">
+                    <div class="program-column">
+                        <h3>Programación preliminar</h3>
+                        <ul class="program-list">
+                            <li>
+                                <span class="speaker-title">01 — Workshop intensivo</span>
+                                <span class="speaker-caption">Descripción en desarrollo. Espacio previsto para formación técnica con aplicación directa.</span>
+                            </li>
+                            <li>
+                                <span class="speaker-title">02 — Workshop intensivo</span>
+                                <span class="speaker-caption">Segundo módulo hands-on orientado a profundizar herramientas y metodología.</span>
+                            </li>
+                            <li>
+                                <span class="speaker-title">03 — Demo / proceso abierto</span>
+                                <span class="speaker-caption">Instancia de exhibición en construcción, pensada para hacer visible el proceso creativo en tiempo real.</span>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="speaker-list">
+                        <h3>Zona de riesgo</h3>
+                        <ul class="speaker-items">
+                            <li>
+                                <span class="speaker-title">Demo AI / asociación</span>
+                                <span class="speaker-caption">Formato preliminar mencionado en el dossier, con articulación abierta a partner técnico.</span>
+                            </li>
+                            <li>
+                                <span class="speaker-title">Demo 02</span>
+                                <span class="speaker-caption">Instalación o proceso abierto con descripción por definir.</span>
+                            </li>
+                            <li>
+                                <span class="speaker-title">Demo 03</span>
+                                <span class="speaker-caption">Tercera activación prevista para ampliar el ecosistema simultáneo del espacio.</span>
+                            </li>
+                        </ul>
+                        <p class="list-note">La estructura está definida; los contenidos específicos continúan en etapa de curaduría y confirmación.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container slide--light" id="slide-critica-sensorial">
+            <div class="two-column equal">
+                <div class="content-area">
+                    <p class="accent-tag"><i class="fa-solid fa-brain"></i> Interfaz crítica</p>
+                    <h2 class="slide-title">Conversatorios que piensan la escena</h2>
+                    <div class="speaker-list">
+                        <ul class="speaker-items">
+                            <li>
+                                <span class="speaker-title">La Conciencia de la Máquina</span>
+                                <span class="speaker-caption">Pensar el arte técnico, su genealogía y su responsabilidad ética.</span>
+                            </li>
+                            <li>
+                                <span class="speaker-title">Identidades Sintéticas</span>
+                                <span class="speaker-caption">IA, estética 3D y nuevas formas de creación digital.</span>
+                            </li>
+                            <li>
+                                <span class="speaker-title">Programar el Futuro</span>
+                                <span class="speaker-caption">Cómo la gestión cultural diseña ecosistemas sostenibles.</span>
+                            </li>
+                            <li>
+                                <span class="speaker-title">La Escena del Futuro</span>
+                                <span class="speaker-caption">Qué buscan hoy curadores, productores y espacios culturales.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content-area">
+                    <p class="accent-tag"><i class="fa-solid fa-sliders"></i> Pulso sensorial</p>
+                    <h2 class="slide-title">Line-up en construcción</h2>
+                    <div class="speaker-list">
+                        <ul class="speaker-items">
+                            <li>
+                                <span class="speaker-title">01 — Colli</span>
+                                <span class="speaker-caption">Bajada artística en desarrollo.</span>
+                            </li>
+                            <li>
+                                <span class="speaker-title">02 — Manu</span>
+                                <span class="speaker-caption">Bajada artística en desarrollo.</span>
+                            </li>
+                            <li>
+                                <span class="speaker-title">03 — Lolo + XXXX</span>
+                                <span class="speaker-caption">Formato colaborativo previsto para la franja de shows en vivo.</span>
+                            </li>
+                            <li>
+                                <span class="speaker-title">04 — XXXX</span>
+                                <span class="speaker-caption">Cuarta performance aún abierta a confirmación curatorial.</span>
+                            </li>
+                        </ul>
+                        <p class="list-note">El dossier marca una programación viva: la estructura del festival ya existe y el line-up se termina de afinar con aliados y confirmaciones.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide-audiencia">
+            <div class="ambient-grid"></div>
+            <div class="content-area">
+                <p class="accent-tag"><i class="fa-solid fa-users-viewfinder"></i> Comunidad & audiencia</p>
+                <h2 class="slide-title">No es un público pasivo: es una <em>comunidad creativa activa</em></h2>
+                <div class="audience-grid">
+                    <div class="persona-card">
+                        <span class="persona-badge">Artistas y gestores</span>
+                        <h3>Agenda cultural contemporánea</h3>
+                        <p>Artistas visuales, sonoros y escénicos junto a curadores del circuito de arte contemporáneo que definen la conversación cultural actual.</p>
+                    </div>
+                    <div class="persona-card">
+                        <span class="persona-badge">Sector creativo</span>
+                        <h3>Líderes y productores</h3>
+                        <p>Directores, productores y profesionales que buscan nuevas fronteras en narrativa digital, innovación y experiencias inmersivas.</p>
+                    </div>
+                    <div class="persona-card">
+                        <span class="persona-badge">Formación</span>
+                        <h3>Talento emergente</h3>
+                        <p>Estudiantes avanzados y docentes de artes electrónicas y diseño que usan la tecnología como herramienta democratizadora y expresiva.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide-alianza-winwin">
+            <div class="ambient-noise"></div>
+            <div class="content-area">
+                <p class="accent-tag"><i class="fa-solid fa-handshake"></i> Alianza win-win</p>
+                <h2 class="slide-title">No proponemos patrocinio tradicional</h2>
+                <p class="lead">Buscamos aliados que compartan una visión de futuro y quieran sumarse a un ecosistema donde las herramientas no solo se exhiben: se habitan. La alianza está diseñada para generar valor real en ambas direcciones.</p>
+                <div class="alliance-grid">
+                    <div class="tile">
+                        <div class="icon"><i class="fa-solid fa-toolbox"></i></div>
+                        <h3>Uso real del equipamiento</h3>
+                        <p>La tecnología sale de la caja. El equipamiento se vuelve protagonista de procesos creativos documentados y auténticos, en manos de profesionales.</p>
+                    </div>
+                    <div class="tile">
+                        <div class="icon"><i class="fa-solid fa-user-group"></i></div>
+                        <h3>Conexión con talento</h3>
+                        <p>Más que una base de datos: contacto directo con creadores y técnicos que están definiendo hoy el lenguaje digital contemporáneo.</p>
+                    </div>
+                    <div class="tile">
+                        <div class="icon"><i class="fa-solid fa-earth-americas"></i></div>
+                        <h3>Futuro y comunidad</h3>
+                        <p>La marca se asocia a una plataforma de largo plazo que democratiza conocimiento técnico y activa innovación cultural con mirada sostenida.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container slide--light" id="slide-tipos-alianza">
+            <div class="content-area">
+                <p class="accent-tag"><i class="fa-solid fa-diagram-project"></i> Tipos de alianza</p>
+                <h2 class="slide-title">Modelos de colaboración flexibles y honestos</h2>
+                <div class="partnership-grid">
+                    <div class="tile">
+                        <div class="icon"><i class="fa-solid fa-location-dot"></i></div>
+                        <h3>Venue Partner</h3>
+                        <p>Sede y coproducción para darle marco físico y operativo a la primera edición.</p>
+                    </div>
+                    <div class="tile">
+                        <div class="icon"><i class="fa-solid fa-plug-circle-bolt"></i></div>
+                        <h3>Partner técnico</h3>
+                        <p>Aporte de equipamiento, tecnología e infraestructura para las distintas capas de experiencia.</p>
+                    </div>
+                    <div class="tile">
+                        <div class="icon"><i class="fa-solid fa-award"></i></div>
+                        <h3>Becas y premios</h3>
+                        <p>Apoyo a la participación y formación para ampliar acceso y fortalecer comunidad.</p>
+                    </div>
+                    <div class="tile">
+                        <div class="icon"><i class="fa-solid fa-building-columns"></i></div>
+                        <h3>Alianzas institucionales</h3>
+                        <p>Articulaciones culturales y académicas para ampliar legitimidad, red y proyección.</p>
+                    </div>
+                </div>
+                <div class="info-panel" style="margin-top:18px;">
+                    <p>La invitación es adaptar el vínculo a la realidad de cada aliado: desde soporte técnico y cesión de espacios hasta becas de formación. La experiencia de cada partner, sumada a la curaduría de DataRaíz, puede marcar el estándar que esta escena necesita para crecer.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide-equipo">
+            <div class="ambient-grid"></div>
+            <div class="content-area">
+                <p class="accent-tag"><i class="fa-solid fa-people-group"></i> Dirección y equipo</p>
+                <h2 class="slide-title">Solidez creativa + operaciones tecnológicas</h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <span class="team-role">Dirección general & creativa</span>
+                        <h3>Manuel Palenque</h3>
+                        <p>Creative Technologist, artista A/V y educador. Motor conceptual del laboratorio y articulador del cruce entre práctica artística y tecnología.</p>
+                    </div>
+                    <div class="team-member">
+                        <span class="team-role">Producción & estrategia tecnológica</span>
+                        <h3>Martín López Palermo</h3>
+                        <p>Productor técnico y especialista en operaciones. Diseña la viabilidad técnica y organizacional para una experiencia de alta complejidad.</p>
+                    </div>
+                    <div class="team-member">
+                        <span class="team-role">Producción ejecutiva</span>
+                        <h3>Ivana Lombroni</h3>
+                        <p>Responsable de la producción ejecutiva y la articulación operativa del proyecto. El dossier deja este perfil aún abierto a desarrollo descriptivo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide-pilares">
+            <div class="ambient-noise"></div>
+            <div class="two-column equal">
+                <div class="content-area">
+                    <p class="accent-tag"><i class="fa-solid fa-seedling"></i> DataRaíz nace</p>
+                    <h2 class="slide-title">Tecnología como lenguaje <em>expresivo y poético</em></h2>
+                    <p class="lead">DataRaíz es un laboratorio vivo de formación, creación, experimentación y acompañamiento de proyectos de innovación donde lo digital converge con lo físico. En un contexto de cruces mínimos, apuesta por encuentro, aprendizaje y práctica colaborativa como mecanismo fundamental para la creación innovadora.</p>
+                    <p>La meta es romper la brecha digital en el arte y fomentar la profesionalización de la escena local, priorizando siempre un intercambio ético y colaborativo.</p>
+                </div>
+                <div class="content-area">
+                    <div class="pillar-grid">
+                        <div class="tile">
+                            <div class="icon"><i class="fa-solid fa-graduation-cap"></i></div>
+                            <h3>Formación</h3>
+                            <p>Talleres técnicos con enfoque artístico, metodológico e incluso científico, siempre desde el hacer.</p>
+                        </div>
+                        <div class="tile">
+                            <div class="icon"><i class="fa-solid fa-link"></i></div>
+                            <h3>Comunidad</h3>
+                            <p>Punto de encuentro entre creadores independientes, profesionales y una comunidad activa para impulsar sinergias B2B y B2C.</p>
+                        </div>
+                        <div class="tile">
+                            <div class="icon"><i class="fa-solid fa-vial-circle-check"></i></div>
+                            <h3>Experimentación</h3>
+                            <p>Laboratorio de cruce multidisciplinario: bioarte, live coding, diseño 3D, sistemas embebidos y otros lenguajes híbridos.</p>
+                        </div>
+                    </div>
+                    <div class="pull-quote">
+                        <p>“No solo mostramos obras: abrimos procesos.”</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container" id="slide-filosofia">
+            <div class="section-title-layout">
+                <p class="label-tag"><i class="fa-solid fa-infinity"></i> Filosofía</p>
+                <h2>Explorar compartiendo.<br><em>Cruces indisciplinados.</em></h2>
+                <p class="section-copy">Práctica situada · saber en circulación · tecnología como herramienta expresiva. En DataRaíz la técnica no es un fin en sí mismo: es un medio poético para activar pensamiento, cuerpo y comunidad.</p>
+                <div class="chip-row" style="justify-content:center; margin-top:24px;">
+                    <span class="chip"><i class="fa-solid fa-location-crosshairs"></i> Práctica situada</span>
+                    <span class="chip"><i class="fa-solid fa-repeat"></i> Saber en circulación</span>
+                    <span class="chip"><i class="fa-solid fa-shuffle"></i> Cruces indisciplinados</span>
+                    <span class="chip"><i class="fa-solid fa-wand-magic-sparkles"></i> Medio poético y expresivo</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="slide-container slide--light" id="slide-cierre">
+            <div class="content-area">
+                <p class="accent-tag"><i class="fa-solid fa-flag-checkered"></i> Proyección & cierre</p>
+                <h2 class="slide-title">DataRaíz 2026: primera edición, base de una plataforma escalable</h2>
+                <div class="closing-grid">
+                    <div class="closing-panel">
+                        <h3>Formato cuidado e íntimo</h3>
+                        <p>La primera edición está pensada como un dispositivo preciso y potente: experiencia cercana, dirección curatorial fuerte y foco en calidad de vínculo.</p>
+                    </div>
+                    <div class="closing-panel">
+                        <h3>Crecimiento modular</h3>
+                        <p>El festival nace con capacidad de expandirse en futuras ediciones sin perder identidad, método ni profundidad de experiencia.</p>
+                    </div>
+                    <div class="closing-panel">
+                        <h3>Plataforma de formación y creación</h3>
+                        <p>Más que una fecha, DataRaíz se plantea como infraestructura cultural para sostener aprendizaje, experimentación y comunidad a largo plazo.</p>
+                    </div>
+                </div>
+                <div class="contact-strip">
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-globe"></i></div>
+                        <div>
+                            <span>Web</span>
+                            <strong>dataraiz.io</strong>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-brands fa-instagram"></i></div>
+                        <div>
+                            <span>Instagram</span>
+                            <strong>@dataraiz.talleres</strong>
+                        </div>
+                    </div>
+                    <div class="contact-item">
+                        <div class="contact-icon"><i class="fa-solid fa-envelope"></i></div>
+                        <div>
+                            <span>Email</span>
+                            <strong>dataraiz.talleres@gmail.com</strong>
+                        </div>
+                    </div>
+                </div>
+                <div class="pull-quote" style="margin-top:18px;">
+                    <p>Buscamos aliados para co-crear la primera edición.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="flowchart-sidebar" id="flowchartSidebar"></div>
+
+    <div class="slide-indicator" id="slideIndicator">1 / 14</div>
+
+    <div class="controls-bar" aria-label="Controles de presentación">
+        <button class="control-button" type="button" onclick="prevSlide()" aria-label="Slide anterior">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <button class="control-button" type="button" onclick="nextSlide()" aria-label="Slide siguiente">
+            <i class="fa-solid fa-arrow-right"></i>
+        </button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Observer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"></script>
+    <script src="animations.js"></script>
+    <script src="gsap-animations.js"></script>
+</body>
+</html>

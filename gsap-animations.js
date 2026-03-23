@@ -1077,23 +1077,19 @@
     function setupHoverEffects() {
         if (!hasGSAP() || prefersReducedMotion()) return;
 
-        // Tiles hover
-        document.querySelectorAll('.tile').forEach(tile => {
+        // Tiles hover — subtle opacity shift only
+        document.querySelectorAll('.tile, .numbered-item, .layer-item, .statement-item').forEach(tile => {
             tile.addEventListener('mouseenter', () => {
                 window.gsap.to(tile, {
-                    scale: 1.02,
-                    y: -4,
-                    boxShadow: '0 12px 40px rgba(0,0,0,0.15)',
-                    duration: 0.25,
+                    opacity: 0.75,
+                    duration: 0.2,
                     ease: 'power2.out',
                 });
             });
             tile.addEventListener('mouseleave', () => {
                 window.gsap.to(tile, {
-                    scale: 1,
-                    y: 0,
-                    boxShadow: '0 4px 20px rgba(0,0,0,0.08)',
-                    duration: 0.25,
+                    opacity: 1,
+                    duration: 0.2,
                     ease: 'power2.out',
                 });
             });

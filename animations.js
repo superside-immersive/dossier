@@ -95,7 +95,7 @@ function downloadHTML() {
     const url = URL.createObjectURL(blob);
     const a = document.createElement('a');
     a.href = url;
-    a.download = 'reddit_modular_proposal.html';
+    a.download = 'dataraiz-ciclo-negro-presentation.html';
     document.body.appendChild(a);
     a.click();
     document.body.removeChild(a);
@@ -108,6 +108,10 @@ let isSidebarOpen = false;
 function toggleFlowchartSidebar() {
     const sidebar = document.getElementById('flowchartSidebar');
     const overlay = document.getElementById('sidebarOverlay');
+
+    if (!sidebar || !overlay) {
+        return;
+    }
     
     isSidebarOpen = !isSidebarOpen;
     
