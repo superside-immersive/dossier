@@ -3,6 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+    // On small screens (phones/tablets), force desktop layout scaled down
+    if (screen.width < 1024) {
+        document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1920');
+    }
+    </script>
     <title>DataRaíz Ciclo Negro — Presentación 2026</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
