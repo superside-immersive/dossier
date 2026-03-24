@@ -317,8 +317,7 @@
             letter-spacing: 0.035em;
             line-height: 1.35;
             color: rgba(246,247,251,0.92);
-            background: linear-gradient(90deg, rgba(255,255,255,0.06) 0%, transparent 100%);
-            padding: 10px 16px;
+            padding: 0 0 0 16px;
             border-left: 3px solid rgba(255,255,255,0.35);
         }
 
@@ -588,7 +587,7 @@
         }
         #slide-contexto .ctx-punch-label {
             display: block; font-family: var(--font-mono);
-            font-size: 10px; letter-spacing: 0.22em; text-transform: uppercase;
+            font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
             color: rgba(255,255,255,0.28); margin-bottom: 10px;
         }
         #slide-contexto .ctx-punchline p {
@@ -602,6 +601,14 @@
         }
         #slide-contexto .pull-quote p {
             font-size: 18px; line-height: 1.34;
+        }
+        /* Unified paragraph colors */
+        #slide-contexto .lead,
+        #slide-contexto .ctx-secondary {
+            color: rgba(242,242,242,0.72);
+        }
+        #slide-caja-negra .content-area > p {
+            color: rgba(242,242,242,0.72);
         }
         .program-visual::after {
             content: none;
@@ -1186,8 +1193,17 @@
 <body>
     <div class="slides-wrapper">
 
-        <!-- ═══ 01 COVER ═══ -->
-        <div class="slide-container active" id="slide-cover" style="background: #0a0a0a; overflow:hidden; padding:0; justify-content:center;">
+        <!-- ═══ 01 PORTADA INTRO ═══ -->
+        <div class="slide-container active" id="slide-cover-intro" style="background:#000000; justify-content:center; align-items:center;">
+            <div class="title-layout">
+                <h1>DataRaíz<br><em>Ciclo Negro</em></h1>
+                <div class="cover-subline">Contraste Inversivo</div>
+                <p class="hero-intro" style="opacity:0.72; font-size:13px; letter-spacing:0.18em; margin-top:14px;">Buenos Aires, 2026</p>
+            </div>
+        </div>
+
+        <!-- ═══ 02 PORTADA IMAGEN ═══ -->
+        <div class="slide-container" id="slide-cover" style="background: #0a0a0a; overflow:hidden; padding:0; justify-content:center;">
             <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
                 <div style="width:75%; height:75%; position:relative;">
                     <img src="cajanegra2.png" alt="" style="width:100%; height:100%; object-fit:cover; display:block; opacity:0.8;">
@@ -1202,10 +1218,7 @@
             </div>
             <div class="title-layout" style="position:relative; z-index:1;">
                 <div class="cover-text-panel">
-                    <h1>DataRaíz<br><em>Ciclo Negro</em></h1>
-                    <div class="cover-subline">Contraste Inmersivo</div>
                     <p class="hero-intro">Un recorrido inmersivo que cruza masterclasses de tecnología, instalaciones de arte interactivo y performances audiovisuales en vivo.</p>
-                    <p class="hero-intro" style="opacity:0.72; font-size:13px; letter-spacing:0.18em; margin-top:10px; max-width:none;">2026</p>
                 </div>
             </div>
         </div>
@@ -1224,12 +1237,12 @@
                     </div>
                 </div>
                 <div class="content-area">
-                    <p class="accent-tag" style="font-size: 0.95rem; letter-spacing: 0.18em; border: 1px solid rgba(255,255,255,0.15); padding: 6px 16px; display: inline-block;">El escenario actual</p>
+                    <span class="ctx-punch-label" style="display:block; margin-bottom:14px;">El escenario actual</span>
                     <h2 class="slide-title">Un ecosistema de <em>silos</em></h2>
                     <p class="lead">Vivimos en un ecosistema de silos: el arte, la tecnología y la ciencia siguen atrapados en órbitas aisladas, desperdiciando el potencial explosivo de su colisión. Mientras la técnica avanza a ritmos vertiginosos, la producción artística se topa con un muro de cristal que restringe el acceso a las herramientas de vanguardia.</p>
                     <p class="ctx-secondary">La escena local hierve; el talento y la urgencia creativa circulan en abundancia, pero faltan plataformas de hibridación y convergencia que rompan la inercia. Es hora de dinamitar las fronteras disciplinares y crear espacios de cruce real donde el código, la materia y la teoría se fundan sin jerarquías.</p>
                     <div class="ctx-punchline">
-                        <span class="ctx-punch-label">La oportunidad</span>
+                        <span class="ctx-punch-label" style="font-size:12px;">La oportunidad</span>
                         <p>Crear un punto de encuentro real<br>para una escena que <em>no acepta fronteras</em>.</p>
                     </div>
                 </div>
@@ -1275,7 +1288,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="content-area" style="gap: 12px;">
+                <div class="content-area" style="gap: 12px; padding-top: 40px;">
                     <div class="festival-visual">
                         <img src="show.png" alt="Show audiovisual de DataRaíz">
                     </div>
@@ -1296,7 +1309,7 @@
                         <p>El rito escénico como inmersión total, el contraste como lenguaje.</p>
                     </div>
                 </div>
-                <div class="content-area" style="display:flex; flex-direction:column; justify-content:center;">
+                <div class="content-area" style="display:flex; flex-direction:column; justify-content:flex-start; align-self:flex-start; padding-top:50px;">
                     <div class="kpi-row" style="flex-direction:column; gap:24px;">
                         <div class="kpi-card">
                             <div class="kpi-value">Silencio</div>
@@ -1328,7 +1341,7 @@
                     </div>
                     <p class="media-caption">El núcleo técnico en acción · formación, herramientas y práctica aplicada</p>
                 </div>
-                <div class="content-area">
+                <div class="content-area" style="padding-top: 120px;">
                     <div class="layer-stack">
                         <div class="layer-item tile">
                             <span class="depth">Capa 01</span>
@@ -1370,7 +1383,6 @@
                 <h2 class="slide-title">Un flujo constante para audiencias diversas</h2>
                 <div class="program-grid" style="grid-template-columns: 0.78fr 1.22fr; gap: 34px; margin-top: 24px; align-items: start;">
                     <div class="program-column">
-                        <h3>Tipos de contenido</h3>
                         <div class="content-type-list">
                             <div class="content-type-card taller">
                                 <span class="content-type-meta">Mañana / tarde</span>
@@ -1390,7 +1402,6 @@
                         </div>
                     </div>
                     <div class="speaker-list" style="margin-top: 0;">
-                        <h3>Programa seleccionado</h3>
                         <div class="activity-legend">
                             <span class="legend-chip"><span class="legend-dot taller"></span>Taller</span>
                             <span class="legend-chip"><span class="legend-dot charla"></span>Activación / charla</span>
@@ -1448,21 +1459,21 @@
                     <h2 class="slide-title" style="font-size: clamp(1.6rem, 3vw, 2.4rem);">Conversatorios que piensan la escena</h2>
                     <div class="speaker-list">
                         <ul class="speaker-items" style="gap: 0;">
-                            <li style="padding: 8px 0;">
-                                <span class="speaker-title" style="font-size:15px;">La Conciencia de la Máquina</span>
-                                <span class="speaker-caption" style="font-size:13px;">Pensar el arte técnico, su genealogía y su responsabilidad ética.</span>
+                            <li style="padding: 10px 0;">
+                                <span class="speaker-title" style="font-size:17px;">La Conciencia de la Máquina</span>
+                                <span class="speaker-caption" style="font-size:15px;">Pensar el arte técnico, su genealogía y su responsabilidad ética.</span>
                             </li>
-                            <li style="padding: 8px 0;">
-                                <span class="speaker-title" style="font-size:15px;">Identidades Sintéticas</span>
-                                <span class="speaker-caption" style="font-size:13px;">IA, estética 3D y nuevas formas de creación digital.</span>
+                            <li style="padding: 10px 0;">
+                                <span class="speaker-title" style="font-size:17px;">Identidades Sintéticas</span>
+                                <span class="speaker-caption" style="font-size:15px;">IA, estética 3D y nuevas formas de creación digital.</span>
                             </li>
-                            <li style="padding: 8px 0;">
-                                <span class="speaker-title" style="font-size:15px;">Programar el Futuro</span>
-                                <span class="speaker-caption" style="font-size:13px;">Cómo la gestión cultural diseña ecosistemas sostenibles.</span>
+                            <li style="padding: 10px 0;">
+                                <span class="speaker-title" style="font-size:17px;">Programar el Futuro</span>
+                                <span class="speaker-caption" style="font-size:15px;">Cómo la gestión cultural diseña ecosistemas sostenibles.</span>
                             </li>
-                            <li style="padding: 8px 0;">
-                                <span class="speaker-title" style="font-size:15px;">La Escena del Futuro</span>
-                                <span class="speaker-caption" style="font-size:13px;">Qué buscan hoy curadores, productores y espacios culturales.</span>
+                            <li style="padding: 10px 0;">
+                                <span class="speaker-title" style="font-size:17px;">La Escena del Futuro</span>
+                                <span class="speaker-caption" style="font-size:15px;">Qué buscan hoy curadores, productores y espacios culturales.</span>
                             </li>
                         </ul>
                     </div>
@@ -1470,30 +1481,29 @@
                 <div class="content-area" style="gap: 8px;">
                     <p class="accent-tag">Pulso sensorial</p>
                     <h2 class="slide-title" style="font-size: clamp(1.6rem, 3vw, 2.4rem);">Line-up</h2>
-                    <div class="program-visual" style="margin: 0;">
-                        <img src="colli.png" alt="Visual de Agustín Colli" style="height: min(28vh, 200px);">
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 4px;">
+                        <div style="display:flex; flex-direction:column; gap: 6px;">
+                            <img src="colli.png" alt="Agustín Colli" style="width:100%; height:110px; object-fit:cover; object-position:top; display:block;">
+                            <span class="speaker-title" style="font-size:14px;">01 — Agustín Colli</span>
+                            <span class="speaker-caption" style="font-size:12px; line-height:1.4;">Artista audiovisual y performer. Miembro de SETUP VISUAL. Performance A/V en vivo con música electrónica y pixel LED sincronizado.</span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap: 6px;">
+                            <div style="width:100%; height:110px; background:#111; border:1px solid rgba(255,255,255,0.07); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:10px; letter-spacing:0.14em; color:rgba(255,255,255,0.2); text-transform:uppercase;">Foto próximamente</div>
+                            <span class="speaker-title" style="font-size:14px;">02 — Manu</span>
+                            <span class="speaker-caption" style="font-size:12px; line-height:1.4;">Performance A/V en vivo. Entorno digital generativo que interactúa con el sonido en tiempo real — música e imagen se responden hasta colapsar en patrones de entropía.</span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap: 6px;">
+                            <div style="width:100%; height:110px; background:#111; border:1px solid rgba(255,255,255,0.07); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:10px; letter-spacing:0.14em; color:rgba(255,255,255,0.2); text-transform:uppercase;">Foto próximamente</div>
+                            <span class="speaker-title" style="font-size:14px;">03 — Lolo Armendariz</span>
+                            <span class="speaker-caption" style="font-size:12px; line-height:1.4;">Programador y artista visual, cofundador de Holaplan. Creador de «Karne» (simulaciones orgánicas con código y shaders). Performance generativa en vivo.</span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap: 6px;">
+                            <div style="width:100%; height:110px; background:#111; border:1px solid rgba(255,255,255,0.07); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:10px; letter-spacing:0.14em; color:rgba(255,255,255,0.2); text-transform:uppercase;">Por confirmar</div>
+                            <span class="speaker-title" style="font-size:14px;">04 — XXXX</span>
+                            <span class="speaker-caption" style="font-size:12px; line-height:1.4;">Cuarta performance aún abierta a confirmación curatorial. Perfil en proceso de definición.</span>
+                        </div>
                     </div>
-                    <div class="speaker-list">
-                        <ul class="speaker-items" style="gap: 0;">
-                            <li style="padding: 6px 0;">
-                                <span class="speaker-title" style="font-size:14px;">01 — Agustín Colli</span>
-                                <span class="speaker-caption" style="font-size:12px; line-height:1.35;">Artista audiovisual y performer. Miembro de SETUP VISUAL. Performance A/V en vivo con música electrónica y pixel LED sincronizado.</span>
-                            </li>
-                            <li style="padding: 6px 0;">
-                                <span class="speaker-title" style="font-size:14px;">02 — Manu</span>
-                                <span class="speaker-caption" style="font-size:12px; line-height:1.35;">Performance A/V en vivo. Entorno digital generativo que interactúa con el sonido en tiempo real — música e imagen se responden mutuamente hasta colapsar en patrones de entropía.</span>
-                            </li>
-                            <li style="padding: 6px 0;">
-                                <span class="speaker-title" style="font-size:14px;">03 — Lolo Armendariz</span>
-                                <span class="speaker-caption" style="font-size:12px; line-height:1.35;">Programador y artista visual, cofundador de Holaplan. Creador de «Karne» (simulaciones orgánicas con código y shaders). Performance generativa en vivo.</span>
-                            </li>
-                            <li style="padding: 6px 0;">
-                                <span class="speaker-title" style="font-size:14px;">04 — XXXX</span>
-                                <span class="speaker-caption" style="font-size:12px;">Cuarta performance aún abierta a confirmación curatorial.</span>
-                            </li>
-                        </ul>
-                        <p class="list-note" style="font-size:11px; margin-top:4px;">Programación viva: la estructura del festival ya existe y el line-up se termina de afinar con aliados y confirmaciones.</p>
-                    </div>
+                    <p class="list-note" style="font-size:11px; margin-top:6px;">Programación viva: la estructura del festival ya existe y el line-up se termina de afinar con aliados y confirmaciones.</p>
                 </div>
             </div>
         </div>
@@ -1504,13 +1514,7 @@
             <div class="content-area">
                 <p class="accent-tag">Comunidad & audiencia</p>
                 <h2 class="slide-title">Una <em>comunidad creativa activa</em></h2>
-                <div class="audience-layout">
-                    <div class="content-area" style="gap: 10px;">
-                        <div class="audience-visual">
-                            <img src="workshops.png" alt="Comunidad y workshops de DataRaíz">
-                        </div>
-                        <p class="audience-note">Comunidad activa · formación, intercambio y escena en movimiento</p>
-                    </div>
+                <div class="audience-layout" style="grid-template-columns: 1.02fr 0.98fr;">
                     <div class="audience-grid" style="grid-template-columns: 1fr; gap: 0;">
                         <div class="persona-card" style="border-right:none; border-bottom:1px solid rgba(255,255,255,0.06); padding: 0 0 22px 0;">
                             <span class="persona-badge">Artistas y gestores</span>
@@ -1527,6 +1531,12 @@
                             <h3>Talento emergente</h3>
                             <p>Estudiantes avanzados y docentes de artes electrónicas y diseño que usan la tecnología como herramienta democratizadora y expresiva.</p>
                         </div>
+                    </div>
+                    <div class="content-area" style="gap: 10px;">
+                        <div class="audience-visual">
+                            <img src="workshops.png" alt="Comunidad y workshops de DataRaíz">
+                        </div>
+                        <p class="audience-note">Comunidad activa · formación, intercambio y escena en movimiento</p>
                     </div>
                 </div>
             </div>
@@ -1585,40 +1595,7 @@
             </div>
         </div>
 
-        <!-- ═══ 11 ROI INSTITUCIONAL ═══ -->
-        <div class="slide-container" id="slide-roi-institucional">
-            <div class="two-column" style="grid-template-columns: 1.15fr 0.85fr; gap: 32px; align-items: start;">
-                <div class="content-area">
-                    <p class="accent-tag">Valor institucional</p>
-                    <h2 class="slide-title">Qué gana <em>ArtHaus</em></h2>
-                    <div style="display:flex; flex-direction:column; gap:0;">
-                        <div class="tile">
-                            <h3>Nuevas audiencias</h3>
-                            <p>DataRaíz atrae hacia Bartolomé Mitre 434 comunidades de creadores digitales, artistas audiovisuales, live-coders e investigadores — perfiles que amplían el alcance cultural de la fundación hacia territorios emergentes.</p>
-                        </div>
-                        <div class="tile">
-                            <h3>Circuito contemporáneo global</h3>
-                            <p>Asociar ArtHaus a un festival alineado con plataformas internacionales de artes electrónicas lo inserta en la conversación global del arte y la tecnología, con una curaduría independiente y de vanguardia.</p>
-                        </div>
-                        <div class="tile">
-                            <h3>Programación de autor, lista para habitar</h3>
-                            <p>ArtHaus recibe un ecosistema curatorial completo — dirección artística, convocatoria de talento de primer nivel y diseño pedagógico — sin asumir la complejidad de construirlo desde cero.</p>
-                        </div>
-                    </div>
-                    <div class="info-panel">
-                        <p>Un programa que expande la identidad cultural de ArtHaus sin comprometer su línea institucional.</p>
-                    </div>
-                </div>
-                <div class="content-area" style="gap: 12px; justify-content: center;">
-                    <div style="position:relative; width:100%; aspect-ratio:9/14; overflow:hidden;">
-                        <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; display:block;"><source src="PARTICLES_1.mp4" type="video/mp4"></video>
-                    </div>
-                    <p class="festival-note">Partículas · visual generativo en tiempo real</p>
-                </div>
-            </div>
-        </div>
-
-        <!-- ═══ 11 EQUIPO ═══ -->
+        <!-- ═══ 12 EQUIPO ═══ -->
         <div class="slide-container" id="slide-equipo">
             <div class="ambient-grid"></div>
             <div class="content-area">
@@ -1626,7 +1603,7 @@
                 <h2 class="slide-title">Dirección y <em>equipo</em></h2>
                 <div class="team-grid">
                     <div class="team-member">
-                        <img src="manuelpalenque.png" alt="Manuel Palenque" style="width:80px; height:80px; border-radius:50%; object-fit:cover; margin-bottom:12px;">
+                        <img src="manuelpalenque.png" alt="Manuel Palenque" style="width:80px; height:80px; border-radius:50%; object-fit:cover; margin-bottom:12px; filter:grayscale(1);">
                         <span class="team-role">Dirección general & creativa</span>
                         <h3>Manuel Palenque</h3>
                         <p>Creative Technologist y artista visual con +15 años de experiencia en experiencias audiovisuales inmersivas e instalaciones interactivas. Mantiene una carrera dual como innovador de alto nivel en la industria y performer prolífico. Actualmente es Senior Creative Technologist en Superside, liderando proyectos inmersivos para líderes tecnológicos globales como Meta, Microsoft, NVIDIA y Reddit.</p>
@@ -1643,7 +1620,7 @@
                         <p>Cofundador y coordinador de DATARAIZ.io. Actualmente trabaja en la industria biotecnológica liderando el desarrollo de sistemas tecnológicos innovadores — electrónica, automatización e ingeniería de sistemas — integrando investigación científica, diseño de ingeniería y colaboración interdisciplinaria.</p>
                     </div>
                     <div class="team-member">
-                        <img src="ivana.png" alt="Ivana Lombroni" style="width:80px; height:80px; border-radius:50%; object-fit:cover; margin-bottom:12px;">
+                        <img src="ivana.png" alt="Ivana Lombroni" style="width:80px; height:80px; border-radius:50%; object-fit:cover; margin-bottom:12px; filter:grayscale(1);">
                         <span class="team-role">Investigación & diseño de procesos culturales</span>
                         <h3>Ivana Lombroni</h3>
                         <p>Investigadora senior en innovación en la Universidad Politécnica de Madrid y diseñadora de procesos culturales. Su práctica se fundamenta en una arquitectura de meta-diseño sistémico desarrollada en su tesis doctoral sobre creación de Living Labs. +15 años de experiencia.</p>
@@ -1675,16 +1652,7 @@
         </div>
 
         <!-- ═══ 14 CIERRE ═══ -->
-        <div class="slide-container" id="slide-cierre" style="overflow:hidden; background:#0a0a0a;">
-            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
-                <div style="width:60%; height:60%; position:relative;">
-                    <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; display:block; opacity:0.7;"><source src="bosque.mp4" type="video/mp4"></video>
-                    <div style="position:absolute; inset:-1px; background:
-                        linear-gradient(to right, #0a0a0a 0%, transparent 20%, transparent 80%, #0a0a0a 100%),
-                        linear-gradient(to bottom, #0a0a0a 0%, transparent 20%, transparent 80%, #0a0a0a 100%);
-                    "></div>
-                </div>
-            </div>
+        <div class="slide-container" id="slide-cierre" style="background:#000000;">
             <div class="content-area" style="position:relative; z-index:1;">
                 <p class="accent-tag">Proyección & cierre</p>
                 <h2 class="slide-title">DataRaíz 2026: primera edición, base de una plataforma escalable</h2>
@@ -1702,7 +1670,22 @@
                         <p>Más que una fecha, DataRaíz se plantea como infraestructura cultural para sostener aprendizaje, experimentación y comunidad a largo plazo.</p>
                     </div>
                 </div>
-                <div class="contact-strip">
+            </div>
+        </div>
+
+        <!-- ═══ 15 CONTACTO ═══ -->
+        <div class="slide-container" id="slide-contacto" style="overflow:hidden; background:#0a0a0a;">
+            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+                <div style="width:60%; height:60%; position:relative;">
+                    <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; display:block; opacity:0.7;"><source src="bosque.mp4" type="video/mp4"></video>
+                    <div style="position:absolute; inset:-1px; background:
+                        linear-gradient(to right, #0a0a0a 0%, transparent 20%, transparent 80%, #0a0a0a 100%),
+                        linear-gradient(to bottom, #0a0a0a 0%, transparent 20%, transparent 80%, #0a0a0a 100%);
+                    "></div>
+                </div>
+            </div>
+            <div class="content-area" style="position:relative; z-index:1; justify-content:center;">
+                <div class="contact-strip" style="border-top:none; padding-top:0;">
                     <div class="contact-item">
                         <span>Web</span>
                         <a href="https://dataraiz.io" target="_blank" style="color: inherit; text-decoration: none;"><strong>dataraiz.io</strong></a>
@@ -1716,8 +1699,8 @@
                         <strong>dataraiz.talleres@gmail.com</strong>
                     </div>
                 </div>
-                <div class="pull-quote" style="margin-top: 24px;">
-                    <p>Buscamos aliados para co-crear la primera edición.</p>
+                <div class="pull-quote" style="margin-top: 32px;">
+                    <p>Buscamos aliados para co-crear la primera Edición.</p>
                 </div>
             </div>
         </div>
@@ -1729,7 +1712,7 @@
     <div class="mobile-tap-zone left" onclick="prevSlide()" aria-label="Slide anterior"></div>
     <div class="mobile-tap-zone right" onclick="nextSlide()" aria-label="Slide siguiente"></div>
 
-    <div class="slide-indicator" id="slideIndicator">1 / 14</div>
+    <div class="slide-indicator" id="slideIndicator">1 / 15</div>
 
     <div class="controls-bar" aria-label="Controles de presentación">
         <button class="control-button" type="button" onclick="prevSlide()" aria-label="Slide anterior">
