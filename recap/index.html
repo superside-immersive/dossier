@@ -1,0 +1,1959 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script>
+    // On phones/tablets: force exact desktop 1920×1080 layout, scaled down
+    if (screen.width < 1024) {
+        document.querySelector('meta[name="viewport"]').setAttribute('content', 'width=1920, user-scalable=yes');
+        document.documentElement.classList.add('mobile-deck');
+    }
+    </script>
+    <title>DataRaíz Ciclo Negro — Presentación 2026</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500;600&family=Space+Grotesk:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --color-primary: #f4f4f4;
+            --color-white: #f2f2f2;
+            --color-text: rgba(242, 242, 242, 0.92);
+            --color-muted: rgba(242, 242, 242, 0.54);
+            --font-main: 'Space Grotesk', sans-serif;
+            --font-title: 'Space Grotesk', sans-serif;
+            --font-mono: 'IBM Plex Mono', monospace;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { width: 100%; height: 100%; }
+        /* Mobile: lock to 1080px height so it matches desktop 16:9 */
+        .mobile-deck, .mobile-deck body { height: 1080px !important; overflow: hidden; }
+
+        /* Mobile tap zones */
+        .mobile-tap-zone {
+            display: none;
+            position: fixed;
+            top: 0;
+            width: 25%;
+            height: 100%;
+            z-index: 15;
+            cursor: pointer;
+            -webkit-tap-highlight-color: transparent;
+        }
+        .mobile-tap-zone.left { left: 0; }
+        .mobile-tap-zone.right { right: 0; }
+        .mobile-deck .mobile-tap-zone { display: block; }
+        .mobile-deck .controls-bar {
+            bottom: 20px;
+            padding: 10px 14px;
+            gap: 12px;
+        }
+        .mobile-deck .control-button {
+            width: 52px;
+            height: 52px;
+            font-size: 18px;
+        }
+        .mobile-deck .slide-indicator {
+            font-size: 14px;
+            padding: 10px 16px;
+        }
+
+        body {
+            font-family: var(--font-main);
+            background: #0a0a0a;
+            color: var(--color-text);
+            overflow: hidden;
+        }
+
+        /* ── Wrapper ── */
+        .slides-wrapper { position: relative; width: 100%; height: 100%; z-index: 1; }
+
+        .slide-container {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            padding: 48px 80px 80px;
+            background: #0a0a0a;
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+        .slide-container.active {
+            opacity: 1;
+            visibility: visible;
+            pointer-events: auto;
+        }
+
+        /* ── Ambient (subtle) ── */
+        .ambient-grid, .ambient-noise {
+            position: absolute; pointer-events: none; z-index: 0;
+        }
+        .ambient-grid {
+            inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.025) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.025) 1px, transparent 1px);
+            background-size: 64px 64px;
+            mask-image: radial-gradient(circle at center, black 20%, transparent 80%);
+            opacity: 0.4;
+        }
+        .ambient-noise {
+            inset: 0; opacity: 0.03;
+            background-image: radial-gradient(rgba(255,255,255,0.4) 0.6px, transparent 0.6px);
+            background-size: 20px 20px;
+        }
+
+        /* ── Z-index content ── */
+        .content-stack, .title-layout, .section-title-layout,
+        .two-column, .content-area, .content-container {
+            position: relative; z-index: 1;
+        }
+
+        /* ═══════════════════════════════════════
+           TITLE / COVER
+           ═══════════════════════════════════════ */
+        .title-layout, .section-title-layout {
+            display: flex; flex-direction: column;
+            justify-content: center; align-items: center;
+            text-align: center; height: 100%;
+        }
+        .title-layout h1, .section-title-layout h2 {
+            font-family: var(--font-title); font-weight: 700;
+            line-height: 0.94; letter-spacing: -0.05em;
+            text-transform: uppercase;
+        }
+        .title-layout h1 { font-size: clamp(4.2rem, 8vw, 7.9rem); max-width: 960px; }
+        .section-title-layout h2 { font-size: clamp(3.2rem, 6vw, 5.3rem); max-width: 980px; }
+
+        .title-layout h1 em, .section-title-layout h2 em,
+        .slide-title em, .stat-hero em {
+            font-family: var(--font-title); font-style: normal; color: var(--color-primary);
+        }
+
+        .eyebrow, .accent-tag, .label-tag {
+            display: inline-flex; align-items: center; gap: 10px;
+            font-size: 11px; letter-spacing: 0.2em; text-transform: uppercase;
+            color: rgba(242,242,242,0.35); font-weight: 500;
+            margin-bottom: 18px; font-family: var(--font-mono);
+        }
+
+        .subtitle, .hero-kicker, .hero-intro,
+        .section-copy, .lead, p, li {
+            color: var(--color-muted); font-size: 17px; line-height: 1.6;
+        }
+        .hero-kicker {
+            max-width: 900px; font-size: 22px; margin-top: 16px;
+            color: rgba(242,242,242,0.78); text-transform: uppercase;
+            letter-spacing: 0.16em;
+        }
+        .hero-intro {
+            max-width: 620px; margin-top: 22px; font-size: 16px;
+            font-family: var(--font-mono); letter-spacing: 0.035em;
+            text-transform: uppercase;
+            color: rgba(242,242,242,0.74);
+        }
+        .cover-subline {
+            width: min(490px, 72vw); margin-top: 26px;
+            padding: 16px 0 14px;
+            border-top: 1px solid rgba(255,255,255,0.12);
+            border-bottom: 1px solid rgba(255,255,255,0.12);
+            text-align: center; font-family: var(--font-mono);
+            font-size: 15px; letter-spacing: 0.42em;
+            text-transform: uppercase; color: rgba(242,242,242,0.46);
+        }
+        .cover-text-panel {
+            position: relative;
+            padding: 26px 34px 22px;
+            border-radius: 28px;
+            background: radial-gradient(circle at center, rgba(10,10,10,0.54) 0%, rgba(10,10,10,0.38) 52%, rgba(10,10,10,0.08) 100%);
+            display: flex; flex-direction: column; align-items: center; text-align: center;
+        }
+        .cover-text-panel h1,
+        .cover-text-panel .cover-subline,
+        .cover-text-panel .hero-intro {
+            text-shadow: 0 2px 12px rgba(0,0,0,0.22);
+        }
+        .slide-title {
+            font-family: var(--font-title); font-weight: 700;
+            font-size: clamp(2.3rem, 4vw, 3.6rem); line-height: 0.98;
+            color: var(--color-white);
+            border-left: 3px solid rgba(255,255,255,0.14);
+            padding-left: 16px; margin-bottom: 20px;
+            letter-spacing: -0.04em; text-transform: uppercase;
+        }
+        .section-copy { max-width: 760px; margin-top: 22px; }
+        .lead { font-size: 19px; color: rgba(246,247,251,0.72); }
+
+        /* ═══════════════════════════════════════
+           TWO COLUMN
+           ═══════════════════════════════════════ */
+        .two-column {
+            display: grid;
+            grid-template-columns: minmax(0, 1.06fr) minmax(0, 0.94fr);
+            gap: 48px; align-items: start; min-height: 0;
+        }
+        .two-column.equal { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+
+        .content-area, .content-container {
+            display: flex; flex-direction: column; gap: 20px; min-height: 0;
+        }
+
+        /* ═══════════════════════════════════════
+           HEADINGS
+           ═══════════════════════════════════════ */
+        h2, h3, h4, strong { color: var(--color-white); }
+        h3 { font-size: 20px; margin-bottom: 6px; font-weight: 600; }
+        h4 {
+            font-size: 14px; letter-spacing: 0.14em;
+            text-transform: uppercase; margin-bottom: 8px;
+            color: rgba(246,247,251,0.8); font-family: var(--font-mono);
+        }
+
+        /* ═══════════════════════════════════════
+           NUMBERED ITEMS (replaces icon-box tiles)
+           ═══════════════════════════════════════ */
+        .numbered-list {
+            display: flex; flex-direction: column; gap: 0;
+        }
+        .numbered-item {
+            display: grid;
+            grid-template-columns: 48px 1fr;
+            gap: 0 16px; padding: 20px 0;
+            border-top: 1px solid rgba(255,255,255,0.07);
+        }
+        .numbered-item:last-child { border-bottom: 1px solid rgba(255,255,255,0.07); }
+        .numbered-item .n {
+            font-family: var(--font-mono); font-size: 13px;
+            font-weight: 400; color: rgba(255,255,255,0.22);
+            padding-top: 2px; letter-spacing: 0.04em;
+        }
+        .numbered-item h3 { font-size: 18px; font-weight: 600; margin-bottom: 4px; }
+        .numbered-item p { font-size: 15px; line-height: 1.55; color: var(--color-muted); }
+
+        /* Tighter numbered items on slide 3 to prevent overflow */
+        #slide-festival .numbered-item { padding: 12px 0; }
+        #slide-festival .numbered-item h3 { font-size: 16px; margin-bottom: 2px; }
+        #slide-festival .numbered-item p { font-size: 14px; line-height: 1.45; }
+        #slide-festival .lead { font-size: 15px; line-height: 1.5; }
+
+        /* Cover-style hero background slides */
+        .hero-bg-slide {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .hero-bg-slide .hero-img-wrap {
+            width: 78%; height: 78%; position: relative;
+        }
+        .hero-bg-slide .hero-img-wrap img {
+            width: 100%; height: 100%; object-fit: cover;
+            display: block; opacity: 0.82;
+        }
+        .hero-bg-slide .hero-img-fade {
+            position: absolute; inset: -1px;
+            background:
+                linear-gradient(to right, #0a0a0a 0%, transparent 18%, transparent 82%, #0a0a0a 100%),
+                linear-gradient(to bottom, #0a0a0a 0%, transparent 18%, transparent 82%, #0a0a0a 100%);
+        }
+        .hero-bg-slide .hero-scrim {
+            position: absolute; inset: 0;
+            display: flex; align-items: center; justify-content: center;
+            pointer-events: none; z-index: 1;
+        }
+        .hero-bg-slide .hero-scrim-inner {
+            width: min(780px, 74vw); height: min(560px, 60vh);
+            background: radial-gradient(circle at center,
+                rgba(10,10,10,0.62) 0%, rgba(10,10,10,0.40) 50%,
+                rgba(10,10,10,0.12) 78%, rgba(10,10,10,0) 100%);
+        }
+
+        /* ── Tile (kept for GSAP compat — flat) ── */
+        .tile { padding: 20px 0; border-top: 1px solid rgba(255,255,255,0.07); }
+        .tile:last-child { border-bottom: 1px solid rgba(255,255,255,0.07); }
+        .tile h3 { font-size: 18px; margin-bottom: 4px; }
+        .tile p { font-size: 15px; line-height: 1.55; }
+
+        /* Tile in column grid */
+        .tiled-content { display: grid; gap: 0; margin-top: 8px; }
+        .tiled-content.four { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+        .tiled-content.three { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+        .tiled-content .tile {
+            border-top: none; border-bottom: none;
+            border-left: 1px solid rgba(255,255,255,0.08);
+            padding: 0 24px;
+        }
+        .tiled-content .tile:first-child { border-left: none; padding-left: 0; }
+
+        /* ═══════════════════════════════════════
+           PULL QUOTE (left border, no box)
+           ═══════════════════════════════════════ */
+        .pull-quote {
+            position: relative; padding: 0 0 0 24px;
+            border-left: 2px solid rgba(255,255,255,0.15);
+            margin: 8px 0;
+        }
+        .pull-quote p {
+            font-family: var(--font-main); font-size: 22px;
+            line-height: 1.4; color: rgba(246,247,251,0.85);
+            text-transform: uppercase; letter-spacing: 0.03em;
+        }
+
+        /* ── Caja Negra featured quote ── */
+        .caja-negra-quote {
+            margin-top: 18px;
+            padding: 14px 0 0;
+            border-top: 1px solid rgba(255,255,255,0.10);
+        }
+        .caja-negra-quote p {
+            font-family: var(--font-main);
+            font-size: clamp(1.15rem, 1.6vw, 1.45rem);
+            font-weight: 500;
+            font-style: italic;
+            letter-spacing: 0.035em;
+            line-height: 1.35;
+            color: rgba(246,247,251,0.92);
+            padding: 0 0 0 16px;
+            border-left: 3px solid rgba(255,255,255,0.35);
+        }
+
+        /* ═══════════════════════════════════════
+           KPI (flat dividers, no box)
+           ═══════════════════════════════════════ */
+        .kpi-row { display: flex; flex-wrap: wrap; gap: 0; margin-top: 20px; }
+        .kpi-card {
+            padding: 16px 32px 16px 0;
+            border-right: 1px solid rgba(255,255,255,0.07);
+            background: none;
+        }
+        .kpi-card:last-child { border-right: none; }
+        .kpi-value {
+            font-family: var(--font-title);
+            font-size: 32px; font-weight: 700; color: var(--color-white);
+            line-height: 1; margin-bottom: 6px; letter-spacing: -0.04em;
+            text-transform: uppercase;
+        }
+        .kpi-label {
+            font-size: 11px; letter-spacing: 0.14em;
+            text-transform: uppercase; color: var(--color-muted);
+            font-family: var(--font-mono);
+        }
+        .stat-hero {
+            font-family: var(--font-title);
+            font-size: clamp(3.2rem, 6vw, 5.5rem);
+            line-height: 0.95; color: var(--color-white);
+            margin-bottom: 16px; letter-spacing: -0.04em;
+            text-transform: uppercase; font-weight: 700;
+        }
+
+        /* ═══════════════════════════════════════
+           CLEAN LIST (dash bullets)
+           ═══════════════════════════════════════ */
+        ul.clean-list { list-style: none; display: flex; flex-direction: column; gap: 16px; }
+        ul.clean-list li, .check-list li { display: flex; align-items: flex-start; gap: 14px; }
+        .bullet {
+            flex-shrink: 0; font-family: var(--font-mono);
+            font-size: 14px; font-weight: 400;
+            color: rgba(255,255,255,0.3); margin-top: 2px;
+        }
+
+        /* ═══════════════════════════════════════
+           SCHEDULE (flat dividers)
+           ═══════════════════════════════════════ */
+        .schedule-grid {
+            display: grid; grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 0; margin-top: 12px;
+        }
+        .schedule-band {
+            padding: 20px 28px 20px 0;
+            border-right: 1px solid rgba(255,255,255,0.06);
+            background: none;
+        }
+        .schedule-band:last-child { border-right: none; }
+        .schedule-band:first-child { padding-left: 0; }
+        .schedule-label {
+            font-size: 11px; letter-spacing: 0.18em; text-transform: uppercase;
+            color: rgba(255,255,255,0.3); font-weight: 500;
+            margin-bottom: 10px; font-family: var(--font-mono);
+        }
+        .schedule-band h3 { font-size: 18px; margin-bottom: 6px; }
+        .schedule-band p { font-size: 14px; line-height: 1.5; }
+
+        /* ═══════════════════════════════════════
+           PROGRAM / SPEAKER LISTS (no box)
+           ═══════════════════════════════════════ */
+        .program-grid {
+            display: grid; grid-template-columns: 1.2fr 0.8fr;
+            gap: 48px; margin-top: 24px;
+        }
+        .content-type-list {
+            display: grid;
+            gap: 14px;
+            margin-top: 6px;
+        }
+        .content-type-card {
+            padding: 16px 0 18px 16px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+            border-left: 1px solid rgba(255,255,255,0.08);
+        }
+        .content-type-card:last-child {
+            border-bottom: 1px solid rgba(255,255,255,0.06);
+        }
+        .content-type-meta {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+            color: rgba(255,255,255,0.34);
+        }
+        .content-type-card h3 {
+            margin-bottom: 6px;
+            font-size: 22px;
+        }
+        .content-type-card p {
+            font-size: 15px;
+            line-height: 1.55;
+        }
+        .content-type-card.taller {
+            border-left-color: rgba(72, 163, 255, 0.34);
+        }
+        .content-type-card.taller .content-type-meta,
+        .content-type-card.taller p {
+            color: rgba(214, 234, 255, 0.72);
+        }
+        .content-type-card.charla {
+            border-left-color: rgba(155, 214, 68, 0.34);
+        }
+        .content-type-card.charla .content-type-meta,
+        .content-type-card.charla p {
+            color: rgba(231, 247, 201, 0.72);
+        }
+        .content-type-card.performance {
+            border-left-color: rgba(241, 150, 197, 0.34);
+        }
+        .content-type-card.performance .content-type-meta,
+        .content-type-card.performance p {
+            color: rgba(255, 228, 240, 0.72);
+        }
+        .ecosystem-layout {
+            display: grid;
+            grid-template-columns: 0.95fr 1.05fr;
+            gap: 40px;
+            align-items: start;
+        }
+        .program-visual {
+            position: relative;
+            margin-top: 6px;
+            overflow: visible;
+        }
+        .program-visual img {
+            display: block;
+            width: 100%;
+            height: min(52vh, 460px);
+            object-fit: contain;
+            object-position: center top;
+            filter: saturate(0.98) contrast(1.02);
+        }
+        .program-visual video {
+            display: block;
+            width: 100%;
+            height: auto;
+            max-height: 220px;
+            object-fit: cover;
+            filter: saturate(0.94) contrast(1.02);
+        }
+        .context-video-frame {
+            position: relative;
+            width: min(100%, 360px);
+            aspect-ratio: 9 / 13;
+            margin: 0 auto 10px;
+            overflow: hidden;
+        }
+        .context-video-frame video {
+            display: block;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            background: #050505;
+            filter: saturate(0.94) contrast(1.02);
+        }
+        .context-video-frame::after {
+            content: none;
+        }
+        .context-points {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 0 18px;
+            margin-top: 4px;
+        }
+        .context-point {
+            padding: 10px 0;
+            border-top: 1px solid rgba(255,255,255,0.07);
+        }
+        .context-point:nth-last-child(-n+2) {
+            border-bottom: 1px solid rgba(255,255,255,0.07);
+        }
+        .context-point .n {
+            display: block;
+            margin-bottom: 6px;
+            font-family: var(--font-mono);
+            font-size: 12px;
+            color: rgba(255,255,255,0.22);
+            letter-spacing: 0.04em;
+        }
+        .context-point h3 {
+            font-size: 17px;
+            margin-bottom: 4px;
+        }
+        .context-point p {
+            font-size: 13px;
+            line-height: 1.42;
+            color: var(--color-muted);
+        }
+        .festival-visual {
+            position: relative;
+            margin-top: 6px;
+            overflow: visible;
+        }
+        .festival-visual img {
+            display: block;
+            width: 100%;
+            height: min(72vh, 720px);
+            object-fit: contain;
+            object-position: center top;
+            filter: saturate(0.98) contrast(1.02);
+        }
+        .festival-visual::after {
+            content: none;
+        }
+        .festival-note {
+            margin-top: 8px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.34);
+            font-family: var(--font-mono);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .audience-layout {
+            display: grid;
+            grid-template-columns: 1.02fr 0.98fr;
+            gap: 38px;
+            align-items: start;
+            margin-top: 10px;
+        }
+        .audience-visual {
+            position: relative;
+            margin-top: 6px;
+            overflow: visible;
+        }
+        .audience-visual img {
+            display: block;
+            width: 100%;
+            height: min(52vh, 460px);
+            object-fit: contain;
+            object-position: center;
+            filter: saturate(0.98) contrast(1.02);
+        }
+        .audience-note {
+            margin-top: 10px;
+            font-size: 12px;
+            color: rgba(255,255,255,0.34);
+            font-family: var(--font-mono);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        #slide-contexto .content-area {
+            gap: 14px;
+        }
+        #slide-contexto .lead {
+            font-size: 16px; line-height: 1.55;
+            color: rgba(246,247,251,0.68);
+        }
+        #slide-contexto .ctx-secondary {
+            font-size: 15px; line-height: 1.52;
+            color: rgba(246,247,251,0.48);
+            margin-top: -6px;
+        }
+        /* ── punchline ── */
+        #slide-contexto .ctx-punchline {
+            margin-top: 14px; padding-top: 14px;
+            border-top: 1px solid rgba(255,255,255,0.1);
+        }
+        #slide-contexto .ctx-punch-label {
+            display: block; font-family: var(--font-mono);
+            font-size: 12px; letter-spacing: 0.22em; text-transform: uppercase;
+            color: rgba(255,255,255,0.28); margin-bottom: 10px;
+        }
+        #slide-contexto .ctx-punchline p {
+            font-family: var(--font-title);
+            font-size: 26px; line-height: 1.22;
+            color: #fff; margin: 0;
+            font-weight: 600; letter-spacing: -0.01em;
+        }
+        #slide-contexto .ctx-punchline em {
+            font-style: italic; color: rgba(255,255,255,0.55);
+        }
+        #slide-contexto .pull-quote p {
+            font-size: 18px; line-height: 1.34;
+        }
+        /* Unified paragraph colors */
+        #slide-contexto .lead,
+        #slide-contexto .ctx-secondary {
+            color: rgba(242,242,242,0.72);
+        }
+        #slide-caja-negra .content-area > p {
+            color: rgba(242,242,242,0.72);
+        }
+        .program-visual::after {
+            content: none;
+        }
+        .workshop-cards {
+            display: grid;
+            gap: 14px;
+            margin-top: 14px;
+        }
+        .workshop-card {
+            padding-top: 14px;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .workshop-meta {
+            display: block;
+            margin-bottom: 6px;
+            color: rgba(255,255,255,0.32);
+            font-size: 11px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+        }
+        .media-caption {
+            font-size: 12px;
+            color: rgba(255,255,255,0.34);
+            margin-top: 10px;
+            font-family: var(--font-mono);
+            letter-spacing: 0.08em;
+            text-transform: uppercase;
+        }
+        .timeline-options {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-top: 6px;
+        }
+        .timeline-option {
+            padding-left: 14px;
+            border-left: 1px solid rgba(255,255,255,0.08);
+        }
+        .timeline-option:first-child {
+            padding-left: 0;
+            border-left: none;
+        }
+        .timeline-option h4 {
+            margin-bottom: 10px;
+            font-size: 13px;
+            letter-spacing: 0.14em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.38);
+            font-family: var(--font-mono);
+        }
+        .mini-timeline {
+            display: grid;
+            gap: 0;
+        }
+        .mini-slot {
+            display: grid;
+            grid-template-columns: 44px 1fr;
+            gap: 10px;
+            padding: 7px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .mini-slot:last-child { border-bottom: none; }
+        .slot-time {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            color: rgba(255,255,255,0.32);
+            letter-spacing: 0.06em;
+        }
+        .slot-text {
+            font-size: 13px;
+            line-height: 1.35;
+            color: rgba(242,242,242,0.82);
+        }
+        .timeline-single {
+            margin-top: 6px;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .activity-legend {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin: 10px 0 14px;
+        }
+        .legend-chip {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 6px 10px;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.02);
+            color: rgba(242,242,242,0.78);
+            font-size: 11px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            font-family: var(--font-mono);
+        }
+        .legend-dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 2px;
+            flex-shrink: 0;
+        }
+        .timeline-head,
+        .timeline-row {
+            display: grid;
+            grid-template-columns: 72px 1.15fr 0.85fr;
+            gap: 16px;
+        }
+        .timeline-head {
+            padding: 10px 0 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.16em;
+            text-transform: uppercase;
+            color: rgba(255,255,255,0.34);
+        }
+        .timeline-row {
+            padding: 10px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+            align-items: start;
+        }
+        .timeline-row:last-child { border-bottom: none; }
+        .timeline-time {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            letter-spacing: 0.06em;
+            color: rgba(255,255,255,0.34);
+            padding-top: 2px;
+        }
+        .timeline-cell {
+            min-height: 100%;
+        }
+        .timeline-pill {
+            display: inline-block;
+            padding: 6px 9px;
+            margin: 0 6px 6px 0;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: rgba(255,255,255,0.04);
+            color: rgba(242,242,242,0.9);
+            font-size: 12px;
+            line-height: 1.25;
+        }
+        .timeline-pill.subtle {
+            color: rgba(242,242,242,0.7);
+            background: rgba(255,255,255,0.02);
+        }
+        .timeline-pill.taller, .legend-dot.taller {
+            background: rgba(72, 163, 255, 0.14);
+            border-color: rgba(72, 163, 255, 0.24);
+            color: rgba(214, 234, 255, 0.96);
+        }
+        .timeline-pill.charla, .legend-dot.charla {
+            background: rgba(155, 214, 68, 0.14);
+            border-color: rgba(155, 214, 68, 0.24);
+            color: rgba(231, 247, 201, 0.96);
+        }
+        .timeline-pill.performance, .legend-dot.performance {
+            background: rgba(241, 150, 197, 0.14);
+            border-color: rgba(241, 150, 197, 0.24);
+            color: rgba(255, 228, 240, 0.96);
+        }
+        .timeline-pill.demo, .legend-dot.demo {
+            background: rgba(164, 177, 193, 0.14);
+            border-color: rgba(164, 177, 193, 0.24);
+            color: rgba(230, 236, 242, 0.96);
+        }
+        .timeline-pill.institucional, .legend-dot.institucional {
+            background: rgba(184, 154, 214, 0.14);
+            border-color: rgba(184, 154, 214, 0.24);
+            color: rgba(238, 228, 247, 0.96);
+        }
+        .timeline-note {
+            margin-top: 12px;
+            font-size: 12px;
+            line-height: 1.45;
+            color: rgba(255,255,255,0.34);
+            font-family: var(--font-mono);
+        }
+        .program-column, .speaker-list { padding: 0; background: none; border: none; }
+        .program-column h3, .speaker-list h3 {
+            margin-bottom: 16px; padding-bottom: 12px;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .program-list, .speaker-items, .check-list {
+            list-style: none; display: flex; flex-direction: column; gap: 0;
+        }
+        .program-list li, .speaker-items li, .check-list li {
+            padding: 14px 0;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .program-list li:last-child, .speaker-items li:last-child,
+        .check-list li:last-child { border-bottom: none; }
+        .list-note {
+            font-size: 13px; color: rgba(255,255,255,0.32);
+            margin-top: 12px; font-family: var(--font-mono);
+        }
+        .speaker-title {
+            display: block; font-size: 15px; font-weight: 600;
+            color: var(--color-white); margin-bottom: 3px;
+        }
+        .speaker-caption { font-size: 14px; color: var(--color-muted); }
+
+        /* ═══════════════════════════════════════
+           PERSONA / AUDIENCE (flat columns)
+           ═══════════════════════════════════════ */
+        .audience-grid, .team-grid, .closing-grid {
+            display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 0;
+        }
+        .persona-card {
+            padding: 0 32px 0 0;
+            border-right: 1px solid rgba(255,255,255,0.06);
+            background: none;
+        }
+        .persona-card:last-child { border-right: none; }
+        .persona-badge, .team-role {
+            display: block; margin-bottom: 10px; padding: 0;
+            background: none; border: none;
+            color: rgba(255,255,255,0.35); font-size: 11px; font-weight: 500;
+            letter-spacing: 0.16em; text-transform: uppercase;
+            font-family: var(--font-mono);
+        }
+        .persona-card h3 { margin-bottom: 8px; }
+        .persona-card p { font-size: 15px; line-height: 1.5; }
+
+        /* ═══════════════════════════════════════
+           PARTNERSHIP GRID (2x2 with dividers)
+           ═══════════════════════════════════════ */
+        .partnership-grid {
+            display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0;
+        }
+        .partnership-grid .tile {
+            border-top: none; border-bottom: none;
+            border-left: 1px solid rgba(255,255,255,0.06);
+            padding: 20px 24px;
+        }
+        .partnership-grid .tile:nth-child(odd) { border-left: none; padding-left: 0; }
+        .partnership-grid .tile:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,0.06); }
+
+        /* ═══════════════════════════════════════
+           TEAM (flat columns)
+           ═══════════════════════════════════════ */
+        .team-member {
+            padding: 0 32px 0 0;
+            border-right: 1px solid rgba(255,255,255,0.06);
+            background: none;
+        }
+        .team-member:last-child { border-right: none; }
+        .team-member h3 { margin-bottom: 8px; }
+        .team-member p { font-size: 13px; line-height: 1.48; color: rgba(246,247,251,0.62); }
+        .team-member p + p { margin-top: 6px; }
+
+        /* ═══════════════════════════════════════
+           INFO PANEL (top border only)
+           ═══════════════════════════════════════ */
+        .info-panel {
+            padding: 20px 0 0;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            background: none;
+        }
+        .info-panel p { font-size: 15px; line-height: 1.55; }
+
+        /* ═══════════════════════════════════════
+           CLOSING PANELS (flat columns)
+           ═══════════════════════════════════════ */
+        .closing-panel {
+            padding: 0 32px 0 0;
+            border-right: 1px solid rgba(255,255,255,0.06);
+            background: none;
+        }
+        .closing-panel:last-child { border-right: none; }
+        .closing-panel h3 { margin-bottom: 8px; }
+        .closing-panel p { font-size: 15px; line-height: 1.55; }
+
+        /* ═══════════════════════════════════════
+           CONTACT (plain text, no icon boxes)
+           ═══════════════════════════════════════ */
+        .contact-strip {
+            margin-top: 28px; display: flex; gap: 48px;
+            padding: 20px 0 0;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            background: none;
+        }
+        .contact-item { display: flex; flex-direction: column; gap: 4px; }
+        .contact-item span {
+            font-size: 11px; text-transform: uppercase;
+            letter-spacing: 0.14em; color: rgba(242,242,242,0.3);
+            font-family: var(--font-mono);
+        }
+        .contact-item strong { font-size: 16px; font-weight: 500; word-break: break-word; }
+
+        /* ═══════════════════════════════════════
+           CHIPS (flat text with / dividers)
+           ═══════════════════════════════════════ */
+        .chip-row { display: flex; flex-wrap: wrap; gap: 0; align-items: center; }
+        .chip {
+            display: inline-flex; padding: 0;
+            background: none; border: none;
+            font-size: 15px; color: rgba(255,255,255,0.55);
+            font-family: var(--font-mono);
+            text-transform: uppercase; letter-spacing: 0.06em;
+        }
+        .chip-divider {
+            display: inline-block; margin: 0 16px;
+            color: rgba(255,255,255,0.18);
+            font-family: var(--font-mono); font-size: 14px;
+        }
+
+        /* ═══════════════════════════════════════
+           PILLAR GRID (stacked, varied scale)
+           ═══════════════════════════════════════ */
+        .pillar-grid { display: flex; flex-direction: column; gap: 0; }
+        .pillar-grid .tile {
+            border-top: 1px solid rgba(255,255,255,0.06);
+            border-bottom: none; padding: 18px 0;
+        }
+        .pillar-grid .tile:last-child { border-bottom: 1px solid rgba(255,255,255,0.06); }
+
+        /* ═══════════════════════════════════════
+           IMAGE PLACEHOLDER
+           ═══════════════════════════════════════ */
+        .img-placeholder {
+            background: #111; border: 1px solid rgba(255,255,255,0.06);
+            display: flex; align-items: center; justify-content: center;
+            font-family: var(--font-mono); font-size: 11px;
+            letter-spacing: 0.2em; text-transform: uppercase;
+            color: rgba(255,255,255,0.15);
+        }
+        .img-placeholder.landscape { aspect-ratio: 16 / 9; }
+        .img-placeholder.square { aspect-ratio: 1 / 1; width: 64px; }
+        .img-placeholder.tall { aspect-ratio: 3 / 4; min-height: 200px; }
+
+        /* ═══════════════════════════════════════
+           LAYER STACK (ecosistema)
+           ═══════════════════════════════════════ */
+        .layer-stack { display: flex; flex-direction: column; gap: 0; margin-top: 12px; }
+        .layer-item {
+            display: grid; grid-template-columns: 56px 1fr;
+            gap: 0 16px; padding: 18px 0;
+            border-top: 1px solid rgba(255,255,255,0.06);
+        }
+        .layer-item:last-child { border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .layer-item .depth {
+            font-family: var(--font-mono); font-size: 11px;
+            color: rgba(255,255,255,0.2); text-transform: uppercase;
+            letter-spacing: 0.08em; padding-top: 3px;
+        }
+        .layer-item h3 { font-size: 18px; margin-bottom: 4px; }
+        .layer-item p { font-size: 15px; line-height: 1.5; }
+
+        /* ═══════════════════════════════════════
+           STATEMENT ROWS (alianza)
+           ═══════════════════════════════════════ */
+        .statement-list { display: flex; flex-direction: column; gap: 0; margin-top: 8px; }
+        .statement-item {
+            display: grid; grid-template-columns: 56px 1fr;
+            gap: 0 16px; padding: 24px 0;
+            border-top: 1px solid rgba(255,255,255,0.07);
+        }
+        .statement-item:last-child { border-bottom: 1px solid rgba(255,255,255,0.07); }
+        .statement-item .n {
+            font-family: var(--font-mono); font-size: 28px;
+            font-weight: 300; color: rgba(255,255,255,0.12); line-height: 1;
+        }
+        .statement-item h3 { font-size: 20px; margin-bottom: 6px; }
+        .statement-item p { font-size: 15px; line-height: 1.55; }
+
+        /* ═══════════════════════════════════════
+           CONTROLS
+           ═══════════════════════════════════════ */
+        .controls-bar {
+            position: fixed; left: 50%; bottom: 12px;
+            transform: translateX(-50%);
+            display: flex; align-items: center; gap: 8px;
+            z-index: 20; padding: 7px 8px;
+            border-radius: 999px;
+            background: rgba(10,10,10,0.88);
+            border: 1px solid rgba(255,255,255,0.08);
+            backdrop-filter: blur(14px);
+            box-shadow: 0 20px 50px rgba(0,0,0,0.34);
+        }
+        .control-button {
+            width: 36px; height: 36px; border: none;
+            border-radius: 999px;
+            display: inline-flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.06); color: var(--color-white);
+            cursor: pointer; transition: transform 0.2s ease, background 0.2s ease;
+            font-size: 13px;
+        }
+        .control-button:hover {
+            transform: translateY(-2px); background: rgba(255,255,255,0.12);
+        }
+        .slide-indicator {
+            position: fixed; top: 20px; right: 20px; z-index: 20;
+            padding: 10px 14px; border-radius: 999px;
+            background: rgba(10,10,10,0.88);
+            border: 1px solid rgba(255,255,255,0.08);
+            color: var(--color-white); font-size: 11px;
+            letter-spacing: 0.18em; text-transform: uppercase;
+            backdrop-filter: blur(14px); font-family: var(--font-mono);
+        }
+        .flowchart-sidebar, .sidebar-overlay { display: none; }
+
+        /* ═══════════════════════════════════════
+           GRID VIEW
+           ═══════════════════════════════════════ */
+        body.grid-view { overflow: hidden; }
+        body.grid-view .slides-wrapper {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            grid-auto-rows: 220px; gap: 12px;
+            width: 100vw; max-height: 100vh;
+            padding: 12px 12px 86px; overflow-y: auto;
+        }
+        body.grid-view .slide-container {
+            position: relative; opacity: 1; visibility: visible;
+            pointer-events: auto; padding: 20px 22px 34px; height: 100%;
+        }
+        body.grid-view .slide-container::after {
+            content: attr(data-slide-num);
+            position: absolute; right: 12px; bottom: 12px;
+            display: flex; align-items: center; justify-content: center;
+            background: rgba(255,255,255,0.9); color: #10141c;
+            font-size: 11px; font-weight: 700;
+            width: 24px; height: 24px; border-radius: 999px;
+        }
+        body.grid-view .slide-title { font-size: 24px; }
+        body.grid-view .title-layout h1, body.grid-view .section-title-layout h2 { font-size: 32px; }
+        body.grid-view p, body.grid-view li, body.grid-view .lead,
+        body.grid-view .speaker-caption { font-size: 11px; line-height: 1.35; }
+        body.grid-view .controls-bar { display: none; }
+
+        /* ═══════════════════════════════════════
+           RESPONSIVE
+           ═══════════════════════════════════════ */
+        /* Short screens (lower-res laptops, e.g. 768px height) */
+        @media (max-height: 800px) {
+            .slide-container { padding: 28px 60px 60px; justify-content: flex-start; }
+            h2.slide-title { font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
+            .lead, .section-copy { font-size: 15px; }
+            p { font-size: 14px; line-height: 1.55; }
+            .kpi-value { font-size: clamp(1.4rem, 2.5vw, 2rem); }
+            .kpi-card { padding: 10px 24px 10px 0; }
+            .kpi-row { gap: 12px; }
+            .two-column { gap: 28px; }
+            .team-member p { font-size: 12px; line-height: 1.45; }
+            .caja-negra-quote { margin-top: 12px; padding-top: 10px; }
+            .caja-negra-quote p { font-size: 1rem; padding: 8px 12px; }
+        }
+        @media (max-height: 700px) {
+            .slide-container { padding: 20px 48px 48px; }
+            h2.slide-title { font-size: clamp(1.2rem, 2.2vw, 1.5rem); }
+            .lead, .section-copy { font-size: 14px; }
+            p { font-size: 13px; }
+        }
+
+        @media (max-width: 1180px) {
+            .slide-container { padding: 36px 32px 100px; }
+            .two-column, .program-grid, .schedule-grid,
+            .tiled-content.four, .tiled-content.three, .partnership-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+            .audience-grid, .team-grid, .closing-grid {
+                grid-template-columns: 1fr;
+            }
+            .persona-card, .team-member, .closing-panel {
+                border-right: none;
+                border-bottom: 1px solid rgba(255,255,255,0.06);
+                padding: 16px 0;
+            }
+            .contact-strip { flex-direction: column; gap: 16px; }
+            h2.slide-title { font-size: clamp(1.5rem, 3.5vw, 2.2rem); }
+            .lead, .section-copy { font-size: 16px; }
+            p { font-size: 15px; }
+            .kpi-value { font-size: clamp(1.6rem, 3vw, 2.2rem); }
+            .kpi-row { gap: 16px; }
+            .kpi-card { padding: 14px 24px 14px 0; }
+            .pull-quote p { font-size: 18px; }
+        }
+        @media (max-width: 820px) {
+            body { overflow: hidden; }
+            .slide-container {
+                padding: 24px 18px 90px;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .two-column, .program-grid, .schedule-grid,
+            .tiled-content, .partnership-grid,
+            .audience-grid, .team-grid, .closing-grid {
+                grid-template-columns: 1fr !important;
+                gap: 16px !important;
+            }
+            .tiled-content .tile {
+                border-left: none;
+                border-bottom: 1px solid rgba(255,255,255,0.06);
+                padding: 16px 0;
+            }
+            .schedule-band {
+                border-right: none;
+                border-bottom: 1px solid rgba(255,255,255,0.06);
+                padding: 16px 0;
+            }
+            .title-layout h1, .section-title-layout h2, .stat-hero {
+                font-size: clamp(2rem, 10vw, 3.2rem);
+            }
+            h2.slide-title { font-size: clamp(1.4rem, 6vw, 2rem); }
+            .lead, .section-copy { font-size: 15px; }
+            p, li { font-size: 14px; }
+            .controls-bar { bottom: 8px; }
+            .slide-indicator { top: 12px; right: 12px; font-size: 10px; padding: 6px 10px; }
+
+            /* Cover */
+            .cover-text-panel { padding: 20px; }
+            .cover-text-panel h1 { font-size: clamp(2rem, 10vw, 3rem); }
+            .hero-intro { font-size: 14px; max-width: 100%; }
+
+            /* Images */
+            .festival-visual img { height: auto; max-height: 40vh; }
+            .program-visual img { height: auto; max-height: 36vh; }
+
+            /* KPI */
+            .kpi-row { flex-direction: column; }
+            .kpi-card { border-right: none; border-bottom: 1px solid rgba(255,255,255,0.06); padding: 14px 0; }
+
+            /* Team */
+            .team-member, .persona-card, .closing-panel {
+                border-right: none;
+                border-bottom: 1px solid rgba(255,255,255,0.06);
+                padding: 16px 0;
+            }
+            .team-member img, .persona-card img { width: 60px !important; height: 60px !important; }
+            .team-member p { font-size: 12px; }
+
+            /* Hero bg slides (arthaus, etc) */
+            .hero-bg-slide .cover-text-panel { max-width: 90%; }
+            .hero-img-wrap img { width: 70% !important; }
+
+            /* Context slide video */
+            .context-video-frame { aspect-ratio: 9/14; max-height: 35vh; }
+
+            /* Pull quote */
+            .pull-quote p { font-size: 16px; }
+            .caja-negra-quote p { font-size: 0.95rem; padding: 8px 12px; }
+
+            /* Punchline */
+            .ctx-punchline p { font-size: 20px; }
+
+            /* Chip row */
+            .chip-row { flex-wrap: wrap; gap: 6px; }
+            .chip { font-size: 10px; padding: 4px 10px; }
+
+            /* Schedule timeline */
+            .timeline-row { flex-wrap: wrap; gap: 4px; }
+            .timeline-pill { font-size: 9px; padding: 3px 8px; }
+
+            /* Numbered items */
+            .numbered-item { padding: 10px 0; }
+            .numbered-item h3 { font-size: 14px; }
+            .numbered-item p { font-size: 12px; }
+
+            /* Content type cards */
+            .content-type-card { padding: 12px 0; }
+            .content-type-card h3 { font-size: 15px; }
+
+            /* Info panel */
+            .info-panel { font-size: 13px; }
+
+            /* Workshop cards */
+            .workshop-card h3 { font-size: 14px; }
+            .workshop-card p { font-size: 12px; }
+
+            /* Speaker items on mobile */
+            .speaker-items li { flex-direction: column; gap: 2px; }
+
+            /* Slide 14 video container */
+            #slide-cierre > div:first-child > div:first-child { width: 90% !important; height: 50% !important; }
+        }
+    </style>
+</head>
+<body>
+    <div class="slides-wrapper">
+
+        <!-- ═══ 01 PORTADA INTRO ═══ -->
+        <div class="slide-container active" id="slide-cover-intro" style="background:#000000; justify-content:center; align-items:center;">
+            <div class="title-layout">
+                <h1>DataRaíz<br><em>Ciclo Negro</em></h1>
+                <div class="cover-subline">Contraste Inversivo</div>
+                <p class="hero-intro" style="opacity:0.72; font-size:13px; letter-spacing:0.18em; margin-top:14px;">Buenos Aires, 2026</p>
+            </div>
+        </div>
+
+        <!-- ═══ 02 PORTADA IMAGEN ═══ -->
+        <div class="slide-container" id="slide-cover" style="background: #0a0a0a; overflow:hidden; padding:0; justify-content:center;">
+            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+                <div style="width:75%; height:75%; position:relative;">
+                    <img src="cajanegra2.png" alt="" style="width:100%; height:100%; object-fit:cover; display:block; opacity:0.8;">
+                    <div style="position:absolute; inset:-1px; background: 
+                        linear-gradient(to right, #0a0a0a 0%, transparent 18%, transparent 82%, #0a0a0a 100%),
+                        linear-gradient(to bottom, #0a0a0a 0%, transparent 18%, transparent 82%, #0a0a0a 100%);
+                    "></div>
+                </div>
+            </div>
+            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center; pointer-events:none; z-index:1;">
+                <div style="width:min(760px, 72vw); height:min(540px, 58vh); background: radial-gradient(circle at center, rgba(10,10,10,0.60) 0%, rgba(10,10,10,0.38) 50%, rgba(10,10,10,0.10) 78%, rgba(10,10,10,0) 100%);"></div>
+            </div>
+            <div class="title-layout" style="position:relative; z-index:1;">
+                <div class="cover-text-panel">
+                    <p class="hero-intro">Un recorrido inmersivo que cruza masterclasses de tecnología, instalaciones de arte interactivo y performances audiovisuales en vivo.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 02 CONTEXTO ═══ -->
+        <div class="slide-container" id="slide-contexto">
+            <div class="two-column" style="grid-template-columns: 0.88fr 1.12fr; gap: 32px; align-items: start;">
+                <div class="content-area" style="justify-content:center;">
+                    <div class="context-video-frame" style="width:100%; aspect-ratio: 9/14; margin-bottom: 10px;">
+                        <video autoplay muted loop playsinline preload="auto" aria-label="Visual de texto en movimiento para contexto DataRaíz">
+                            <source src="screentext.mp4" type="video/mp4">
+                        </video>
+                    </div>
+                    <div class="pull-quote" style="margin: 0;">
+                        <p>"La escena hierve. Falta el espacio que la contenga."</p>
+                    </div>
+                </div>
+                <div class="content-area">
+                    <span class="ctx-punch-label" style="display:block; margin-bottom:14px;">El escenario actual</span>
+                    <h2 class="slide-title">Un ecosistema de <em>silos</em></h2>
+                    <p class="lead">Vivimos en un ecosistema de silos: el arte, la tecnología y la ciencia siguen atrapados en órbitas aisladas, desperdiciando el potencial explosivo de su colisión. Mientras la técnica avanza a ritmos vertiginosos, la producción artística se topa con un muro de cristal que restringe el acceso a las herramientas de vanguardia.</p>
+                    <p class="ctx-secondary">La escena local hierve; el talento y la urgencia creativa circulan en abundancia, pero faltan plataformas de hibridación y convergencia que rompan la inercia. Es hora de dinamitar las fronteras disciplinares y crear espacios de cruce real donde el código, la materia y la teoría se fundan sin jerarquías.</p>
+                    <div class="ctx-punchline">
+                        <span class="ctx-punch-label" style="font-size:12px;">La oportunidad</span>
+                        <p>Crear un punto de encuentro real<br>para una escena que <em>no acepta fronteras</em>.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 03 FESTIVAL ═══ -->
+        <div class="slide-container" id="slide-festival">
+            <div class="ambient-noise"></div>
+            <div class="two-column" style="grid-template-columns: 1.16fr 0.84fr; gap: 34px; align-items: start;">
+                <div class="content-area">
+                    <p class="accent-tag">Ciclo DataRaíz</p>
+                    <h2 class="slide-title">Un <em>nodo de convergencia</em> vivo</h2>
+                    <p class="lead">La tecnología deja de ser una herramienta aislada para experimentarse como un lenguaje expresivo, sensible y humano. DataRaíz construye un territorio donde la biología dialoga con el código, la danza con los sensores y el diseño visual con la electrónica.</p>
+                    <div class="numbered-list" style="margin-top: 8px;">
+                        <div class="numbered-item tile">
+                            <span class="n">01</span>
+                            <div>
+                                <h3>Experiencia</h3>
+                                <p>Festival inmersivo de 12 horas que transforma el espacio en un ecosistema vibrante: workshops técnicos, cruce con industria creativa y un cierre A/V de vanguardia.</p>
+                            </div>
+                        </div>
+                        <div class="numbered-item tile">
+                            <span class="n">02</span>
+                            <div>
+                                <h3>Puente</h3>
+                                <p>Conecta la demanda de la industria tecnológica con talento emergente disruptivo, proyectando una red profesional desde Buenos Aires hacia el mundo.</p>
+                            </div>
+                        </div>
+                        <div class="numbered-item tile">
+                            <span class="n">03</span>
+                            <div>
+                                <h3>Alianza</h3>
+                                <p>Convoca infraestructura de primer nivel y una dirección técnica-curatorial respaldada por trayectoria en plataformas como MUTEK y Node Forum Berlín.</p>
+                            </div>
+                        </div>
+                        <div class="numbered-item tile">
+                            <span class="n">04</span>
+                            <div>
+                                <h3>Impacto</h3>
+                                <p>Activa a una comunidad de creadores y desarrolladores que ya está definiendo el futuro del lenguaje digital contemporáneo.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="content-area" style="gap: 12px; padding-top: 40px;">
+                    <div class="festival-visual">
+                        <img src="show.png" alt="Show audiovisual de DataRaíz">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 04 CAJA NEGRA ═══ -->
+        <div class="slide-container" id="slide-caja-negra">
+            <div class="two-column">
+                <div class="content-area">
+                    <p class="accent-tag">La experiencia · Caja Negra</p>
+                    <h2 class="slide-title">La Experiencia: <em>Caja Negra</em></h2>
+                    <p class="lead">La Caja Negra es un dispositivo escénico heredado del teatro experimental: un espacio completamente oscuro, acústicamente controlado, donde se anulan todas las distracciones del entorno para que la experiencia sensorial sea absoluta.</p>
+                    <p>En DataRaíz tomamos ese concepto y lo llevamos al cruce entre tecnología y arte: el negro total se convierte en la superficie donde las visuales generativas, la iluminación inmersiva y el sonido espacializado alcanzan su máxima potencia expresiva. La tecnología deja de ser un gadget para convertirse en un organismo vivo.</p>
+                    <p>La configuración elimina la jerarquía entre escenario y público — todos están adentro de la obra.</p>
+                    <div class="caja-negra-quote">
+                        <p>El rito escénico como inmersión total, el contraste como lenguaje.</p>
+                    </div>
+                </div>
+                <div class="content-area" style="display:flex; flex-direction:column; justify-content:flex-start; align-self:flex-start; padding-top:50px;">
+                    <div class="kpi-row" style="flex-direction:column; gap:24px;">
+                        <div class="kpi-card">
+                            <div class="kpi-value">Silencio</div>
+                            <div class="kpi-label">como lienzo escénico</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-value">Negro</div>
+                            <div class="kpi-label">como contraste expresivo</div>
+                        </div>
+                        <div class="kpi-card">
+                            <div class="kpi-value">Inmersión</div>
+                            <div class="kpi-label">atención profunda y foco total</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 05 ECOSISTEMA ═══ -->
+        <div class="slide-container" id="slide-ecosistema">
+            <div class="ambient-grid"></div>
+            <div class="ecosystem-layout" style="grid-template-columns: 1.08fr 0.92fr; gap: 34px; height: 100%; align-content: center;">
+                <div class="content-area">
+                    <p class="accent-tag">Un mismo espacio, múltiples capas</p>
+                    <h2 class="slide-title">Un ecosistema en <em>tiempo real</em></h2>
+                    <p class="lead">La jornada se organiza como un recorrido continuo bajo cuatro ejes: formación técnica intensiva, experimentación en procesos abiertos, conversatorios para intercambio de ideas y shows audiovisuales que atraviesan toda la experiencia.</p>
+                    <div class="program-visual" style="margin-top: 16px;">
+                        <img src="taller2.png" alt="Workshop técnico de DataRaíz">
+                    </div>
+                    <p class="media-caption">El núcleo técnico en acción · formación, herramientas y práctica aplicada</p>
+                </div>
+                <div class="content-area" style="padding-top: 120px;">
+                    <div class="layer-stack">
+                        <div class="layer-item tile">
+                            <span class="depth">Capa 01</span>
+                            <div>
+                                <h3>El núcleo técnico</h3>
+                                <p>Talleres hands-on donde los participantes acceden a hardware y software al que normalmente no llegarían. DataRaíz rompe la barrera económica del equipamiento y pone los fierros en manos de quienes los necesitan para crear.</p>
+                            </div>
+                        </div>
+                        <div class="layer-item tile">
+                            <span class="depth">Capa 02</span>
+                            <div>
+                                <h3>La zona de riesgo</h3>
+                                <p>Un espacio de producción en vivo y procesos abiertos. Ahí algo puede fallar, mutar o sorprender — una puerta de entrada al universo de la performance artística profesional.</p>
+                            </div>
+                        </div>
+                        <div class="layer-item tile">
+                            <span class="depth">Capa 03</span>
+                            <div>
+                                <h3>Interfaz crítica</h3>
+                                <p>Charlas y conversatorios donde artistas, tecnólogos y gestores debaten futuros posibles y desafíos de la escena actual.</p>
+                            </div>
+                        </div>
+                        <div class="layer-item tile">
+                            <span class="depth">Capa 04</span>
+                            <div>
+                                <h3>Pulso sensorial</h3>
+                                <p>Shows audiovisuales en vivo como hilo conductor: una descarga de energía generativa que cohesiona toda la jornada.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 06 PROGRAMACIÓN ═══ -->
+        <div class="slide-container" id="slide-programacion">
+            <div class="content-area">
+                <p class="accent-tag">Programación</p>
+                <h2 class="slide-title">Un flujo constante para audiencias diversas</h2>
+                <div class="program-grid" style="grid-template-columns: 0.78fr 1.22fr; gap: 34px; margin-top: 24px; align-items: start;">
+                    <div class="program-column">
+                        <div class="content-type-list">
+                            <div class="content-type-card taller">
+                                <span class="content-type-meta">Mañana / tarde</span>
+                                <h3>Workshops intensivos</h3>
+                                <p>Transferencia técnica en formato concentrado, con foco en práctica, herramientas y experimentación aplicada.</p>
+                            </div>
+                            <div class="content-type-card charla">
+                                <span class="content-type-meta">Tarde</span>
+                                <h3>Instalaciones + conversatorios</h3>
+                                <p>Procesos abiertos, demos y cruces de ideas para activar diálogo entre comunidad, industria y escena local.</p>
+                            </div>
+                            <div class="content-type-card performance">
+                                <span class="content-type-meta">Noche</span>
+                                <h3>Performances audiovisuales</h3>
+                                <p>Cierre sensorial con shows en vivo que consolidan el carácter inmersivo y colectivo del festival.</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="speaker-list" style="margin-top: 0;">
+                        <div class="activity-legend">
+                            <span class="legend-chip"><span class="legend-dot taller"></span>Taller</span>
+                            <span class="legend-chip"><span class="legend-dot charla"></span>Activación / charla</span>
+                            <span class="legend-chip"><span class="legend-dot performance"></span>Performance</span>
+                        </div>
+                        <div class="timeline-single">
+                            <div class="timeline-head">
+                                <span>Horario</span>
+                                <span>Venue</span>
+                                <span>Espacio 2</span>
+                            </div>
+                            <div class="timeline-row">
+                                <span class="timeline-time">09:00</span>
+                                <div class="timeline-cell"></div>
+                                <div class="timeline-cell"><span class="timeline-pill subtle">Recepción</span></div>
+                            </div>
+                            <div class="timeline-row">
+                                <span class="timeline-time">11:00–13:00</span>
+                                <div class="timeline-cell"><span class="timeline-pill taller">Taller práctico</span></div>
+                                <div class="timeline-cell"></div>
+                            </div>
+                            <div class="timeline-row">
+                                <span class="timeline-time">13:00–16:00</span>
+                                <div class="timeline-cell"><span class="timeline-pill taller">Taller + práctica de performance audiovisual</span></div>
+                                <div class="timeline-cell">
+                                    <span class="timeline-pill charla">Apertura técnica</span>
+                                    <span class="timeline-pill charla">Cultura</span>
+                                    <span class="timeline-pill charla">Ciencia / arte</span>
+                                    <span class="timeline-pill charla">Conversatorio</span>
+                                    <span class="timeline-pill charla">Cierre</span>
+                                </div>
+                            </div>
+                            <div class="timeline-row">
+                                <span class="timeline-time">17:00–22:00</span>
+                                <div class="timeline-cell">
+                                    <span class="timeline-pill performance">VJ Colli</span>
+                                    <span class="timeline-pill performance">Lolo Armdz</span>
+                                    <span class="timeline-pill performance">Pablo Veron</span>
+                                    <span class="timeline-pill performance">Manuel Palenque</span>
+                                </div>
+                                <div class="timeline-cell"><span class="timeline-pill charla">Espacio de intercambio</span></div>
+                            </div>
+                        </div>
+                        <p class="timeline-note">Lectura sintética del flujo de jornada: formación técnica, activación simultánea del espacio 2 y bloque final de performances.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 07 CRÍTICA / SENSORIAL ═══ -->
+        <div class="slide-container" id="slide-critica-sensorial">
+            <div class="two-column" style="grid-template-columns: 0.82fr 1.18fr; gap: 28px;">
+                <div class="content-area" style="gap: 10px;">
+                    <p class="accent-tag">Interfaz crítica</p>
+                    <h2 class="slide-title" style="font-size: clamp(1.6rem, 3vw, 2.4rem);">Conversatorios que piensan la escena</h2>
+                    <div class="speaker-list">
+                        <ul class="speaker-items" style="gap: 0;">
+                            <li style="padding: 10px 0;">
+                                <span class="speaker-title" style="font-size:17px;">La Conciencia de la Máquina</span>
+                                <span class="speaker-caption" style="font-size:15px;">Pensar el arte técnico, su genealogía y su responsabilidad ética.</span>
+                            </li>
+                            <li style="padding: 10px 0;">
+                                <span class="speaker-title" style="font-size:17px;">Identidades Sintéticas</span>
+                                <span class="speaker-caption" style="font-size:15px;">IA, estética 3D y nuevas formas de creación digital.</span>
+                            </li>
+                            <li style="padding: 10px 0;">
+                                <span class="speaker-title" style="font-size:17px;">Programar el Futuro</span>
+                                <span class="speaker-caption" style="font-size:15px;">Cómo la gestión cultural diseña ecosistemas sostenibles.</span>
+                            </li>
+                            <li style="padding: 10px 0;">
+                                <span class="speaker-title" style="font-size:17px;">La Escena del Futuro</span>
+                                <span class="speaker-caption" style="font-size:15px;">Qué buscan hoy curadores, productores y espacios culturales.</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="content-area" style="gap: 8px;">
+                    <p class="accent-tag">Pulso sensorial</p>
+                    <h2 class="slide-title" style="font-size: clamp(1.6rem, 3vw, 2.4rem);">Line-up</h2>
+                    <div style="display:grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-top: 4px;">
+                        <div style="display:flex; flex-direction:column; gap: 6px;">
+                            <img src="colli.png" alt="Agustín Colli" style="width:100%; height:110px; object-fit:cover; object-position:top; display:block;">
+                            <span class="speaker-title" style="font-size:14px;">01 — Agustín Colli</span>
+                            <span class="speaker-caption" style="font-size:12px; line-height:1.4;">Artista audiovisual y performer. Miembro de SETUP VISUAL. Performance A/V en vivo con música electrónica y pixel LED sincronizado.</span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap: 6px;">
+                            <div style="width:100%; height:110px; background:#111; border:1px solid rgba(255,255,255,0.07); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:10px; letter-spacing:0.14em; color:rgba(255,255,255,0.2); text-transform:uppercase;">Foto próximamente</div>
+                            <span class="speaker-title" style="font-size:14px;">02 — Manu</span>
+                            <span class="speaker-caption" style="font-size:12px; line-height:1.4;">Performance A/V en vivo. Entorno digital generativo que interactúa con el sonido en tiempo real — música e imagen se responden hasta colapsar en patrones de entropía.</span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap: 6px;">
+                            <div style="width:100%; height:110px; background:#111; border:1px solid rgba(255,255,255,0.07); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:10px; letter-spacing:0.14em; color:rgba(255,255,255,0.2); text-transform:uppercase;">Foto próximamente</div>
+                            <span class="speaker-title" style="font-size:14px;">03 — Lolo Armendariz</span>
+                            <span class="speaker-caption" style="font-size:12px; line-height:1.4;">Programador y artista visual, cofundador de Holaplan. Creador de «Karne» (simulaciones orgánicas con código y shaders). Performance generativa en vivo.</span>
+                        </div>
+                        <div style="display:flex; flex-direction:column; gap: 6px;">
+                            <div style="width:100%; height:110px; background:#111; border:1px solid rgba(255,255,255,0.07); display:flex; align-items:center; justify-content:center; font-family:var(--font-mono); font-size:10px; letter-spacing:0.14em; color:rgba(255,255,255,0.2); text-transform:uppercase;">Por confirmar</div>
+                            <span class="speaker-title" style="font-size:14px;">04 — XXXX</span>
+                            <span class="speaker-caption" style="font-size:12px; line-height:1.4;">Cuarta performance aún abierta a confirmación curatorial. Perfil en proceso de definición.</span>
+                        </div>
+                    </div>
+                    <p class="list-note" style="font-size:11px; margin-top:6px;">Programación viva: la estructura del festival ya existe y el line-up se termina de afinar con aliados y confirmaciones.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 08 AUDIENCIA ═══ -->
+        <div class="slide-container" id="slide-audiencia">
+            <div class="ambient-grid"></div>
+            <div class="content-area">
+                <p class="accent-tag">Comunidad & audiencia</p>
+                <h2 class="slide-title">Una <em>comunidad creativa activa</em></h2>
+                <div class="audience-layout" style="grid-template-columns: 1.02fr 0.98fr;">
+                    <div class="audience-grid" style="grid-template-columns: 1fr; gap: 0;">
+                        <div class="persona-card" style="border-right:none; border-bottom:1px solid rgba(255,255,255,0.06); padding: 0 0 22px 0;">
+                            <span class="persona-badge">Artistas y gestores</span>
+                            <h3>Agenda cultural contemporánea</h3>
+                            <p>Artistas visuales, sonoros y escénicos junto a curadores del circuito de arte contemporáneo que definen la conversación cultural actual.</p>
+                        </div>
+                        <div class="persona-card" style="border-right:none; border-bottom:1px solid rgba(255,255,255,0.06); padding: 22px 0;">
+                            <span class="persona-badge">Sector creativo</span>
+                            <h3>Líderes y productores</h3>
+                            <p>Directores, productores y profesionales que buscan nuevas fronteras en narrativa digital, innovación y experiencias inmersivas.</p>
+                        </div>
+                        <div class="persona-card" style="border-right:none; padding: 22px 0 0 0;">
+                            <span class="persona-badge">Formación</span>
+                            <h3>Talento emergente</h3>
+                            <p>Estudiantes avanzados y docentes de artes electrónicas y diseño que usan la tecnología como herramienta democratizadora y expresiva.</p>
+                        </div>
+                    </div>
+                    <div class="content-area" style="gap: 10px;">
+                        <div class="audience-visual">
+                            <img src="workshops.png" alt="Comunidad y workshops de DataRaíz">
+                        </div>
+                        <p class="audience-note">Comunidad activa · formación, intercambio y escena en movimiento</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 09 POR QUÉ ARTHAUS ═══ -->
+        <div class="slide-container" id="slide-porque-arthaus" style="background:#0a0a0a; overflow:hidden;">
+            <div class="hero-bg-slide">
+                <div class="hero-img-wrap" style="width:55%; height:55%;">
+                    <img src="arthaus-copy.png" alt="ArtHaus venue">
+                    <div class="hero-img-fade"></div>
+                </div>
+            </div>
+            <div class="hero-bg-slide hero-scrim">
+                <div class="hero-scrim-inner"></div>
+            </div>
+            <div class="section-title-layout" style="position:relative; z-index:2;">
+                <div class="cover-text-panel">
+                    <p class="label-tag" style="color:rgba(242,242,242,0.5);">La sede</p>
+                    <h2 style="font-family:var(--font-title); font-weight:700; line-height:0.94; letter-spacing:-0.05em; text-transform:uppercase; font-size:clamp(3.2rem, 6vw, 5.3rem); max-width:980px;">El Venue Perfecto:<br><em>Por qué ArtHaus</em></h2>
+                    <p class="section-copy" style="max-width:640px; margin-top:18px; text-shadow:0 2px 12px rgba(0,0,0,0.22);">DataRaíz requiere un ecosistema espacial y sonoro preciso. Elegimos ArtHaus porque su infraestructura acústica de primer nivel, su diseño arquitectónico y su posicionamiento en la escena cultural contemporánea lo convierten en el espacio ideal para albergar este formato.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 10 COPRODUCCIÓN ═══ -->
+        <div class="slide-container" id="slide-coproduccion">
+            <div class="ambient-noise"></div>
+            <div class="content-area">
+                <p class="accent-tag">Coproducción</p>
+                <h2 class="slide-title">ArtHaus como Co-Presentador <em>Institucional</em></h2>
+                <p class="lead">Nuestra organización provee una inversión consolidada en curaduría transdisciplinaria, convocatoria de talento de primer nivel, desarrollo de red profesional hipersegmentada y producción ejecutiva. Ofrecemos este robusto ecosistema de contenidos en formato «llave en mano» para la programación anual de ArtHaus. A cambio, ArtHaus aporta su infraestructura física y técnica, capitalizando este evento como inversión equitativa en la coproducción.</p>
+                <div class="statement-list">
+                    <div class="statement-item tile">
+                        <span class="n">01</span>
+                        <div>
+                            <h3>Producción integral</h3>
+                            <p>Curaduría, convocatoria de talento de rango internacional, diseño pedagógico de talleres, producción ejecutiva y convocatoria orgánica de nichos altamente especializados de la industria digital y del software.</p>
+                        </div>
+                    </div>
+                    <div class="statement-item tile">
+                        <span class="n">02</span>
+                        <div>
+                            <h3>Ahorro vs. producción propia</h3>
+                            <p>Conceptualizar, producir y ejecutar un festival de arte tecnológico desde cero representaría para ArtHaus una erogación formidable: curadores especializados, diseño pedagógico y el esfuerzo de convocar comunidades escurridizas. DataRaíz absorbe íntegramente esa inversión.</p>
+                        </div>
+                    </div>
+                    <div class="statement-item tile">
+                        <span class="n">03</span>
+                        <div>
+                            <h3>Inversión equitativa</h3>
+                            <p>ArtHaus capitaliza el evento como parte de su programación anual sin erogación presupuestaria adicional. Su aporte en infraestructura física y técnica equivale a su porcentaje de inversión en la coproducción.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 12 EQUIPO ═══ -->
+        <div class="slide-container" id="slide-equipo">
+            <div class="ambient-grid"></div>
+            <div class="content-area">
+                <p class="accent-tag">Dirección y equipo</p>
+                <h2 class="slide-title">Dirección y <em>equipo</em></h2>
+                <div class="team-grid">
+                    <div class="team-member">
+                        <img src="manuelpalenque.png" alt="Manuel Palenque" style="width:80px; height:80px; border-radius:50%; object-fit:cover; margin-bottom:12px; filter:grayscale(1);">
+                        <span class="team-role">Dirección general & creativa</span>
+                        <h3>Manuel Palenque</h3>
+                        <p>Creative Technologist y artista visual con +15 años de experiencia en experiencias audiovisuales inmersivas e instalaciones interactivas. Mantiene una carrera dual como innovador de alto nivel en la industria y performer prolífico. Actualmente es Senior Creative Technologist en Superside, liderando proyectos inmersivos para líderes tecnológicos globales como Meta, Microsoft, NVIDIA y Reddit.</p>
+                        <p>Como artista y educador, desarrolló una extensa trayectoria internacional — performances, exhibiciones y workshops en Tokio, Hong Kong, Berlín, Barcelona, Bogotá y Ciudad de México. Dirigió sistemas de video técnico para shows de gran escala como Fuerza Bruta y desarrolló experiencias interactivas para Cirque du Soleil y el World Economic Forum.</p>
+                        <p>Cofundador y coordinador de DATARAIZ.io. Su práctica actual se centra en la integración de IA generativa, WebXR y motores en tiempo real, empujando constantemente los límites de la interacción humana en entornos digitales y físicos.</p>
+                        <p style="margin-top:10px; font-size:12px; font-family: var(--font-mono); letter-spacing: 0.06em;"><a href="https://drive.google.com/file/d/1kLrnObQFyhzh26G9HhrdDi8vIFDMCJCN/view" target="_blank" rel="noopener noreferrer" style="color: rgba(242,242,242,0.72); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.18);">Ver CV</a></p>
+                    </div>
+                    <div class="team-member">
+                        <img src="martinlopez.png" alt="Martín López Palermo" style="width:80px; height:80px; border-radius:50%; object-fit:cover; margin-bottom:12px;">
+                        <span class="team-role">Producción & estrategia tecnológica</span>
+                        <h3>Martín López Palermo</h3>
+                        <p>Ingeniero electrónico y tecnólogo creativo en la intersección de arte, ciencia y tecnología. +15 años desarrollando sistemas electrónicos, audiovisuales e interactivos en contextos artísticos, culturales y científicos.</p>
+                        <p>Desde 2007 trabaja de forma independiente en el campo multimedia: instalaciones interactivas, entornos escénicos, interfaces experimentales y sistemas tecnológicos a medida para artistas, instituciones y eventos de gran escala. Su práctica se fundamenta en electrónica, sistemas embebidos, tecnologías de sonido y video e interacción en tiempo real.</p>
+                        <p>Cofundador y coordinador de DATARAIZ.io. Actualmente trabaja en la industria biotecnológica liderando el desarrollo de sistemas tecnológicos innovadores — electrónica, automatización e ingeniería de sistemas — integrando investigación científica, diseño de ingeniería y colaboración interdisciplinaria.</p>
+                    </div>
+                    <div class="team-member">
+                        <img src="ivana.png" alt="Ivana Lombroni" style="width:80px; height:80px; border-radius:50%; object-fit:cover; margin-bottom:12px; filter:grayscale(1);">
+                        <span class="team-role">Investigación & diseño de procesos culturales</span>
+                        <h3>Ivana Lombroni</h3>
+                        <p>Investigadora senior en innovación en la Universidad Politécnica de Madrid y diseñadora de procesos culturales. Su práctica se fundamenta en una arquitectura de meta-diseño sistémico desarrollada en su tesis doctoral sobre creación de Living Labs. +15 años de experiencia.</p>
+                        <p>Articula enfoques transdisciplinarios para la conceptualización, implementación colectiva y despliegue de intervenciones tecnológicas basadas en evidencia, entendiendo el arte y la creatividad como espacios de experimentación situada y producción de conocimiento.</p>
+                        <p>A través del diseño de dispositivos y metodologías participativas, explora nociones como territorio, ecosistema y agencia, activando procesos que conectan cuerpos, territorios y tecnologías mediante una lógica relacional. Radicada en Europa desde 2016, actualmente es directora del LifeSpace Living Lab en la Universidad.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 13 MANIFIESTO ═══ -->
+        <div class="slide-container" id="slide-manifiesto">
+            <div class="ambient-noise"></div>
+            <div class="section-title-layout">
+                <img src="dtr.png" alt="Sello DataRaíz" style="width: min(180px, 22vw); height: auto; aspect-ratio: 1/1; object-fit: cover; border-radius: 50%; margin-bottom: 28px; opacity: 0.88; filter: saturate(0.92) contrast(1.04);">
+                <p class="label-tag">Manifiesto</p>
+                <h2>Manifiesto DataRaíz:<br><em>El futuro es colectivo</em></h2>
+                <p class="section-copy">Somos la interfaz crítica donde la tecnología de punta, la formación y el pulso de la pista se cruzan. DataRaíz es el ecosistema donde las marcas prueban su hardware en la vida real, los creadores expanden sus herramientas y el público vive la vanguardia electrónica desde adentro. Formá parte de la raíz.</p>
+                <div class="chip-row" style="justify-content:center; margin-top:28px;">
+                    <span class="chip">Formación</span>
+                    <span class="chip-divider">/</span>
+                    <span class="chip">Comunidad</span>
+                    <span class="chip-divider">/</span>
+                    <span class="chip">Experimentación</span>
+                    <span class="chip-divider">/</span>
+                    <span class="chip">Vanguardia</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 14 CIERRE ═══ -->
+        <div class="slide-container" id="slide-cierre" style="background:#000000;">
+            <div class="content-area" style="position:relative; z-index:1;">
+                <p class="accent-tag">Proyección & cierre</p>
+                <h2 class="slide-title">DataRaíz 2026: primera edición, base de una plataforma escalable</h2>
+                <div class="closing-grid">
+                    <div class="closing-panel">
+                        <h3>Formato cuidado e íntimo</h3>
+                        <p>La primera edición está pensada como un dispositivo preciso y potente: experiencia cercana, dirección curatorial fuerte y foco en calidad de vínculo.</p>
+                    </div>
+                    <div class="closing-panel">
+                        <h3>Crecimiento modular</h3>
+                        <p>El festival nace con capacidad de expandirse en futuras ediciones sin perder identidad, método ni profundidad de experiencia.</p>
+                    </div>
+                    <div class="closing-panel">
+                        <h3>Plataforma de formación y creación</h3>
+                        <p>Más que una fecha, DataRaíz se plantea como infraestructura cultural para sostener aprendizaje, experimentación y comunidad a largo plazo.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- ═══ 15 CONTACTO ═══ -->
+        <div class="slide-container" id="slide-contacto" style="overflow:hidden; background:#0a0a0a;">
+            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
+                <div style="width:60%; height:60%; position:relative;">
+                    <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; display:block; opacity:0.7;"><source src="bosque.mp4" type="video/mp4"></video>
+                    <div style="position:absolute; inset:-1px; background:
+                        linear-gradient(to right, #0a0a0a 0%, transparent 20%, transparent 80%, #0a0a0a 100%),
+                        linear-gradient(to bottom, #0a0a0a 0%, transparent 20%, transparent 80%, #0a0a0a 100%);
+                    "></div>
+                </div>
+            </div>
+            <div class="content-area" style="position:relative; z-index:1; justify-content:center;">
+                <div class="contact-strip" style="border-top:none; padding-top:0;">
+                    <div class="contact-item">
+                        <span>Web</span>
+                        <a href="https://dataraiz.io" target="_blank" style="color: inherit; text-decoration: none;"><strong>dataraiz.io</strong></a>
+                    </div>
+                    <div class="contact-item">
+                        <span>Instagram</span>
+                        <a href="https://instagram.com/dataraiz.talleres" target="_blank" style="color: inherit; text-decoration: none;"><strong>@dataraiz.talleres</strong></a>
+                    </div>
+                    <div class="contact-item">
+                        <span>Email</span>
+                        <strong>dataraiz.talleres@gmail.com</strong>
+                    </div>
+                </div>
+                <div class="pull-quote" style="margin-top: 32px;">
+                    <p>Buscamos aliados para co-crear la primera Edición.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="sidebar-overlay" id="sidebarOverlay"></div>
+    <div class="flowchart-sidebar" id="flowchartSidebar"></div>
+
+    <div class="mobile-tap-zone left" onclick="prevSlide()" aria-label="Slide anterior"></div>
+    <div class="mobile-tap-zone right" onclick="nextSlide()" aria-label="Slide siguiente"></div>
+
+    <div class="slide-indicator" id="slideIndicator">1 / 15</div>
+
+    <div class="controls-bar" aria-label="Controles de presentación">
+        <button class="control-button" type="button" onclick="prevSlide()" aria-label="Slide anterior">
+            <i class="fa-solid fa-arrow-left"></i>
+        </button>
+        <button class="control-button" type="button" onclick="nextSlide()" aria-label="Slide siguiente">
+            <i class="fa-solid fa-arrow-right"></i>
+        </button>
+        <div style="width:1px; height:20px; background:rgba(255,255,255,0.12); margin:0 4px;"></div>
+        <button class="control-button" type="button" id="btnDownloadPDF" onclick="exportPDF()" aria-label="Descargar PDF" title="Descargar PDF">
+            <i class="fa-solid fa-file-pdf"></i>
+        </button>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/Observer.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/SplitText.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+    <script src="animations.js"></script>
+    <script src="gsap-animations.js"></script>
+    <script>
+    /* ═══ PDF EXPORT ═══ */
+    async function exportPDF() {
+        const btn = document.getElementById('btnDownloadPDF');
+        const icon = btn.querySelector('i');
+        const origClass = icon.className;
+        icon.className = 'fa-solid fa-spinner fa-spin';
+        btn.style.pointerEvents = 'none';
+
+        const indicator = document.getElementById('slideIndicator');
+        const origIndicator = indicator ? indicator.innerText : '';
+
+        try {
+            if (!window.jspdf) { alert('La librería jsPDF no se cargó. Recargá la página e intentá de nuevo.'); return; }
+            const { jsPDF } = window.jspdf;
+            const slides = Array.from(document.querySelectorAll('.slide-container:not(.gsap-clone)'));
+            const totalSlides = slides.length;
+
+            const W = 1920;
+            const H = 1080;
+
+            const pdf = new jsPDF({ orientation: 'landscape', unit: 'px', format: [W, H], compress: true });
+
+            /* Hide UI */
+            const controlsBar = document.querySelector('.controls-bar');
+            const slideInd = document.querySelector('.slide-indicator');
+            if (controlsBar) controlsBar.style.display = 'none';
+            if (slideInd) slideInd.style.display = 'none';
+
+            /* Lock every image's rendered size BEFORE capture to prevent distortion */
+            function lockImageSizes(root) {
+                root.querySelectorAll('img').forEach(img => {
+                    const rect = img.getBoundingClientRect();
+                    img.dataset.pdfW = rect.width + 'px';
+                    img.dataset.pdfH = rect.height + 'px';
+                    img.dataset.pdfFit = window.getComputedStyle(img).objectFit;
+                });
+            }
+            function unlockImageSizes(root) {
+                root.querySelectorAll('img').forEach(img => {
+                    delete img.dataset.pdfW;
+                    delete img.dataset.pdfH;
+                    delete img.dataset.pdfFit;
+                });
+            }
+
+            /* Lock aspect-ratio containers to explicit pixels (html2canvas ignores aspect-ratio) */
+            function lockAspectRatioBoxes(root) {
+                root.querySelectorAll('*').forEach(el => {
+                    const cs = window.getComputedStyle(el);
+                    if (cs.aspectRatio && cs.aspectRatio !== 'auto') {
+                        const rect = el.getBoundingClientRect();
+                        el.dataset.pdfAr = cs.aspectRatio;
+                        el.dataset.pdfArW = rect.width + 'px';
+                        el.dataset.pdfArH = rect.height + 'px';
+                    }
+                });
+            }
+            function unlockAspectRatioBoxes(root) {
+                root.querySelectorAll('[data-pdf-ar]').forEach(el => {
+                    delete el.dataset.pdfAr;
+                    delete el.dataset.pdfArW;
+                    delete el.dataset.pdfArH;
+                });
+            }
+
+            for (let i = 0; i < totalSlides; i++) {
+                if (indicator) indicator.innerText = `Exportando ${i + 1} / ${totalSlides}…`;
+
+                /* Activate only this slide */
+                slides.forEach((s, idx) => {
+                    if (idx === i) {
+                        s.style.opacity = '1';
+                        s.style.visibility = 'visible';
+                        s.style.pointerEvents = 'auto';
+                        s.classList.add('active');
+                    } else {
+                        s.style.opacity = '0';
+                        s.style.visibility = 'hidden';
+                        s.style.pointerEvents = 'none';
+                        s.classList.remove('active');
+                    }
+                });
+
+                /* Lock image dimensions at current rendered size */
+                lockImageSizes(slides[i]);
+                lockAspectRatioBoxes(slides[i]);
+
+                /* Replace videos with frame snapshots */
+                const videos = slides[i].querySelectorAll('video');
+                const videoData = [];
+                for (const video of videos) {
+                    try {
+                        if (video.readyState < 2) {
+                            await new Promise(r => { video.addEventListener('loadeddata', r, { once: true }); setTimeout(r, 2000); });
+                        }
+                        const vw = video.videoWidth || 640;
+                        const vh = video.videoHeight || 360;
+                        const vc = document.createElement('canvas');
+                        vc.width = vw; vc.height = vh;
+                        vc.getContext('2d').drawImage(video, 0, 0, vw, vh);
+
+                        const rect = video.getBoundingClientRect();
+                        const img = document.createElement('img');
+                        img.src = vc.toDataURL('image/jpeg', 0.92);
+                        /* Copy exact rendered box */
+                        const cs = window.getComputedStyle(video);
+                        img.style.width = rect.width + 'px';
+                        img.style.height = rect.height + 'px';
+                        img.style.objectFit = cs.objectFit || 'cover';
+                        img.style.objectPosition = cs.objectPosition || 'center';
+                        img.style.display = 'block';
+                        img.style.borderRadius = cs.borderRadius;
+                        img.style.position = cs.position;
+                        if (cs.position === 'absolute' || cs.position === 'fixed') {
+                            img.style.top = cs.top; img.style.left = cs.left;
+                            img.style.right = cs.right; img.style.bottom = cs.bottom;
+                            img.style.inset = cs.inset;
+                        }
+                        img.dataset.pdfW = rect.width + 'px';
+                        img.dataset.pdfH = rect.height + 'px';
+                        img.dataset.pdfFit = cs.objectFit || 'cover';
+
+                        videoData.push({ video, img, parent: video.parentNode });
+                        video.parentNode.insertBefore(img, video);
+                        video.style.display = 'none';
+                    } catch (e) { console.warn('Video frame capture failed:', e); }
+                }
+
+                await new Promise(r => requestAnimationFrame(() => requestAnimationFrame(r)));
+
+                const canvas = await html2canvas(slides[i], {
+                    width: W,
+                    height: H,
+                    scale: 1,
+                    useCORS: true,
+                    allowTaint: true,
+                    backgroundColor: '#0a0a0a',
+                    logging: false,
+                    windowWidth: W,
+                    windowHeight: H,
+                    onclone: (clonedDoc) => {
+                        /* Fix the slide container */
+                        const allCloned = clonedDoc.querySelectorAll('.slide-container');
+                        allCloned.forEach((cs, idx) => {
+                            if (idx === i) {
+                                cs.style.position = 'relative';
+                                cs.style.width = W + 'px';
+                                cs.style.height = H + 'px';
+                                cs.style.overflow = 'hidden';
+                                cs.style.opacity = '1';
+                                cs.style.visibility = 'visible';
+                            } else {
+                                cs.style.display = 'none';
+                            }
+                        });
+                        /* Enforce locked image sizes in clone to prevent distortion */
+                        clonedDoc.querySelectorAll('img[data-pdf-w]').forEach(img => {
+                            img.style.width = img.dataset.pdfW;
+                            img.style.height = img.dataset.pdfH;
+                            img.style.objectFit = img.dataset.pdfFit || 'cover';
+                            img.style.maxWidth = 'none';
+                            img.style.maxHeight = 'none';
+                        });
+                        /* Resolve aspect-ratio containers to explicit pixel sizes */
+                        clonedDoc.querySelectorAll('[data-pdf-ar]').forEach(el => {
+                            el.style.aspectRatio = 'auto';
+                            el.style.width = el.dataset.pdfArW;
+                            el.style.height = el.dataset.pdfArH;
+                            el.style.overflow = 'hidden';
+                        });
+                        /* Hide UI in clone */
+                        const cb = clonedDoc.querySelector('.controls-bar');
+                        const si = clonedDoc.querySelector('.slide-indicator');
+                        if (cb) cb.style.display = 'none';
+                        if (si) si.style.display = 'none';
+                    }
+                });
+
+                /* Restore videos */
+                for (const vd of videoData) {
+                    vd.video.style.display = '';
+                    if (vd.img.parentNode) vd.img.parentNode.removeChild(vd.img);
+                }
+                unlockImageSizes(slides[i]);
+                unlockAspectRatioBoxes(slides[i]);
+
+                if (i > 0) pdf.addPage([W, H], 'landscape');
+                const imgData = canvas.toDataURL('image/jpeg', 0.92);
+                pdf.addImage(imgData, 'JPEG', 0, 0, W, H);
+            }
+
+            /* Restore */
+            slides.forEach(s => {
+                s.style.opacity = '';
+                s.style.visibility = '';
+                s.style.pointerEvents = '';
+                s.classList.remove('active');
+            });
+            slides[currentIndex].classList.add('active');
+            if (controlsBar) controlsBar.style.display = '';
+            if (slideInd) slideInd.style.display = '';
+            if (indicator) indicator.innerText = origIndicator;
+
+            pdf.save('DataRaiz-CicloNegro-Dossier.pdf');
+
+        } catch (err) {
+            console.error('PDF export failed:', err);
+            alert('Error al exportar PDF: ' + err.message);
+        } finally {
+            icon.className = origClass;
+            btn.style.pointerEvents = '';
+            const controlsBar = document.querySelector('.controls-bar');
+            const slideInd = document.querySelector('.slide-indicator');
+            if (controlsBar) controlsBar.style.display = '';
+            if (slideInd) slideInd.style.display = '';
+            if (indicator) indicator.innerText = origIndicator;
+        }
+    }
+    </script>
+</body>
+</html>
