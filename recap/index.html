@@ -882,6 +882,57 @@
         .closing-panel h3 { margin-bottom: 8px; }
         .closing-panel p { font-size: 15px; line-height: 1.55; }
 
+        .closing-stage-layout, .contact-stage-layout {
+            display: grid;
+            grid-template-columns: minmax(0, 1.08fr) minmax(320px, 0.92fr);
+            gap: 42px;
+            align-items: center;
+            width: 100%;
+        }
+        .closing-copy, .contact-copy {
+            gap: 24px;
+        }
+        .stage-media-stack {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        .stage-media-card {
+            position: relative;
+            min-height: clamp(300px, 52vh, 500px);
+            border-radius: 0;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.08);
+            background: #050505;
+            box-shadow: 0 24px 70px rgba(0,0,0,0.28);
+        }
+        .stage-media-card video,
+        .stage-media-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            display: block;
+        }
+        .stage-media-card::after {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background:
+                linear-gradient(to right, rgba(10,10,10,0.68) 0%, rgba(10,10,10,0.06) 18%, rgba(10,10,10,0.06) 82%, rgba(10,10,10,0.58) 100%),
+                linear-gradient(to bottom, rgba(10,10,10,0.36) 0%, rgba(10,10,10,0.02) 24%, rgba(10,10,10,0.18) 100%);
+            pointer-events: none;
+        }
+        .contact-lead {
+            max-width: 560px;
+            font-size: 18px;
+            line-height: 1.6;
+            color: rgba(246,247,251,0.76);
+        }
+        .contact-quote {
+            margin-top: 4px;
+            max-width: 560px;
+        }
+
         /* ═══════════════════════════════════════
            CONTACT (plain text, no icon boxes)
            ═══════════════════════════════════════ */
@@ -1070,6 +1121,10 @@
             .tiled-content.four, .tiled-content.three, .partnership-grid {
                 grid-template-columns: repeat(2, minmax(0, 1fr));
             }
+            .closing-stage-layout, .contact-stage-layout {
+                grid-template-columns: 1fr;
+                gap: 28px;
+            }
             .audience-grid, .team-grid, .closing-grid {
                 grid-template-columns: 1fr;
             }
@@ -1118,6 +1173,10 @@
             .ecosystem-layout {
                 grid-template-columns: 1fr !important;
                 gap: 20px !important;
+            }
+            .closing-stage-layout, .contact-stage-layout {
+                grid-template-columns: 1fr !important;
+                gap: 22px !important;
             }
             .tiled-content .tile {
                 border-left: none;
@@ -1311,9 +1370,8 @@
             .contact-strip { flex-direction: column; gap: 14px; }
             .contact-item span { font-size: 10px; }
             .contact-item strong, .contact-item a { font-size: 14px; }
-            #slide-contacto > div:first-child > div:first-child {
-                width: 95% !important; height: 60% !important;
-            }
+            .stage-media-card { min-height: 240px; }
+            .contact-lead { font-size: 16px; }
 
             /* ── Manifiesto ── */
             #slide-manifiesto img { width: min(120px, 30vw) !important; }
@@ -1334,9 +1392,6 @@
                 grid-auto-rows: 180px;
                 padding: 12px 12px 86px;
             }
-
-            /* ── Slide 14 video container ── */
-            #slide-cierre > div:first-child > div:first-child { width: 90% !important; height: 50% !important; }
         }
     </style>
 </head>
@@ -1802,21 +1857,32 @@
 
         <!-- ═══ 14 CIERRE ═══ -->
         <div class="slide-container" id="slide-cierre" style="background:#000000;">
-            <div class="content-area" style="position:relative; z-index:1;">
-                <p class="accent-tag">Proyección & cierre</p>
-                <h2 class="slide-title">DataRaíz 2026: primera edición, base de una plataforma escalable</h2>
-                <div class="closing-grid">
-                    <div class="closing-panel">
-                        <h3>Formato cuidado e íntimo</h3>
-                        <p>La primera edición está pensada como un dispositivo preciso y potente: experiencia cercana, dirección curatorial fuerte y foco en calidad de vínculo.</p>
+            <div class="closing-stage-layout">
+                <div class="content-area closing-copy" style="position:relative; z-index:1;">
+                    <div>
+                        <p class="accent-tag">Proyección & cierre</p>
+                        <h2 class="slide-title">DataRaíz 2026: primera edición, base de una plataforma escalable</h2>
                     </div>
-                    <div class="closing-panel">
-                        <h3>Crecimiento modular</h3>
-                        <p>El festival nace con capacidad de expandirse en futuras ediciones sin perder identidad, método ni profundidad de experiencia.</p>
+                    <div class="closing-grid">
+                        <div class="closing-panel">
+                            <h3>Formato cuidado e íntimo</h3>
+                            <p>La primera edición está pensada como un dispositivo preciso y potente: experiencia cercana, dirección curatorial fuerte y foco en calidad de vínculo.</p>
+                        </div>
+                        <div class="closing-panel">
+                            <h3>Crecimiento modular</h3>
+                            <p>El festival nace con capacidad de expandirse en futuras ediciones sin perder identidad, método ni profundidad de experiencia.</p>
+                        </div>
+                        <div class="closing-panel">
+                            <h3>Plataforma de formación y creación</h3>
+                            <p>Más que una fecha, DataRaíz se plantea como infraestructura cultural para sostener aprendizaje, experimentación y comunidad a largo plazo.</p>
+                        </div>
                     </div>
-                    <div class="closing-panel">
-                        <h3>Plataforma de formación y creación</h3>
-                        <p>Más que una fecha, DataRaíz se plantea como infraestructura cultural para sostener aprendizaje, experimentación y comunidad a largo plazo.</p>
+                </div>
+                <div class="stage-media-stack" style="position:relative; z-index:1;">
+                    <div class="stage-media-card">
+                        <video autoplay muted loop playsinline preload="auto" aria-label="Visual de partículas para el cierre de DataRaíz">
+                            <source src="PARTICLES_1.mp4" type="video/mp4">
+                        </video>
                     </div>
                 </div>
             </div>
@@ -1824,32 +1890,37 @@
 
         <!-- ═══ 15 CONTACTO ═══ -->
         <div class="slide-container" id="slide-contacto" style="overflow:hidden; background:#0a0a0a;">
-            <div style="position:absolute; inset:0; display:flex; align-items:center; justify-content:center;">
-                <div style="width:60%; height:60%; position:relative;">
-                    <video autoplay muted loop playsinline style="width:100%; height:100%; object-fit:cover; display:block; opacity:0.7;"><source src="bosque.mp4" type="video/mp4"></video>
-                    <div style="position:absolute; inset:-1px; background:
-                        linear-gradient(to right, #0a0a0a 0%, transparent 20%, transparent 80%, #0a0a0a 100%),
-                        linear-gradient(to bottom, #0a0a0a 0%, transparent 20%, transparent 80%, #0a0a0a 100%);
-                    "></div>
+            <div class="contact-stage-layout">
+                <div class="content-area contact-copy" style="position:relative; z-index:1; justify-content:center;">
+                    <div>
+                        <p class="accent-tag">Contacto</p>
+                        <h2 class="slide-title">Sumate a la primera edición</h2>
+                        <p class="contact-lead">Abrimos conversaciones con aliados, sponsors y espacios que quieran activar una experiencia donde formación, comunidad y cultura digital suceden al mismo tiempo.</p>
+                    </div>
+                    <div class="contact-strip" style="border-top:none; padding-top:0; margin-top:0;">
+                        <div class="contact-item">
+                            <span>Web</span>
+                            <a href="https://dataraiz.io" target="_blank" style="color: inherit; text-decoration: none;"><strong>dataraiz.io</strong></a>
+                        </div>
+                        <div class="contact-item">
+                            <span>Instagram</span>
+                            <a href="https://instagram.com/dataraiz.talleres" target="_blank" style="color: inherit; text-decoration: none;"><strong>@dataraiz.talleres</strong></a>
+                        </div>
+                        <div class="contact-item">
+                            <span>Email</span>
+                            <strong>dataraiz.talleres@gmail.com</strong>
+                        </div>
+                    </div>
+                    <div class="pull-quote contact-quote">
+                        <p>Sé nuestro aliado para co-crear la primera edición</p>
+                    </div>
                 </div>
-            </div>
-            <div class="content-area" style="position:relative; z-index:1; justify-content:center;">
-                <div class="contact-strip" style="border-top:none; padding-top:0;">
-                    <div class="contact-item">
-                        <span>Web</span>
-                        <a href="https://dataraiz.io" target="_blank" style="color: inherit; text-decoration: none;"><strong>dataraiz.io</strong></a>
+                <div class="stage-media-stack" style="position:relative; z-index:1;">
+                    <div class="stage-media-card">
+                        <video autoplay muted loop playsinline preload="auto" aria-label="Visual orgánico para el slide de contacto de DataRaíz">
+                            <source src="bosque.mp4" type="video/mp4">
+                        </video>
                     </div>
-                    <div class="contact-item">
-                        <span>Instagram</span>
-                        <a href="https://instagram.com/dataraiz.talleres" target="_blank" style="color: inherit; text-decoration: none;"><strong>@dataraiz.talleres</strong></a>
-                    </div>
-                    <div class="contact-item">
-                        <span>Email</span>
-                        <strong>dataraiz.talleres@gmail.com</strong>
-                    </div>
-                </div>
-                <div class="pull-quote" style="margin-top: 32px;">
-                    <p>Sé nuestro aliado para co-crear la primera edición</p>
                 </div>
             </div>
         </div>
